@@ -10,16 +10,17 @@ import YouHui from '@/components/YouHui'
 import Search from '@/components/Search'
 import PersonCenter from '@/components/PersonCenter'
 import jiFen from '@/components/jiFen'
+import Exchange from '@/components/Exchange'
 Vue.use(VueRouter)
 
 const routes = [
   {
   path: '/',
-  component: Home
+  component:Home
 },
 {
   path: '/Tmall',
-    component: Tmall
+  component: Tmall
 },
   {
     path: '/YouHui',
@@ -34,8 +35,12 @@ const routes = [
     component: PersonCenter
   },
   {
-    path: '/jiFen',
+    path: '/home/jiFen',
     component: jiFen
+  },
+  {
+    path: '/home/jiFen/Exchange',
+    component: Exchange
   }
 ]
 
@@ -52,3 +57,4 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app-box')
+

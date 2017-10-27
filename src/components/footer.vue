@@ -26,6 +26,7 @@
       Tabbar,
       TabbarItem,
     }
+
   }
 </script>
 <style scoped>

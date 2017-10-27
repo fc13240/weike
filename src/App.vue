@@ -4,7 +4,6 @@
     <app-footer></app-footer>
   </div>
 </template>
-
 <script>
   import AppFooter from '@/components/footer'
 export default {

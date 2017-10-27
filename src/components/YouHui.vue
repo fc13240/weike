@@ -7,7 +7,7 @@
     </nav>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav">
-        <div class="box1-item" v-for="i in item" id="box1-item" style="width: 2.42rem;">
+        <div class="box1-item" v-for="i in item" id="box1-item" style="width: 2.49rem;">
             <img src="../assets/logo.png" alt="">
           <span class="dess">
             <p class="des_name">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -95,11 +95,9 @@
     methods: {
        init(){
          const self = this
-         var w=document.getElementById('box1-item').offsetWidth
-         console.log(w)
-         var n = self.item.length
-         console.log(n)
-         console.log(self.$refs.nav.style.width=(w*n)+'px')
+         const w=document.getElementById('box1-item').offsetWidth
+         const n = self.item.length
+         self.$refs.nav.style.width=(w*n)+'px'
        }
     }
   }
