@@ -11,6 +11,8 @@ import Search from '@/components/Search'
 import PersonCenter from '@/components/PersonCenter'
 import jiFen from '@/components/jiFen'
 import Exchange from '@/components/Exchange'
+import xianBao from '@/components/xianBao'
+import fuLi from '@/components/fuLi'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,8 +41,16 @@ const routes = [
     component: jiFen
   },
   {
-    path: '/home/jiFen/Exchange',
+    path: '/home/Exchange',
     component: Exchange
+  },
+  {
+    path:'/home/xianBao',
+    component:xianBao
+  },
+  {
+    path:'/home/fuLi',
+    component:fuLi
   }
 ]
 

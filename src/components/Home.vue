@@ -36,8 +36,14 @@
 
          </div>
           <div class="m_r">
-            <div class="m_r_t"></div>
-            <div class="m_r_b"></div>
+            <router-link to="/home/xianBao">
+              <!--@click="toXianBao"-->
+              <div class="m_r_t"></div>
+            </router-link>
+
+            <router-link to="/home/fuLi">
+              <div class="m_r_b"></div>
+            </router-link>
           </div>
       </div>
       <div class="main_goods">
@@ -122,7 +128,12 @@
         this.$router.push({
           path:'/home/jiFen'
         })
-      }
+      },
+//      toXianBao(){
+//        this.$router.push({
+//          path:'/home/xianBao'
+//        })
+//      }
     }
   }
 </script>

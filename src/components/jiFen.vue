@@ -66,7 +66,7 @@
     methods:{
       toExchange(){
         this.$router.push({
-          path:'/home/jeFen/Exchange'
+          path:'/home/Exchange'
         })
       }
     }
