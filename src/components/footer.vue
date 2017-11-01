@@ -1,10 +1,10 @@
 <template>
   <tabbar class="footer">
-    <tabbar-item link="/" :selected="$route.path == '/'">
+    <tabbar-item link="/home" :selected="$route.path == '/home'">
       <img slot="icon" src="../assets/logo.png">
       <span slot="label">首页</span>
     </tabbar-item>
-    <tabbar-item link="/Tmall" :selected="$route.path == '/Tmall'">
+    <tabbar-item link="/Search" :selected="$route.path == '/Search'">
       <img slot="icon" src="../assets/logo.png">
       <span slot="label">智搜</span>
     </tabbar-item>
@@ -30,7 +30,12 @@
   }
 </script>
 <style scoped>
-   .footer{
+   .footer {
      position: fixed;
    }
+</style>
+<style>
+  .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon > i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label {
+    color: #ff7171!important;
+  }
 </style>

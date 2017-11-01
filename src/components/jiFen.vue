@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-header title="积分商城"></app-header>
+    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;">积分商城</x-header>
     <nav>
       <a href="javascript:">
         <img src="../assets/logo.png" alt="">
@@ -55,13 +55,13 @@
   </div>
 </template>
 <script>
+  import {XHeader} from 'vux'
   import  Vue from 'vue'
-  import AppHeader from './Header'
   export default {
     name:'jiFen',
   components:{
       Vue,
-    AppHeader
+      XHeader
   },
     methods:{
       toExchange(){
@@ -85,7 +85,6 @@
   }
   nav{
     background-color: white;
-    margin-top: .88rem;
     margin-bottom: .2rem;
     font-size: 0;
     text-align: center;
@@ -166,5 +165,10 @@
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+</style>
+<style>
+  .vux-header-title{
+    font-size: .32rem!important;
   }
 </style>

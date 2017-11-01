@@ -1,7 +1,7 @@
 <template>
   <div>
-    <app-header title="超值线报"></app-header>
-    <div class="banner">banner</div>
+    <x-header :left-options="{backText: ''}" style="background-color: white;">超值线报</x-header>
+    <swiper auto :list="demo03_list" style="width:100%;margin:0 auto;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div class="main">
       <ul class="timeTab">
         <!--<router-link tag="li" to="/home/xianBao/list1" :class="{active:isActive}">09:00抢购中</router-link>-->
@@ -24,7 +24,7 @@
               <div style="margin-top: .35rem;position: relative;">
                 <div>
                   <div class="juan">
-                    <span class="j_num">20</span>
+                    <span class="j_num">200</span>
                   </div>
                   <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
                 </div>
@@ -91,17 +91,29 @@
   </div>
 </template>
 <script>
+  import {Swiper} from 'vux'
   import Vue from 'vue'
-  import AppHeader from './Header'
-
+  import {XHeader} from 'vux'
+  const imgList = [
+    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
+    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
+    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
+    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
+  ];
+  const demoList = imgList.map((one, index) => ({
+    url: 'javascript:',
+    img: one
+  }));
   export default {
     name: 'xianBao',
     components: {
+      Swiper,
       Vue,
-      AppHeader
+      XHeader
     },
     data: function () {
       return {
+        demo03_list: demoList,
         activeClass: 'active',
         items: [
           {
@@ -137,19 +149,16 @@
         items[index].active = true;
         items[index].texts = "抢购中"
       }
+    },
+    mounted(){
+      const title = document.getElementsByClassName('vux-header-title');
+      title[0].style.color='#333'
     }
   }
 
 </script>
 <style scoped>
-  .banner {
-    width: 100%;
-    height: 1.8rem;
-    background-color: red;
-    margin-top: .88rem;
-  }
-
-  ul {
+  ul{
     font-size: 0;
     overflow: hidden;
   }
@@ -203,18 +212,18 @@
 
   .juan {
     display: inline-block;
-    min-width: .86rem;
-    height: .28rem;
+    width: 47px;
+    height: 14px;
     background-image: url('../assets/juan.png');
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
   }
 
   .j_num {
-    font-size: .14rem;
+    font-size: 10px;
     color: #ff526d;
-    line-height: .28rem;
-    margin-left: .48rem;
+    line-height: 14px;
+    margin-left: 22.5px;
   }
 
   .new_num {

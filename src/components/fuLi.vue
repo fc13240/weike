@@ -1,11 +1,13 @@
 <template>
   <!--<div> {{$route.params.time}}</div>-->
   <div>
-    <app-header title="粉丝福利"></app-header>
-    <div class="banner">banner</div>
+    <x-header :left-options="{backText: ''}" style="background-color: white;">粉丝福利</x-header>
+    <swiper auto :list="demo03_list" style="width:100%;margin:0 auto;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div>
-      <tab :line-width=4 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
-        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
+      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
+        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item"
+                  :key="index">{{item}}
+        </tab-item>
       </tab>
       <!--<swiper v-model="index" :show-dots="false">-->
       <!--<swiper-item v-for="(item, index) in list2" :key="index">-->
@@ -19,20 +21,24 @@
           <img src="../assets/logo.png" alt="">
           <div class="content">
             <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <div class="des_b">
-              <span class="price">￥88.8</span>
+            <p style="position: relative;margin-top: .2rem;"><span class="left">送20元宝</span><span class="right">剩余<span
+              style="color: #ffb205;">2000</span>件</span></p>
+            <p class="des_b" style="position: relative;margin-top: .1rem;">
+              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
               <span class="num">518件已售</span>
-            </div>
+            </p>
           </div>
         </li>
         <li class="goods_list">
           <img src="../assets/logo.png" alt="">
           <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <div class="des_b">
-              <span class="price">￥88.8</span>
+            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+            <p style="position: relative;margin-top: .2rem;"><span class="left">送20元宝</span><span class="right">剩余<span
+              style="color: #ffb205;">2000</span>件</span></p>
+            <p class="des_b" style="position: relative;margin-top: .1rem;">
+              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
               <span class="num">518件已售</span>
-            </div>
+            </p>
           </div>
         </li>
       </ul>
@@ -41,23 +47,33 @@
   </div>
 </template>
 <script>
-  import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
+  import {Tab, TabItem, Swiper, SwiperItem,XHeader} from 'vux'
   import Vue from 'vue'
-  import AppHeader from './Header'
-  const list = () => ['价格优先', '销量优先', '元宝优先','时间优先']
 
+  const list = () => ['价格优先', '销量优先', '元宝优先', '时间优先']
+  const imgList = [
+    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
+    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
+    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
+    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
+  ]
+  const demoList = imgList.map((one, index) => ({
+    url: 'javascript:',
+    img: one
+  }))
   export default {
-    name:'Exchange',
+    name: 'Exchange',
     components: {
       Tab,
       TabItem,
       Swiper,
       SwiperItem,
       Vue,
-      AppHeader
+      XHeader
     },
-    data () {
+    data() {
       return {
+        demo03_list: demoList,
         list2: list(),
         demo2: '全部',
         index: 0,
@@ -67,83 +83,89 @@
       }
     },
     methods: {
-      onItemClick (index) {
+      onItemClick(index) {
         console.log('on item click:', index)
       },
-      addTab () {
+      addTab() {
         if (this.list2.length < 5) {
           this.list2 = list().slice(0, this.list2.length + 1)
         }
       },
-      removeTab () {
+      removeTab() {
         if (this.list2.length > 1) {
           this.list2 = list().slice(0, this.list2.length - 1)
         }
       },
-      next () {
+      next() {
         if (this.index === this.list2.length - 1) {
           this.index = 0
         } else {
           ++this.index
         }
       },
-      prev () {
+      prev() {
         if (this.index === 0) {
           this.index = this.list2.length - 1
         } else {
           --this.index
         }
       }
+    },
+    mounted(){
+      const title = document.getElementsByClassName('vux-header-title');
+      title[0].style.color='#333'
     }
   }
 </script>
 <style lang="less" scoped>
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/center.less';
-  .banner {
-    width: 100%;
-    height: 1.8rem;
-    background-color: red;
-    margin-top: .88rem;
-  }
-
   ul {
     font-size: 0;
     overflow: hidden;
   }
+
   .tab-swiper {
     background-color: #fff;
     height: 100px;
   }
-  .main{
+
+  .main {
     margin-bottom: 1.06rem;
   }
-  .goods{
+
+  .goods {
     overflow: hidden;
     margin-top: .1rem;
   }
-  .goods_list{
+
+  .goods_list {
     background-color: white;
     list-style: none;
     float: left;
     width: 50%;
     box-sizing: border-box;
-    border-bottom:.1rem solid  #f4f4f4;
+    border-bottom: .1rem solid #f4f4f4;
   }
-  .goods_list img{
+
+  .goods_list img {
     width: 100%;
     height: 3.6rem;
   }
-  .goods_list:nth-of-type(odd){
-    border-right:.05rem solid  #f4f4f4;
+
+  .goods_list:nth-of-type(odd) {
+    border-right: .05rem solid #f4f4f4;
   }
-  .goods_list:nth-of-type(even){
-    border-left:.05rem solid  #f4f4f4;
+
+  .goods_list:nth-of-type(even) {
+    border-left: .05rem solid #f4f4f4;
   }
-  .content{
+
+  .content {
     padding: .15rem;
   }
-  .des{
+
+  .des {
     font-size: .28rem;
     color: #333;
     line-height: .4rem;
@@ -153,15 +175,32 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .price{
+
+  .left {
+    font-size: .20rem;
+    color: #ff526d;
+    border: 1px solid #ff526d;
+    padding: 0 3px;
+    border-radius: .05rem;
+  }
+
+  .price {
     font-size: .32rem;
     color: #ff7171;
   }
-  .num{
+
+  .num {
     font-size: .24rem;
     color: #999;
-    float: right;
-    margin-top: .1rem;
-    margin-right: .15rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  .right {
+    position: absolute;
+    right: 0;
+    font-size: .24rem;
+    color: #999999;
   }
 </style>

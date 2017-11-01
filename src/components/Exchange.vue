@@ -1,8 +1,8 @@
 <template>
   <div>
-    <app-header title="兑换记录"></app-header>
-    <div style="margin-top: .88rem;">
-      <tab :line-width=4 active-color='#ff526d' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff526d">
+    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;">兑换记录</x-header>
+    <div>
+      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff526d">
         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
       </tab>
       <!--<swiper v-model="index" :show-dots="false">-->
@@ -46,9 +46,9 @@
   </div>
 </template>
 <script>
+  import {XHeader} from 'vux'
   import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
   import Vue from 'vue'
-  import AppHeader from './Header'
   const list = () => ['全部', '虚拟类', '实物类']
 
   export default {
@@ -59,7 +59,7 @@
       Swiper,
       SwiperItem,
       Vue,
-      AppHeader
+      XHeader
     },
     data () {
       return {

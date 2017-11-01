@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <app-footer></app-footer>
+    <app-footer v-show="$route.meta.showFooter"></app-footer>
   </div>
 </template>
 <script>
@@ -10,6 +10,30 @@ export default {
   name: 'app',
   components:{
     AppFooter
+  },
+  data:function(){
+    return{
+//      showFooter:true
+    }
+  },
+  mouthed:{
+
+  },
+  watch:{
+//    '$route':'fetchPath'
+  },
+  methods:{
+//    fetchPath(to,from,next){
+//      console.log(to)
+//      console.log(from)
+//      if(to.path==='/home' || to.path==='/Search' || to.path==='/YouHui' || to.path==='/PersonCenter'){
+//        this.showFooter = true;
+//      }else{
+//        this.showFooter = false;
+//      }
+//
+//
+//    }
   }
 }
 </script>
