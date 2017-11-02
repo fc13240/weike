@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;">积分商城</x-header>
-    <nav>
+    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">积分商城</x-header>
+    <nav style="margin-top: .88rem">
       <a href="javascript:">
         <img src="../assets/logo.png" alt="">
         <span>元宝 <span class="nums">88</span></span>

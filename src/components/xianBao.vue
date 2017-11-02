@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="background-color: white;">超值线报</x-header>
-    <swiper auto :list="demo03_list" style="width:100%;margin:0 auto;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+    <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">超值线报</x-header>
+    <swiper auto :list="demo03_list" style="width:100%;margin:.88rem auto 0;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div class="main">
       <ul class="timeTab">
         <!--<router-link tag="li" to="/home/xianBao/list1" :class="{active:isActive}">09:00抢购中</router-link>-->
@@ -25,6 +25,29 @@
                 <div>
                   <div class="juan">
                     <span class="j_num">200</span>
+                  </div>
+                  <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
+                </div>
+                <div>
+                  <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
+                  <del class="old_num">￥124.00</del>
+                </div>
+                <div style="position: absolute;right: 0;bottom: 0;">
+                  <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
+                  <img src="../assets/logo.png" alt="" style="width: 1.16rem;height: .46rem;">
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <img src="../assets/logo.png" alt="" class="pic">
+            <div class="content">
+              <p class="title">产品标题产品标题</p>
+              <p class="des">产品补充介绍</p>
+              <div style="margin-top: .35rem;position: relative;">
+                <div>
+                  <div class="juan">
+                    <span class="j_num">20</span>
                   </div>
                   <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
                 </div>

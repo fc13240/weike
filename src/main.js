@@ -16,6 +16,8 @@ import subjects from '@/components/subjects';
 import discount from '@/components/discount';
 import essential from '@/components/essential';
 import hot from '@/components/hot'
+import classify from '@/components/classify'
+import myOrder from '@/components/myOrder'
 
 Vue.use(VueRouter)
 
@@ -85,6 +87,16 @@ const routes = [
   {
     path:'/home/hot',
     component: hot,
+    meta: {showFooter: false}
+  },
+  {
+    path:'/home/classify',
+    component: classify,
+    meta: {showFooter: false}
+  },
+  {
+    path:'/PersonCenter/myOrder',
+    component: myOrder,
     meta: {showFooter: false}
   }
 ]

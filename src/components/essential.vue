@@ -1,8 +1,8 @@
 <template>
   <!--<div> {{$route.params.time}}</div>-->
   <div>
-    <x-header :left-options="{backText: ''}" style="background-color: white;">应季必备</x-header>
-    <nav style="width: 7.5rem;height: 2.6rem;background-color: red;"></nav>
+    <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">应季必备</x-header>
+    <nav style="width: 7.5rem;height: 2.6rem;background-color: red;margin-top: .88rem;"></nav>
     <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="../assets/logo.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早上10点晚9点上新</p>
     <div class="main_goods">
       <ul class="goods">

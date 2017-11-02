@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;">兑换记录</x-header>
-    <div>
+    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">兑换记录</x-header>
+    <div style="margin-top: .88rem;">
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff526d">
         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
       </tab>

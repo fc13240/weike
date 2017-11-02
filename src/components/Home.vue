@@ -10,24 +10,24 @@
             <img src="../assets/logo.png">
             <span>热门</span>
           </router-link>
-          <li><img src="../assets/logo.png">
-            <span>家居</span></li>
-          <li><img src="../assets/logo.png">
-            <span>家纺</span></li>
-          <li><img src="../assets/logo.png">
-            <span>电器</span></li>
-          <li><img src="../assets/logo.png">
-            <span>数码</span></li>
-          <li><img src="../assets/logo.png">
-            <span>美妆</span></li>
-          <li><img src="../assets/logo.png">
-            <span>服装</span></li>
-          <li><img src="../assets/logo.png">
-            <span>汽车</span></li>
-          <li><img src="../assets/logo.png">
-            <span>母婴</span></li>
-          <li><img src="../assets/logo.png">
-            <span>美食</span></li>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>家居</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>家纺</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>电器</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>数码</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>美妆</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>服饰</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>汽车</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>母婴</span></router-link>
+          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
+            <span>美食</span></router-link>
         </ul>
       </div>
       <div class="main">

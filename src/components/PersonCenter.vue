@@ -11,7 +11,7 @@
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
     </div>
     <group>
-      <cell title="我的订单" value="查看全部" is-link></cell>
+      <cell title="我的订单" value="查看全部" is-link link="/PersonCenter/myOrder"></cell>
     </group>
     <div>
       <ul class="nav-small">
