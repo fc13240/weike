@@ -1,8 +1,9 @@
 <template>
   <div>
     <app-header title="超实惠"></app-header>
+    <div style="height: .88rem;"></div>
     <router-link to="/YouHui/subjects">
-      <nav style="margin-top:.88rem;">
+      <nav>
         <img src="../assets/logo.png" alt="" class="nav_btn">
         <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
       </nav>

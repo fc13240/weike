@@ -1,7 +1,8 @@
 <template>
   <div>
     <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">超值线报</x-header>
-    <swiper auto :list="demo03_list" style="width:100%;margin:.88rem auto 0;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+    <div style="height: .88rem;"></div>
+    <swiper auto :list="demo03_list" style="width:100%;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div class="main">
       <ul class="timeTab">
         <!--<router-link tag="li" to="/home/xianBao/list1" :class="{active:isActive}">09:00抢购中</router-link>-->

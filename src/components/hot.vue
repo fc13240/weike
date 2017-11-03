@@ -1,7 +1,8 @@
 <template>
   <div>
     <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;">热门</x-header>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem">
+    <div style="height: .88rem;"></div>
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">
 
       <div class="main_goods">
         <ul class="goods">

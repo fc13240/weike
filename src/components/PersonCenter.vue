@@ -1,6 +1,7 @@
 <template>
   <div>
     <app-header title="个人中心"></app-header>
+    <div style="height: .88rem;"></div>
     <div class="top">
       <img src="../assets/1.jpg" alt="" class="photo">
       <div class="info">
@@ -15,25 +16,25 @@
     </group>
     <div>
       <ul class="nav-small">
-        <li>
+        <router-link to="/PersonCenter/myOrder" tag="li">
           <img src="../assets/logo.png">
-          <span>添加</span></li>
-        <li><img src="../assets/logo.png">
-          <span>全部</span></li>
-        <li><img src="../assets/logo.png">
-          <span>待返</span></li>
-        <li><img src="../assets/logo.png">
-          <span>已返</span></li>
+          <span>添加</span></router-link>
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+          <span>全部</span></router-link>
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+          <span>待返</span></router-link>
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+          <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">
-        <li><img src="../assets/logo.png">
-          <span>收货管理</span></li>
-        <li><img src="../assets/logo.png">
-          <span>我的足迹</span></li>
-        <li><img src="../assets/logo.png">
-          <span>我的兑换</span></li>
-        <li><img src="../assets/logo.png">
-          <span>每日签到</span></li>
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+          <span>收货管理</span></router-link>
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+          <span>我的足迹</span></router-link>
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+          <span>我的兑换</span></router-link>
+        <router-link tag="li" to="/PersonCenter/sign"><img src="../assets/logo.png">
+          <span>每日签到</span></router-link>
       </ul>
     </div>
     <panel :list="list" :type="type"></panel>
@@ -65,7 +66,7 @@
           {
             src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
             title: '晒单赚元宝<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">评价晒单赚元宝</span>',
-            url: '/component/cell'
+            url: '/personCenter/shareList'
           },
           {
             src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
@@ -84,12 +85,7 @@
           },
           {
             src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-            title: '在线客服',
-            url: '/component/cell'
-          },
-          {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-            title: '设置',
+            title: '官方客服',
             url: '/component/cell'
           }
         ]
@@ -99,7 +95,6 @@
 </script>
 <style scoped="">
   .top {
-    margin-top: .88rem;
     background-color: #ff526d;
     padding: .44rem .34rem;
     position: relative;

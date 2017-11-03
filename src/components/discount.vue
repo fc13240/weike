@@ -2,7 +2,8 @@
   <!--<div> {{$route.params.time}}</div>-->
   <div>
     <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">聚折扣</x-header>
-    <div class="main_goods" style="margin-top: .88rem;">
+    <div style="height: .88rem;"></div>
+    <div class="main_goods">
       <ul class="goods">
         <li class="goods_list">
           <img src="../assets/logo.png" alt="">

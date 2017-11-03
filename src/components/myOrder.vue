@@ -1,7 +1,8 @@
 <template>
   <div>
     <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">我的订单</x-header>
-    <div style="margin-top: .88rem;">
+    <div style="height: .88rem;"></div>
+    <div>
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
       </tab>
@@ -20,6 +21,8 @@
         <div>
             <x-input title="订单号" placeholder="请输入订单号" keyboard="number" type="number" style="color: #333;font-size: .32rem;border-top: .16rem solid #f4f4f4;border-bottom: .16rem solid #f4f4f4;padding: .4rem .5rem"></x-input>
             <p style="border-bottom: 1px solid #f4f4f4;padding: .4rem 0 .2rem;margin: 0 .5rem;font-size: .24rem;color: #333;">如何找到返元宝订单号？</p>
+          <img src="../assets/detail2.png" alt="" style="width: 100%;">
+          <div style="height: 1.56rem;"></div>
           <div class="btn">
             <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">确认提交</x-button>
           </div>

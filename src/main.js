@@ -18,7 +18,9 @@ import essential from '@/components/essential';
 import hot from '@/components/hot'
 import classify from '@/components/classify'
 import myOrder from '@/components/myOrder'
-
+import exchangeDetail from '@/components/exchangeDetail'
+import shareList from '@/components/shareList';
+import sign from '@/components/sign'
 Vue.use(VueRouter)
 
 const routes = [
@@ -50,54 +52,56 @@ const routes = [
   },
   {
     path: '/home/jiFen',
-    component: jiFen,
-    meta: {showFooter: false}
+    component: jiFen
   },
   {
     path: '/home/Exchange',
     component: Exchange,
-    meta: {showFooter: false}
   },
   {
     path: '/home/xianBao',
     component: xianBao,
-    meta: {showFooter: false}
 
   },
   {
     path: '/home/fuLi',
     component: fuLi,
-    meta: {showFooter: false}
   },
   {
     path: '/YouHui/subjects',
     component: subjects,
-    meta: {showFooter: false}
   },
   {
-    path:'/YouHui/discount',
+    path: '/YouHui/discount',
     component: discount,
-    meta: {showFooter: false}
   },
   {
-    path:'/YouHui/essential',
+    path: '/YouHui/essential',
     component: essential,
-    meta: {showFooter: false}
   },
   {
-    path:'/home/hot',
+    path: '/home/hot',
     component: hot,
-    meta: {showFooter: false}
   },
   {
-    path:'/home/classify',
+    path: '/home/classify',
     component: classify,
-    meta: {showFooter: false}
   },
   {
-    path:'/PersonCenter/myOrder',
+    path: '/PersonCenter/myOrder',
     component: myOrder,
-    meta: {showFooter: false}
+  },
+  {
+    path:'/home/exchangeDetail',
+    component:exchangeDetail,
+  },
+  {
+    path:'/personCenter/shareList',
+    component:shareList,
+  },
+  {
+    path:'/personCenter/sign',
+    component:sign
   }
 ]
 
