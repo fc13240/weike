@@ -33,7 +33,7 @@
       </div>
       <div class="main">
         <div class="nav-bigger">
-          <div class="jiFen" @click="toJiFen">
+          <div class="yuanBaoShop" @click="toYuanBaoShop">
 
           </div>
           <div class="zhiNan">
@@ -103,9 +103,9 @@
       }
     },
     methods: {
-      toJiFen() {
+      toYuanBaoShop() {
         this.$router.push({
-          path: '/home/jiFen'
+          path: '/home/yuanBaoShop'
         })
       },
       infinite(done) {
@@ -191,7 +191,7 @@
     margin: .2rem 0;
   }
 
-  .jiFen {
+  .yuanBaoShop {
     width: 28%;
     height: 100%;
     display: inline-block;

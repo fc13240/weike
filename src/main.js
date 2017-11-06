@@ -8,7 +8,7 @@ import Home from './components/Home'
 import YouHui from '@/components/YouHui'
 import Search from '@/components/Search'
 import PersonCenter from '@/components/PersonCenter'
-import jiFen from '@/components/jiFen'
+import yuanBaoShop from '@/components/yuanBaoShop'
 import Exchange from '@/components/Exchange'
 import xianBao from '@/components/xianBao'
 import fuLi from '@/components/fuLi';
@@ -20,7 +20,12 @@ import classify from '@/components/classify'
 import myOrder from '@/components/myOrder'
 import exchangeDetail from '@/components/exchangeDetail'
 import shareList from '@/components/shareList';
-import sign from '@/components/sign'
+import sign from '@/components/sign';
+import userInfo from '@/components/userInfo'
+import notice from '@/components/notice';
+import myTracks from '@/components/myTracks'
+import feedback from '@/components/feedback'
+import SearchPage from '@/components/searchPage'
 Vue.use(VueRouter)
 
 const routes = [
@@ -46,13 +51,17 @@ const routes = [
     meta: {showFooter: true}
   },
   {
+    path: '/Search/searchPage',
+    component: SearchPage
+  },
+  {
     path: '/PersonCenter',
     component: PersonCenter,
     meta: {showFooter: true}
   },
   {
-    path: '/home/jiFen',
-    component: jiFen
+    path: '/home/yuanBaoShop',
+    component: yuanBaoShop
   },
   {
     path: '/home/Exchange',
@@ -92,6 +101,18 @@ const routes = [
     component: myOrder,
   },
   {
+    path: '/PersonCenter/userInfo',
+    component: userInfo,
+  },
+  {
+    path:'/PersonCenter/notice',
+    component:notice
+  },
+  {
+    path:'/PersonCenter/myTracks',
+    component:myTracks
+  },
+  {
     path:'/home/exchangeDetail',
     component:exchangeDetail,
   },
@@ -102,6 +123,10 @@ const routes = [
   {
     path:'/personCenter/sign',
     component:sign
+  },
+  {
+    path:'/personCenter/feedback',
+    component:feedback
   }
 ]
 

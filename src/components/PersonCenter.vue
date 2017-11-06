@@ -2,15 +2,19 @@
   <div>
     <app-header title="个人中心"></app-header>
     <div style="height: .88rem;"></div>
-    <div class="top">
+    <router-link tag="div" to="/PersonCenter/notice" style="position: absolute;right: .3rem;top:.3rem;z-index: 10000;">
+      <img src="../assets/message.png" alt="" style="width: .36rem;height: .28rem;">
+      <span style="width: .16rem;height: .16rem;border-radius: 50%;background-color:#ffde0d;opacity: .9;display: block;position: relative;right: -.27rem;top: -.45rem; "></span>
+    </router-link>
+    <router-link class="top" to="/personCenter/userInfo" tag="div">
       <img src="../assets/1.jpg" alt="" class="photo">
       <div class="info">
         <p class="name">昵称</p>
         <p class="num"><img src="../assets/logo.png" alt="" class="yuanBao">元宝 88</p>
       </div>
-      <img src="../assets/logo.png" alt=""
+      <img src="../assets/gt.png" alt=""
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
-    </div>
+    </router-link>
     <group>
       <cell title="我的订单" value="查看全部" is-link link="/PersonCenter/myOrder"></cell>
     </group>
@@ -81,7 +85,7 @@
           {
             src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
             title: '意见反馈',
-            url: '/component/cell'
+            url: '/personCenter/feedback'
           },
           {
             src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
@@ -166,6 +170,7 @@
 <style>
   .vux-label {
     font-size: .28rem;
+    color: #333;
   }
 
   .weui-cell__ft {
