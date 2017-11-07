@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">超值线报</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">超值线报</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <swiper auto :list="demo03_list" style="width:100%;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div class="main">
       <ul class="timeTab">
@@ -35,7 +35,7 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: 0;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/logo.png" alt="" style="width: 1.16rem;height: .46rem;">
+                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
                 </div>
               </div>
             </div>
@@ -58,7 +58,7 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: 0;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/logo.png" alt="" style="width: 1.16rem;height: .46rem;">
+                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
                 </div>
               </div>
             </div>
@@ -81,7 +81,7 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: 0;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/logo.png" alt="" style="width: 1.16rem;height: .46rem;">
+                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: 0;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/logo.png" alt="" style="width: 1.16rem;height: .46rem;">
+                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
                 </div>
               </div>
             </div>
@@ -175,8 +175,8 @@
       }
     },
     mounted(){
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color='#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color='#333'
     }
   }
 

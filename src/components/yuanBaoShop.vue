@@ -1,14 +1,14 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">元宝商城</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">元宝商城</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <nav >
       <a href="javascript:">
-        <img src="../assets/logo.png" alt="">
+        <img src="../assets/yuanBao_gray.png" alt="">
         <span>元宝 <span class="nums">88</span></span>
       </a>
       <a href="javascript:" @click="toExchange">
-        <img src="../assets/logo.png" alt="">
+        <img src="../assets/exchange_gray.png" alt="">
         <span>兑换记录</span>
       </a>
     </nav>
@@ -21,7 +21,7 @@
             <p class="des">10元现金红包啊哈哈哈哈啊哈哈哈哈</p>
             <div class="des_b">
                <span class="yuanBao">1000</span>
-              <img src="../assets/logo.png" alt="" class="y_img">
+              <img src="../assets/yuanBao_red.png" alt="" class="y_img">
               <del>￥88.8</del>
               <span class="num">库存 <span>888</span></span>
             </div>
@@ -33,7 +33,7 @@
             <p class="des">10元现金红包</p>
             <div class="des_b">
               <span class="yuanBao">1000</span>
-              <img src="../assets/logo.png" alt="" class="y_img">
+              <img src="../assets/yuanBao_red.png" alt="" class="y_img">
               <del>￥88.8</del>
               <span class="num">库存 <span>888</span></span>
             </div>
@@ -45,7 +45,7 @@
             <p class="des">10元现金红包</p>
             <div class="des_b">
               <span class="yuanBao">1000</span>
-              <img src="../assets/logo.png" alt="" class="y_img">
+              <img src="../assets/yuanBao_red.png" alt="" class="y_img">
               <del>￥88.8</del>
               <span class="num">库存 <span>888</span></span>
             </div>
@@ -127,7 +127,6 @@
   .photo{
     width: calc(100% - .4rem);
     height: 2rem;
-    border:1px solid red;
     padding: .14rem .2rem;
   }
   .content{
@@ -150,7 +149,6 @@
   .y_img{
     width: .26rem;
     height:  .22rem;
-    border: 1px solid red;
     margin-left: -.05rem;
   }
   .des_b del{

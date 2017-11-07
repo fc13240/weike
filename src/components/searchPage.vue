@@ -1,53 +1,78 @@
 <template>
   <div style="background-color: white;">
-    <x-header :left-options="{backText: ''}"
-              style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 100;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;height: .88rem;">
-      搜索
-    </x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}"-->
+              <!--style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 100;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;height: .88rem;">-->
+      <!--搜索-->
+    <!--</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <search placeholder="请输入商品名称" cancel-text="搜索"
       @result-click="resultClick"
       @on-change="getResult"
       :results="results"
       v-model="value"
-      position="absolute"
-      auto-scroll-to-top top=".88rem"
       @on-focus="onFocus"
       @on-cancel="onCancel"
       @on-submit="onSubmit"
       ref="search"></search>
-    <p style="font-size: .28rem;color: #666;padding: .3rem">热门搜索</p>
-     <ul class="hot_list">
-       <li>冬装</li>
-       <li>雪地靴</li>
-       <li>iPhone手机壳</li>
-       <li>火锅</li>
-       <li>烤箱</li>
-     </ul>
-    <p style="font-size: .28rem;color: #666;padding: .3rem">历史搜索</p>
-    <ul class="hot_list">
-      <li>冬装</li>
-      <li>雪地靴</li>
-      <li>iPhone手机壳</li>
-      <li>火锅</li>
-      <li>烤箱</li>
-    </ul>
+    <div v-show="searchResults" id="hot">
+      <p style="font-size: .28rem;color: #666;padding: .3rem">热门搜索</p>
+      <ul class="hot_list">
+        <li>冬装</li>
+        <li>雪地靴</li>
+        <li>iPhone手机壳</li>
+        <li>火锅</li>
+        <li>烤箱</li>
+      </ul>
+      <p style="font-size: .28rem;color: #666;padding: .3rem;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;"></p>
+      <ul class="hot_list">
+        <li>冬装</li>
+        <li>雪地靴</li>
+        <li>机壳</li>
+        <li>火锅</li>
+        <li>烤箱</li>
+      </ul>
+    </div>
+    <div v-show="!searchResults" id="results">
+      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
+           style="border-bottom: 1px solid #e1e1e1;">
+        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item"
+                  :key="index">{{item}}
+        </tab-item>
+      </tab>
+
+      <div class="main_goods">
+        <ul class="goods">
+          <li class="goods_list" v-for="goods in goodsList">
+            <img src="../assets/logo.png" alt="">
+            <div class="content">
+              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+              <div class="des_b">
+                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
+                <span class="num">518件已售</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-  import {Search, XHeader} from 'vux'
+  import {Search, XHeader,Tab, TabItem} from 'vux'
+  const list = () => ['综合排序', '销量优先', '价格优先']
 
   export default {
     name: 'searchPage',
     components: {
       XHeader,
-      Search
+      Search,
+      Tab,
+      TabItem
     },
     mounted() {
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color = '#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color = '#333'
       const search = document.getElementsByClassName('weui-search-bar__cancel-btn')
-      console.log(search)
       search[0].style.cssText="color:#333;font-size:.28rem;"
     },
     methods: {
@@ -61,27 +86,81 @@
 //        this.results = val ? getResult(this.value) : []
       },
       onSubmit() {
-        this.$refs.search.setBlur()
-        this.$vux.toast.show({
-          type: 'text',
-          position: 'top',
-          text: 'on submit'
-        })
+        this.$refs.search.setBlur();
+        this.searchResults=false;
+//        this.$vux.toast.show({
+//          type: 'text',
+//          position: 'top',
+//          text: 'on submit'
+//        })
       },
       onFocus() {
-        console.log('on focus')
+        this.searchResults=true
+        const hot = document.getElementById('hot');
+        hot.style.marginTop='.88rem';
+        const results = document.getElementById('results');
+        results.style.marginTop='.88rem';
       },
       onCancel() {
-        console.log('on cancel')
+        this.searchResults=false
+        const hot = document.getElementById('hot')
+        hot.style.marginTop='.0rem'
+        const results = document.getElementById('results')
+        results.style.marginTop='0'
+      },
+      onItemClick(index) {
+        console.log('on item click:', index)
+      },
+      addTab() {
+        if (this.list2.length < 5) {
+          this.list2 = list().slice(0, this.list2.length + 1)
+        }
+      },
+      removeTab() {
+        if (this.list2.length > 1) {
+          this.list2 = list().slice(0, this.list2.length - 1)
+        }
+      },
+      next() {
+        if (this.index === this.list2.length - 1) {
+          this.index = 0
+        } else {
+          ++this.index
+        }
+      },
+      prev() {
+        if (this.index === 0) {
+          this.index = this.list2.length - 1
+        } else {
+          --this.index
+        }
       }
     },
     data() {
       return {
+        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        searchResults:true,
         results: [],
-        value: ''
+        value: '',
+        list2: list(),
+        demo2: '全部',
+        index: 0,
+        getBarWidth: function (index) {
+          return (index + 1) * 22 + 'px'
+        }
       }
     }
   }
+//  function getResult (val) {
+//    let rs = []
+//    for (let i = 0; i < 20; i++) {
+//      rs.push({
+//        title: `${val} result: ${i + 1} `,
+//        other: i
+//      })
+//    }
+//    return rs
+//  }
 </script>
 <style scoped>
   .hot_list{
@@ -100,4 +179,64 @@ ul li{
     color: #333;
     margin: 0 .2rem .2rem 0;
   }
+
+  .main {
+    margin-bottom: 1.06rem;
+  }
+
+  .goods {
+    overflow: hidden;
+  }
+
+  .goods_list {
+    background-color: white;
+    list-style: none;
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    border-bottom: .1rem solid #f4f4f4;
+  }
+
+  .goods_list img {
+    width: 100%;
+    height: 3.6rem;
+  }
+
+  .goods_list:nth-of-type(odd) {
+    border-right: .05rem solid #f4f4f4;
+  }
+
+  .goods_list:nth-of-type(even) {
+    border-left: .05rem solid #f4f4f4;
+  }
+
+  .content {
+    padding: .15rem;
+  }
+
+  .des {
+    height: .8rem;
+    font-size: .28rem;
+    color: #333;
+    line-height: .4rem;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .price {
+    font-size: .32rem;
+    color: #ff7171;
+  }
+
+  .num {
+    font-size: .24rem;
+    color: #999;
+    float: right;
+    margin-top: .1rem;
+    margin-right: .15rem;
+  }
+
 </style>

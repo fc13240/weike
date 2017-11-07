@@ -1,9 +1,9 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">服饰</x-header>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">服饰</x-header>-->
     <!-- style="position: fixed;top: .88rem;z-index: 10;"-->
     <div class="allSort">
-      <div class="sortMenu clearfix" style="position: fixed;top: .88rem;z-index: 10;">
+      <div class="sortMenu clearfix" style="position: fixed;z-index: 10;">
         <ul class="sortMenu-ul">
           <li class="cell" v-for="item in sortMenu">
             <a href="">{{item.sortname}}</a>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2rem">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
       <div class="main_goods">
         <ul class="goods">
           <li class="goods_list" v-for="goods in goodsList">
@@ -178,7 +178,7 @@
   }
   .sortMenu .all{
     right: 0;
-    top: .88rem;
+    top: .0rem;
     height: .8rem;
     width: 24px;
     position: fixed;
@@ -196,7 +196,7 @@
   .sortMenu .pull-down{
     position: fixed;
     left: 0;
-    top: 1.68rem;
+    /*top: 1.68rem;*/
     height:auto;
     width: 100%;
     background: #fff;

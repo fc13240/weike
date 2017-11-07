@@ -1,7 +1,7 @@
 <template>
    <div>
-     <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">晒单赚元宝</x-header>
-     <div style="height: .88rem;"></div>
+     <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">晒单赚元宝</x-header>-->
+     <!--<div style="height: .88rem;"></div>-->
      <div>
        <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
          <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index" style="color: white;">{{item}}</tab-item>
@@ -120,8 +120,8 @@
       }
     },
     mounted(){
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color='#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color='#333'
     }
   }
 </script>

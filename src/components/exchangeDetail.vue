@@ -1,9 +1,9 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}"
-              style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">兑换详情
-    </x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}"-->
+              <!--style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">兑换详情-->
+    <!--</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <div class="main">
       <div class="goods">
           <img src="../assets/1.jpg" alt="" class="pic">

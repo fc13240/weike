@@ -1,7 +1,7 @@
 <template>
   <div>
-    <app-header title="微客"></app-header>
-    <div style="height: .88rem;"></div>
+    <!--<app-header title="微客"></app-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">
       <swiper auto :list="demo03_list" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
               dots-position="center" :show-desc-mask="false"></swiper>

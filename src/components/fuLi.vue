@@ -1,8 +1,8 @@
 <template>
   <!--<div> {{$route.params.time}}</div>-->
   <div>
-    <x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">粉丝福利</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">粉丝福利</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <swiper auto :list="demo03_list" style="width:100%;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
     <div>
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">

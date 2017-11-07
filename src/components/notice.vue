@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">通知</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">通知</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <router-link to="/PersonCenter/myTracks">
       <img src="../assets/trash.png" alt="" style="width: .35rem;height: .35rem;position: absolute;top:.25rem;right: .3rem;z-index: 100;">
     </router-link>

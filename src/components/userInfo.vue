@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">用户信息</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">用户信息</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <div class="userInfo">
       <p>头像 <img src="../assets/1.jpg" alt="" class="photo"></p>
       <p>昵称 <span style="position: absolute;right: .36rem; color: #999;">昵称</span>
@@ -21,14 +21,14 @@ import {XHeader,XButton} from 'vux'
       XButton
     },
     mounted(){
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color='#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color='#333'
     }
   }
 </script>
 <style scoped>
 .userInfo{
-  background-color: white;color: #333;font-size: .28rem;margin-top: .2rem;
+  background-color: white;color: #333;font-size: .28rem;
 }
   .userInfo p{
     height: 1.04rem;line-height:1.04rem;position: relative;

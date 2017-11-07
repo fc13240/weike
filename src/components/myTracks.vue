@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">我的足迹</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">我的足迹</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <div class="goods_list">
       <ul class="goods">
         <p style="line-height: .6rem;font-size: .2rem;color: #999;background-color: #f4f4f4;padding-left: .3rem;">2017/11/01</p>

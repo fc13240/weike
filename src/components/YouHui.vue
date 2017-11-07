@@ -1,7 +1,7 @@
 <template>
   <div>
-    <app-header title="超实惠"></app-header>
-    <div style="height: .88rem;"></div>
+    <!--<app-header title="超实惠"></app-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <router-link to="/YouHui/subjects">
       <nav>
         <img src="../assets/logo.png" alt="" class="nav_btn">

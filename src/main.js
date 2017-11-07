@@ -26,6 +26,9 @@ import notice from '@/components/notice';
 import myTracks from '@/components/myTracks'
 import feedback from '@/components/feedback'
 import SearchPage from '@/components/searchPage'
+import {AlertPlugin,ToastPlugin} from 'vux'
+Vue.use(AlertPlugin)
+Vue.use(ToastPlugin)
 Vue.use(VueRouter)
 
 const routes = [

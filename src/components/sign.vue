@@ -1,10 +1,10 @@
 <template>
   <div style="background-color: white;">
-    <x-header :left-options="{backText: ''}"
-              style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 100;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;height: .88rem;">
-      每日签到
-    </x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}"-->
+              <!--style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 100;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;height: .88rem;">-->
+      <!--每日签到-->
+    <!--</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <div class="top">
       <img src="../assets/sign_left.png" alt="">
       <div class="sign_s">签到</div>
@@ -78,8 +78,8 @@
       Cell
     },
     mounted() {
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color = '#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color = '#333'
     },
     data() {
       return {

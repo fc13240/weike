@@ -1,6 +1,6 @@
 <template>
    <div>
-     <app-header title="淘宝天猫专场"></app-header>
+     <!--<app-header title="淘宝天猫专场"></app-header>-->
      <div class="sub_header">
        <div class="sub_header_left">
          <img slot="icon" src="../assets/logo.png">

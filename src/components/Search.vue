@@ -1,8 +1,8 @@
 <template>
   <div>
-    <app-header title="智搜"></app-header>
-    <div style="height: .88rem;">
-    </div>
+    <!--<app-header title="智搜"></app-header>-->
+    <!--<div style="height: .88rem;">-->
+    <!--</div>-->
     <div class="search">
      <router-link to="/search/searchPage">
        <img src="../assets/search_img.png" alt="">

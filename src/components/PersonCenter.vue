@@ -1,16 +1,16 @@
 <template>
   <div>
-    <app-header title="个人中心"></app-header>
-    <div style="height: .88rem;"></div>
-    <router-link tag="div" to="/PersonCenter/notice" style="position: absolute;right: .3rem;top:.3rem;z-index: 10000;">
-      <img src="../assets/message.png" alt="" style="width: .36rem;height: .28rem;">
-      <span style="width: .16rem;height: .16rem;border-radius: 50%;background-color:#ffde0d;opacity: .9;display: block;position: relative;right: -.27rem;top: -.45rem; "></span>
-    </router-link>
+    <!--<app-header title="个人中心"></app-header>-->
+    <!--<div style="height: .88rem;"></div>-->
+    <!--<router-link tag="div" to="/PersonCenter/notice" style="position: absolute;right: .3rem;top:.3rem;z-index: 10000;">-->
+      <!--<img src="../assets/message.png" alt="" style="width: .36rem;height: .28rem;">-->
+      <!--<span style="width: .16rem;height: .16rem;border-radius: 50%;background-color:#ffde0d;opacity: .9;display: block;position: relative;right: -.27rem;top: -.45rem; "></span>-->
+    <!--</router-link>-->
     <router-link class="top" to="/personCenter/userInfo" tag="div">
       <img src="../assets/1.jpg" alt="" class="photo">
       <div class="info">
         <p class="name">昵称</p>
-        <p class="num"><img src="../assets/logo.png" alt="" class="yuanBao">元宝 88</p>
+        <p class="num"><img src="../assets/yuanBao_white.png" alt="" class="yuanBao">元宝 88</p>
       </div>
       <img src="../assets/gt.png" alt=""
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
@@ -21,23 +21,23 @@
     <div>
       <ul class="nav-small">
         <router-link to="/PersonCenter/myOrder" tag="li">
-          <img src="../assets/logo.png">
+          <img src="../assets/add_order.png">
           <span>添加</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/all_order.png">
           <span>全部</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/stay_order.png">
           <span>待返</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/logo.png">
+        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/return_order.png">
           <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/receive_manage.png">
           <span>收货管理</span></router-link>
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/my_footer.png">
           <span>我的足迹</span></router-link>
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/logo.png">
+        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/exchange.png">
           <span>我的兑换</span></router-link>
-        <router-link tag="li" to="/PersonCenter/sign"><img src="../assets/logo.png">
+        <router-link tag="li" to="/PersonCenter/sign"><img src="../assets/sign.png">
           <span>每日签到</span></router-link>
       </ul>
     </div>
@@ -50,7 +50,11 @@
   import AppHeader from './Header'
   import {Group, Cell, CellBox} from 'vux'
   import {Panel, Radio} from 'vux'
-
+  import  share_list from '../assets/share_list.png'
+  import share_oters from '../assets/share_others.png'
+  import help_center from '../assets/help_center.png'
+  import feedback_icon from '../assets/feedback_icon.png'
+  import server_icon from '../assets/server_icon.png'
   export default {
     name: 'PersonCenter',
     components: {
@@ -68,27 +72,27 @@
         type: '3',
         list: [
           {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+            src: share_list,
             title: '晒单赚元宝<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">评价晒单赚元宝</span>',
             url: '/personCenter/shareList'
           },
           {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+            src: share_oters,
             title: '我要分羹<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">功能升级中</span>',
             url: '/component/cell'
           },
           {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+            src:help_center ,
             title: '帮助中心',
             url: '/component/cell'
           },
           {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+            src: feedback_icon ,
             title: '意见反馈',
             url: '/personCenter/feedback'
           },
           {
-            src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+            src: server_icon,
             title: '官方客服',
             url: '/component/cell'
           }
@@ -131,7 +135,6 @@
     width: .3rem;
     height: .24rem;
     margin-right: .1rem;
-    vertical-align: middle
   }
 
   .nav-small, .nav-big {

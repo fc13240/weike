@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">意见反馈</x-header>
-    <div style="height: .88rem;"></div>
+    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">意见反馈</x-header>-->
+    <!--<div style="height: .88rem;"></div>-->
     <p style="padding-left: .3rem;line-height: 1rem;font-size: .28rem;color: #333;">反馈内容 <span style="font-size: .24rem;color: #ff526d;">*</span></p>
     <group>
       <x-textarea   @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" :show-counter="false" style="height: 3.36rem; font-size: .28rem;color: #cecece;" placeholder="请填写您的建议" ></x-textarea>
@@ -27,8 +27,8 @@ import {XHeader,Group,XTextarea,XInput,XButton} from 'vux'
       XButton
     },
     mounted() {
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color = '#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color = '#333'
     },
     methods: {
       onEvent (event) {
