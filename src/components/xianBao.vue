@@ -33,9 +33,10 @@
                   <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
                   <del class="old_num">￥124.00</del>
                 </div>
-                <div style="position: absolute;right: 0;bottom: 0;">
+                <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
+                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
+                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
                 </div>
               </div>
             </div>
@@ -56,10 +57,10 @@
                   <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
                   <del class="old_num">￥124.00</del>
                 </div>
-                <div style="position: absolute;right: 0;bottom: 0;">
+                <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
-                </div>
+                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
+                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
               </div>
             </div>
           </li>
@@ -79,10 +80,10 @@
                   <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
                   <del class="old_num">￥124.00</del>
                 </div>
-                <div style="position: absolute;right: 0;bottom: 0;">
+                <div style="position: absolute;right: 0;bottom: .5rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
-                </div>
+                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
+                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
               </div>
             </div>
           </li>
@@ -102,10 +103,10 @@
                   <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
                   <del class="old_num">￥124.00</del>
                 </div>
-                <div style="position: absolute;right: 0;bottom: 0;">
+                <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <img src="../assets/rightAway.png" alt="" style="width: 1.16rem;height: .46rem;">
-                </div>
+                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
+                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
               </div>
             </div>
           </li>

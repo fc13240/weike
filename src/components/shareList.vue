@@ -68,16 +68,23 @@
          </div>
        </div>
      </div>
+     <div style="height: 1.56rem;"></div>
+     <div class="btn">
+       <router-link to="/personCenter/toShowList">
+         <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">去晒单</x-button>
+       </router-link>
+     </div>
    </div>
 </template>
 <script>
-  import {XHeader,Tab, TabItem, Swiper, SwiperItem } from 'vux'
+  import {XHeader,Tab, TabItem, XButton } from 'vux'
   const list = () => ['晒单广场','我的晒单']
   export default {
     name:'shareList',
     components:{
       XHeader,
-      Tab, TabItem, Swiper, SwiperItem
+      Tab, TabItem,
+      XButton
 
     },
     data () {
@@ -164,5 +171,11 @@
     width: 2.28rem;
     height: 2.28rem;
   }
-
+  .btn{
+    width: 100%;
+    background-color: #f6f6f6;
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid #e9e9e9;
+  }
 </style>

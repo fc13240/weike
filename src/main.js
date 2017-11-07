@@ -26,6 +26,7 @@ import notice from '@/components/notice';
 import myTracks from '@/components/myTracks'
 import feedback from '@/components/feedback'
 import SearchPage from '@/components/searchPage'
+import toShowList from '@/components/toShowList'
 import {AlertPlugin,ToastPlugin} from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
@@ -130,6 +131,10 @@ const routes = [
   {
     path:'/personCenter/feedback',
     component:feedback
+  },
+  {
+    path:'/personCenter/toShowList',
+    component:toShowList
   }
 ]
 

@@ -41,15 +41,24 @@
           <span>每日签到</span></router-link>
       </ul>
     </div>
-    <panel :list="list" :type="type"></panel>
+    <group style=" position: relative;background-color: white;">
+      <img src="../assets/message.png" alt="" style="width: 20px;height: 20px;margin-right: 5px;position: absolute;left: 14px;top: 10px;">
+      <cell title="消息中心" is-link link="/PersonCenter/notice" style="padding-left: 45px;">
+        <div class="badge-value">
+          <span class="vertical-middle"> &nbsp;</span>
+          <badge text="888"></badge>
+        </div>
+      </cell>
+    </group>
+    <panel :list="list" :type="type" style="margin-top: -1px;margin-bottom: 1.06rem;"></panel>
+
   </div>
 
 </template>
 <script>
   import Vue from 'vue'
   import AppHeader from './Header'
-  import {Group, Cell, CellBox} from 'vux'
-  import {Panel, Radio} from 'vux'
+  import {Badge,Group, Cell, CellBox,Panel} from 'vux'
   import  share_list from '../assets/share_list.png'
   import share_oters from '../assets/share_others.png'
   import help_center from '../assets/help_center.png'
@@ -64,7 +73,7 @@
       Cell,
       CellBox,
       Panel,
-      Radio
+      Badge
     },
     methods: {},
     data() {
@@ -96,6 +105,7 @@
             title: '官方客服',
             url: '/component/cell'
           }
+
         ]
       }
     }
