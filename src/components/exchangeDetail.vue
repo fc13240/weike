@@ -17,10 +17,29 @@
           <p class="has_num">剩余 <span style="color: #ff526d;">88</span> 件</p>
       </div>
         <x-number :value="1"  fillable :title="'请输入兑换数量'" style="padding: 10px 0;font-size: .24rem;color: #666666;border-bottom: 1px solid #e9e9e9;"></x-number>
-      <p style="font-size: .24rem;color: #666;line-height: .8rem;">请输入您提现的支付宝账号</p>
-      <div style="margin: .2rem 0 .5rem;">
-        <img src="../assets/logo.png" alt="" style="width: 1.38rem;height: .48rem;border: 1px solid red;vertical-align: middle">
-        <input type="text" style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
+    </div>
+    <div style=" background-color: white;">
+      <div style="padding: .2rem .3rem;" v-show="false">
+        <p style="font-size: .24rem;color: #666;padding: .2rem  0 .1rem;">请输入您提现的支付宝账号</p>
+        <div style="margin: .2rem 0 .5rem;">
+          <img src="../assets/alipay_img.png" alt="" style="width: 1.38rem;height: .48rem;vertical-align: middle">
+          <input type="text"
+                 style="vertical-align: middle;outline: none;width: 4.8rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
+        </div>
+      </div>
+      <div style="padding: .2rem .3rem;" v-show="false">
+        <p style="font-size: .24rem;color: #666;margin: .2rem  0 .1rem;">请输入您要充值的手机号</p>
+        <div style="display: inline-block;">
+          <input type="text"
+                 style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
+        </div>
+      </div>
+      <div style="padding-bottom: .25rem;">
+          <cell title="配送至:" value="修改地址" is-link link="/PersonCenter/addressList"></cell>
+        <div style="font-size: .24rem;border: 1px solid #f4f4f4;width: 5.8rem;margin: 0 auto;padding: .26rem .3rem;">
+          <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;">默认</span>浙江省杭州市西湖区一栋32号</p>
+          <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;">姓名</span><span>13298309372</span></p>
+        </div>
       </div>
     </div>
     <div class="des">
@@ -42,18 +61,20 @@
   </div>
 </template>
 <script>
-  import {XHeader, XNumber,XButton} from 'vux'
+  import {XHeader, XNumber,XButton,Group,Cell} from 'vux'
 
   export default {
     name: 'exchangeDetail',
     components: {
       XHeader,
       XNumber,
-      XButton
+      XButton,
+      Group,
+      Cell
     },
     data () {
       return {
-        roundValue: 0
+        roundValue: 0,
       }
     },
     methods: {
@@ -77,7 +98,7 @@
 <style scoped>
   .main {
     background-color: white;
-    padding: .2rem .3rem;
+    padding: .2rem .3rem 0;
   }
 
   .goods {

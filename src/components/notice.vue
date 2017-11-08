@@ -2,9 +2,9 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">通知</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <router-link to="/PersonCenter/myTracks">
-      <img src="../assets/trash.png" alt="" style="width: .35rem;height: .35rem;position: absolute;top:.25rem;right: .3rem;z-index: 100;">
-    </router-link>
+    <!--<router-link to="/PersonCenter/myTracks">-->
+      <!--<img src="../assets/trash.png" alt="" style="width: .35rem;height: .35rem;position: absolute;top:.25rem;right: .3rem;z-index: 100;">-->
+    <!--</router-link>-->
     <div class="main">
        <div class="notice_list">
          <div class="notice_top">
@@ -28,14 +28,17 @@
       </div>
       <p style="font-size: .28rem;color: #999;text-align: center; background-color: #f4f4f4;padding-top: 2rem;">您还没有收到任何通知呢</p>
     </div>
+    <div class="btn">
+      <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">清空</x-button>
+    </div>
   </div>
 </template>
 <script>
-import {XHeader} from 'vux'
+import {XButton} from 'vux'
   export default {
   name:'notice',
     components:{
-    XHeader
+     XButton
     },
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
@@ -71,4 +74,11 @@ import {XHeader} from 'vux'
     padding: 0 1.05rem;
     margin: .05rem 0;
   }
+.btn{
+  width: 100%;
+  background-color: #f6f6f6;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #e9e9e9;
+}
 </style>

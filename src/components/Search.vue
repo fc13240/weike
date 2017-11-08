@@ -8,6 +8,7 @@
        <img src="../assets/search_img.png" alt="">
      </router-link>
     </div>
+    <div style="height: 1.52rem;"></div>
     <img src="../assets/detail.png" alt="" class="detail">
   </div>
 </template>
@@ -25,6 +26,8 @@ import AppHeader from './Header'
   background-image: url("../assets/search_bd.png");background-size: 100% 100%;background-repeat: no-repeat;
   height: 1.52rem;
   text-align: center;
+  position: fixed;
+  top: 0;
 }
   .search img{
     width: 90%;

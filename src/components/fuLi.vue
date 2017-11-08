@@ -113,8 +113,8 @@
       }
     },
     mounted(){
-      const title = document.getElementsByClassName('vux-header-title');
-      title[0].style.color='#333'
+//      const title = document.getElementsByClassName('vux-header-title');
+//      title[0].style.color='#333'
     }
   }
 </script>

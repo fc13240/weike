@@ -27,32 +27,46 @@ import myTracks from '@/components/myTracks'
 import feedback from '@/components/feedback'
 import SearchPage from '@/components/searchPage'
 import toShowList from '@/components/toShowList'
+import addressList from '@/components/addressList'
+import addAddress from '@/components/addAddress'
 import {AlertPlugin,ToastPlugin} from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueRouter)
-
+Vue.use(require('vue-wechat-title'))
 const routes = [
   {
     path: '/',
     redirect: '/home',
     component: Home,
-    meta: {showFooter: true}
+    meta: {
+      showFooter: true,
+      title:'微客'
+    }
   },
   {
     path: '/home',
     component: Home,
-    meta: {showFooter: true}
+    meta: {
+      showFooter: true,
+      title:'微客'
+    }
   },
   {
     path: '/YouHui',
     component: YouHui,
-    meta: {showFooter: true}
+    meta: {
+      showFooter: true,
+      title:'超实惠'
+    }
   },
   {
     path: '/Search',
     component: Search,
-    meta: {showFooter: true}
+    meta: {
+      showFooter: true,
+      title:'智搜'
+    }
   },
   {
     path: '/Search/searchPage',
@@ -61,24 +75,38 @@ const routes = [
   {
     path: '/PersonCenter',
     component: PersonCenter,
-    meta: {showFooter: true}
+    meta: {
+      showFooter: true,
+      title:'个人中心'
+    }
   },
   {
     path: '/home/yuanBaoShop',
-    component: yuanBaoShop
+    component: yuanBaoShop,
+    meta: {
+      title:'元宝商城'
+    }
   },
   {
     path: '/home/Exchange',
     component: Exchange,
+    meta: {
+      title:'兑换记录'
+    }
   },
   {
     path: '/home/xianBao',
     component: xianBao,
-
+    meta: {
+      title:'超值线报'
+    }
   },
   {
     path: '/home/fuLi',
     component: fuLi,
+    meta: {
+      title:'粉丝福利'
+    }
   },
   {
     path: '/YouHui/subjects',
@@ -95,6 +123,9 @@ const routes = [
   {
     path: '/home/hot',
     component: hot,
+    meta: {
+      title:'热门'
+    }
   },
   {
     path: '/home/classify',
@@ -103,38 +134,79 @@ const routes = [
   {
     path: '/PersonCenter/myOrder',
     component: myOrder,
+    meta: {
+      title:'我的订单'
+    }
   },
   {
     path: '/PersonCenter/userInfo',
     component: userInfo,
+    meta: {
+      title:'用户信息'
+    }
   },
   {
     path:'/PersonCenter/notice',
-    component:notice
+    component:notice,
+    meta: {
+      title:'通知'
+    }
   },
   {
     path:'/PersonCenter/myTracks',
-    component:myTracks
+    component:myTracks,
+    meta: {
+      title:'我的足迹'
+    }
   },
   {
     path:'/home/exchangeDetail',
     component:exchangeDetail,
+    meta: {
+      title:'兑换详情'
+    }
   },
   {
     path:'/personCenter/shareList',
     component:shareList,
+    meta: {
+      title:'晒单赚元宝'
+    }
   },
   {
     path:'/personCenter/sign',
-    component:sign
+    component:sign,
+    meta: {
+      title:'每日签到'
+    }
   },
   {
     path:'/personCenter/feedback',
-    component:feedback
+    component:feedback,
+    meta: {
+      title:'意见反馈'
+    }
   },
   {
     path:'/personCenter/toShowList',
-    component:toShowList
+    component:toShowList,
+    meta: {
+      title:'晒单'
+    }
+  },
+  {
+    path:'/personCenter/addressList',
+    component:addressList,
+    meta: {
+      title:'收货管理'
+    }
+  },
+  {
+    path:'/personCenter/addAddress',
+    component:addAddress,
+    meta: {
+      title:'添加地址'
+    }
   }
 ]
 

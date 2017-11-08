@@ -31,17 +31,17 @@
           <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/receive_manage.png">
+        <router-link tag="li" to="/PersonCenter/addressList"><img src="../assets/receive_manage.png">
           <span>收货管理</span></router-link>
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/my_footer.png">
+        <router-link tag="li" to="/PersonCenter/myTracks"><img src="../assets/my_footer.png">
           <span>我的足迹</span></router-link>
-        <router-link tag="li" to="/PersonCenter/myOrder"><img src="../assets/exchange.png">
+        <router-link tag="li" to="/home/Exchange"><img src="../assets/exchange.png">
           <span>我的兑换</span></router-link>
         <router-link tag="li" to="/PersonCenter/sign"><img src="../assets/sign.png">
           <span>每日签到</span></router-link>
       </ul>
     </div>
-    <group style=" position: relative;background-color: white;">
+    <div style="position: relative;background-color: white;">
       <img src="../assets/message.png" alt="" style="width: 20px;height: 20px;margin-right: 5px;position: absolute;left: 14px;top: 10px;">
       <cell title="消息中心" is-link link="/PersonCenter/notice" style="padding-left: 45px;">
         <div class="badge-value">
@@ -49,8 +49,8 @@
           <badge text="888"></badge>
         </div>
       </cell>
-    </group>
-    <panel :list="list" :type="type" style="margin-top: -1px;margin-bottom: 1.06rem;"></panel>
+    </div>
+    <panel :list="list" :type="type" style="margin-bottom: 1.06rem;margin-top: 0;"></panel>
 
   </div>
 

@@ -27,7 +27,9 @@
     <div style="text-align: center;margin: .6rem;">
       <p style="font-size: .32rem;color: #666;">您已连续签到<span>1</span>天</p>
       <p style="font-size: .28rem;color: #666;">元宝: <span style="font-size: .28rem;font-weight:bold;color: #fe425f;">88</span></p>
-      <div style="line-height: .76rem; font-weight: bold; margin:.3rem auto 0;font-size: .32rem;color: #fe425f;border: 1px solid #fe425f;border-radius: .5rem;height: .76rem;width: 5.2rem;">晒单赚元宝</div>
+      <router-link to="/personCenter/shareList">
+        <div style="line-height: .76rem; font-weight: bold; margin:.3rem auto 0;font-size: .32rem;color: #fe425f;border: 1px solid #fe425f;border-radius: .5rem;height: .76rem;width: 5.2rem;">晒单赚元宝</div>
+      </router-link>
     </div>
     <div style="border-top: .2rem solid #f4f4f4;">
       <group style="position: relative;"><cell title="兑换记录" value="去元宝商城" is-link link="/home/yuanBaoShop"></cell>

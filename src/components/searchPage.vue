@@ -15,7 +15,7 @@
       @on-submit="onSubmit"
       ref="search"></search>
     <div v-show="searchResults" id="hot">
-      <p style="font-size: .28rem;color: #666;padding: .3rem">热门搜索</p>
+      <p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>
       <ul class="hot_list">
         <li>冬装</li>
         <li>雪地靴</li>
@@ -23,7 +23,7 @@
         <li>火锅</li>
         <li>烤箱</li>
       </ul>
-      <p style="font-size: .28rem;color: #666;padding: .3rem;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;"></p>
+      <p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;"></p>
       <ul class="hot_list">
         <li>冬装</li>
         <li>雪地靴</li>
@@ -174,7 +174,7 @@ ul li{
     border: .01rem solid #999;
     border-radius: .5rem;
     line-height: .6rem;
-    padding: .1rem .3rem;
+    padding: 0rem .3rem;
     font-size: .28rem;
     color: #333;
     margin: 0 .2rem .2rem 0;
