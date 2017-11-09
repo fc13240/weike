@@ -29,7 +29,8 @@ import SearchPage from '@/components/searchPage'
 import toShowList from '@/components/toShowList'
 import addressList from '@/components/addressList'
 import addAddress from '@/components/addAddress'
-import {AlertPlugin,ToastPlugin} from 'vux'
+import {AlertPlugin,ToastPlugin,AjaxPlugin } from 'vux'
+Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueRouter)
@@ -205,7 +206,7 @@ const routes = [
     path:'/personCenter/addAddress',
     component:addAddress,
     meta: {
-      title:'添加地址'
+      title:'地址管理'
     }
   }
 ]

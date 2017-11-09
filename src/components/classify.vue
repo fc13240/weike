@@ -4,11 +4,13 @@
     <!-- style="position: fixed;top: .88rem;z-index: 10;"-->
     <div class="allSort">
       <div class="sortMenu clearfix" style="position: fixed;z-index: 10;">
-        <ul class="sortMenu-ul">
-          <li class="cell" v-for="item in sortMenu">
-            <a href="">{{item.sortname}}</a>
-          </li>
-        </ul>
+        <div style="width: calc(100% - 24px)">
+          <ul class="sortMenu-ul">
+            <li class="cell" v-for="item in sortMenu">
+              <a href="">{{item.sortname}}</a>
+            </li>
+          </ul>
+        </div>
         <div class="all" v-on:click="subitemsExpanded=!subitemsExpanded">
           <img src="../assets/down.png" alt="" style="width: 10px;height: 10px;">
         </div>

@@ -36,6 +36,7 @@
         </router-link>
         <p
           style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;overflow: hidden;">
+          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;">使用</span>
           <span style="color: #333;float: right;"><img src="../assets/trash.png" alt=""
                                                        style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
         </p>
@@ -53,6 +54,7 @@
         </router-link>
         <p
           style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;overflow: hidden;">
+          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;">使用</span>
           <span style="color: #333;float: right;"><img src="../assets/trash.png" alt=""
                                                        style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
         </p>

@@ -3,7 +3,7 @@
     <!--<app-header title="微客"></app-header>-->
     <!--<div style="height: .88rem;"></div>-->
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">
-      <swiper auto :list="demo03_list" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
+      <swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
         <ul class="nav-small">
@@ -75,15 +75,17 @@
   import VueScroller from 'vue-scroller'
 
   Vue.use(VueScroller)
-  const imgList = [
-    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
-    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
-    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
-    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
-  ]
-  const demoList = imgList.map((one, index) => ({
+  const imgList = []
+
+//  const imgList = [
+//    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
+//    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
+//    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
+//    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
+//  ]
+  const demoList = imgList.map((item, index) => ({
     url: 'javascript:',
-    img: one
+    img: item.banner_image
   }))
   export default {
     name: 'Home',
@@ -92,17 +94,35 @@
       Vue,
       AppHeader
     },
-    ready() {
-
-    },
     data() {
       return {
-        demo03_list: demoList,
+        demoList: demoList,
         noData: '',
-        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
       }
     },
     methods: {
+      getList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/index_banner'
+        }).then((res)=>{
+          const imgList = res.data.data.index_banner
+          console.log(imgList)
+          const demoList = imgList.map((item, index) => ({
+            url: 'javascript:',
+            img: item.banner_image
+          }))
+          console.log(demoList)
+        },(err)=>{
+          console.log(err)
+        })
+      },
+
+
+
+
+
       toYuanBaoShop() {
         this.$router.push({
           path: '/home/yuanBaoShop'
@@ -152,6 +172,9 @@
       this.$nextTick(function () {
 
       })
+    },
+    created: function(){
+      this.getList()
     }
   }
 </script>

@@ -3,14 +3,10 @@
      <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">晒单赚元宝</x-header>-->
      <!--<div style="height: .88rem;"></div>-->
      <div>
-       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
-         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index" style="color: white;">{{item}}</tab-item>
+       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
+         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index" style="color: white;">
+           <img :src="item.src" alt="" style="width: .38rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
        </tab>
-       <!--<swiper v-model="index" :show-dots="false">-->
-       <!--<swiper-item v-for="(item, index) in list2" :key="index">-->
-       <!--<div class="tab-swiper vux-center">{{item}}</div>-->
-       <!--</swiper-item>-->
-       <!--</swiper>-->
      </div>
      <div class="main">
         <div class="list_m">
@@ -78,7 +74,14 @@
 </template>
 <script>
   import {XHeader,Tab, TabItem, XButton } from 'vux'
-  const list = () => ['晒单广场','我的晒单']
+  const list = () => [
+    {
+    title:'晒单广场',
+      src:'../static/images/shaidan1.png'
+  }, {
+    title:'我的晒单',
+      src:'../static/images/shaidan2.png'
+  }]
   export default {
     name:'shareList',
     components:{
