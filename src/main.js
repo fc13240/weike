@@ -129,7 +129,8 @@ const routes = [
     }
   },
   {
-    path: '/home/classify',
+    path: '/home/classify/:id',
+    name:'classify',
     component: classify,
   },
   {

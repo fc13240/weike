@@ -5,7 +5,7 @@
     <nav >
       <a href="javascript:">
         <img src="../assets/yuanBao_gray.png" alt="">
-        <span>元宝 <span class="nums">88</span></span>
+        <span>元宝 <span class="nums">{{member_acer}}</span></span>
       </a>
       <a href="javascript:" @click="toExchange">
         <img src="../assets/exchange_gray.png" alt="">
@@ -15,42 +15,18 @@
     <div class="main">
       <h3><i></i>优先推荐</h3>
       <ul class="goods_list">
-        <router-link tag="li" to="/home/exchangeDetail" class="goods">
-          <img src="../assets/logo.png" alt="" class="photo">
+        <router-link tag="li" to="/home/exchangeDetail" class="goods" v-for="acerList in acer_list">
+          <img :src="acerList.product_image" alt="" class="photo">
           <div class="content">
-            <p class="des">10元现金红包啊哈哈哈哈啊哈哈哈哈</p>
+            <p class="des">{{acerList.product_name}}</p>
             <div class="des_b">
-               <span class="yuanBao">1000</span>
+               <span class="yuanBao">{{acerList.exchange_acer}}</span>
               <img src="../assets/yuanBao_red.png" alt="" class="y_img">
-              <del>￥88.8</del>
-              <span class="num">库存 <span>888</span></span>
+              <del>￥{{acerList.market_price}}</del>
+              <span class="num">库存 <span>{{acerList.stock}}</span></span>
             </div>
           </div>
         </router-link>
-        <li class="goods">
-          <img src="../assets/logo.png" alt="" class="photo">
-          <div class="content">
-            <p class="des">10元现金红包</p>
-            <div class="des_b">
-              <span class="yuanBao">1000</span>
-              <img src="../assets/yuanBao_red.png" alt="" class="y_img">
-              <del>￥88.8</del>
-              <span class="num">库存 <span>888</span></span>
-            </div>
-          </div>
-        </li>
-        <li class="goods">
-          <img src="../assets/logo.png" alt="" class="photo">
-          <div class="content">
-            <p class="des">10元现金红包</p>
-            <div class="des_b">
-              <span class="yuanBao">1000</span>
-              <img src="../assets/yuanBao_red.png" alt="" class="y_img">
-              <del>￥88.8</del>
-              <span class="num">库存 <span>888</span></span>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
   </div>
@@ -64,12 +40,50 @@
       Vue,
       XHeader
   },
+    data (){
+      return{
+        member_acer:[],
+        acer_list:[]
+      }
+    },
     methods:{
       toExchange(){
         this.$router.push({
           path:'/home/Exchange'
         })
-      }
+      },
+      //      获取用户元宝
+      getNum:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/member_acer'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            console.log(res.data)
+            this.member_acer = res.data.data.member_acer
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      获取商品列表
+      getAcerList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/acerList'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            console.log(res.data)
+            this.acer_list = res.data.data.acer_list
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+     this.getNum()
+      this.getAcerList()
     }
 }
 </script>

@@ -1,71 +1,82 @@
 <template>
   <div>
-    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">兑换记录</x-header>-->
-    <!--<div style="height: .88rem;"></div>-->
     <div>
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff526d">
-        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
+        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in exchangeType" @click="demo2 = item" :key="index">{{item.type_name}}</tab-item>
       </tab>
-      <!--<swiper v-model="index" :show-dots="false">-->
-      <!--<swiper-item v-for="(item, index) in list2" :key="index">-->
-      <!--<div class="tab-swiper vux-center">{{item}}</div>-->
-      <!--</swiper-item>-->
-      <!--</swiper>-->
+      <swiper v-model="index"  :show-dots="false" style="height: calc(100vh - 44px);overflow: scroll;">
+        <swiper-item v-for="(item, index) in exchangeType" :key="index" style="overflow: scroll;">
+          <div class="tab-swiper vux-center">
+            <div class="main">
+              <div class="page1">
+                <figure style="text-align: center;padding-top: 1.1rem;">
+                  <img src="/static/images/empty_img.png" alt="" style="width:1.86rem;height:1.8rem;">
+                  <figcaption style="font-size: .28rem;color: #666;">暂时没有兑换记录~</figcaption>
+                </figure>
+                <div class="list_m">
+                  <p class="tip">累计为您成功免单14324元</p>
+                  <div class="list">
+                    <img src="../assets/logo.png" alt="">
+                    <div class="list_c">
+                      <p class="title">10元现金红包</p>
+                      <p class="date">日期：2017.10.28</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="list_m">
+                  <p class="tip">累计为您成功免单14324元</p>
+                  <div class="list">
+                    <img src="../assets/logo.png" alt="">
+                    <div class="list_c">
+                      <p class="title">10元现金红包</p>
+                      <p class="date">日期：2017.10.28</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="list_m">
+                  <p class="tip">累计为您成功免单14324元</p>
+                  <div class="list">
+                    <img src="../assets/logo.png" alt="">
+                    <div class="list_c">
+                      <p class="title">10元现金红包</p>
+                      <p class="date">日期：2017.10.28</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="list_m">
+                  <p class="tip">累计为您成功免单14324元</p>
+                  <div class="list">
+                    <img src="../assets/logo.png" alt="">
+                    <div class="list_c">
+                      <p class="title">10元现金红包</p>
+                      <p class="date">日期：2017.10.28</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </swiper-item>
+      </swiper>
     </div>
-    <div class="main">
-      <div class="page1">
-        <figure style="text-align: center;padding-top: 1.1rem;">
-          <img src="../assets/logo.png" alt="" style="width:1.86rem;height:1.8rem;">
-          <figcaption style="font-size: .28rem;color: #666;">暂时没有兑换记录~</figcaption>
-        </figure>
-        <div class="list_m">
-          <p class="tip">累计为您成功免单14324元</p>
-          <div class="list">
-            <img src="../assets/logo.png" alt="">
-            <div class="list_c">
-              <p class="title">10元现金红包</p>
-              <p class="date">日期：2017.10.28</p>
-            </div>
-          </div>
-          <div class="list">
-            <img src="../assets/logo.png" alt="">
-            <div class="list_c">
-              <p class="title">10元现金红包</p>
-              <p class="date">日期：2017.10.28</p>
-            </div>
-          </div>
-          <div class="list">
-            <img src="../assets/logo.png" alt="">
-            <div class="list_c">
-              <p class="title">10元现金红包</p>
-              <p class="date">日期：2017.10.28</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 <script>
-  import {XHeader} from 'vux'
-  import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
-  import Vue from 'vue'
-  const list = () => ['全部', '虚拟类', '实物类']
+  import {XHeader,Tab, TabItem,Swiper,SwiperItem} from 'vux'
 
   export default {
     name:'Exchange',
     components: {
       Tab,
       TabItem,
-      Swiper,
-      SwiperItem,
-      Vue,
-      XHeader
+      Swiper,SwiperItem
     },
     data () {
       return {
-        list2: list(),
-        demo2: '全部',
+        exchangeType:[],
+        exchangeTypeList:[],
+        demo2:"全部",
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
@@ -73,33 +84,24 @@
       }
     },
     methods: {
-      onItemClick (index) {
-        console.log('on item click:', index)
+      //      获取兑换记录分类
+      getExchangeType:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/myexchange_type'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            const exchangeType=res.data.data.acer_type
+            this.exchangeType= exchangeType
+          }
+        },(err)=>{})
       },
-      addTab () {
-        if (this.list2.length < 5) {
-          this.list2 = list().slice(0, this.list2.length + 1)
-        }
-      },
-      removeTab () {
-        if (this.list2.length > 1) {
-          this.list2 = list().slice(0, this.list2.length - 1)
-        }
-      },
-      next () {
-        if (this.index === this.list2.length - 1) {
-          this.index = 0
-        } else {
-          ++this.index
-        }
-      },
-      prev () {
-        if (this.index === 0) {
-          this.index = this.list2.length - 1
-        } else {
-          --this.index
-        }
-      }
+    },
+    created:function(){
+      this.getExchangeType()
+    },
+    mounted(){
+      console.log(document.getElementsByClassName('vux-swiper')[0].style.height='500px')
     }
   }
 </script>
@@ -109,10 +111,10 @@
   @import '~vux/src/styles/center.less';
   .tab-swiper {
     background-color: #fff;
-    height: 100px;
   }
   .main{
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     background-color: white;
   }
   .tip{

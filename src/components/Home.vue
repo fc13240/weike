@@ -7,61 +7,41 @@
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
         <ul class="nav-small">
-          <router-link tag="li" to="/home/hot">
-            <img src="../assets/logo.png">
-            <span>热门</span>
+          <router-link tag="li" v-for="type in typeList" :to="{name:'classify',params:{id:type.id}}">
+            <img :src="type.image_url">
+            <span>{{type.cate_name}}{{type.id}}</span>
           </router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>家居</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>家纺</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>电器</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>数码</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>美妆</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>服饰</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>汽车</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>母婴</span></router-link>
-          <router-link tag="li" to="/home/classify"><img src="../assets/logo.png">
-            <span>美食</span></router-link>
         </ul>
       </div>
       <div class="main">
         <div class="nav-bigger">
-          <div class="yuanBaoShop" @click="toYuanBaoShop">
-
-          </div>
-          <div class="zhiNan">
-
-          </div>
+          <router-link to="/home/yuanBaoShop">
+          <img class="yuanBaoShop" src="static/images/yuanbaoShop_img.png">
+          </router-link>
+          <router-link to="">
+          <img class="zhiNan" src="/static/images/zhinan_img.png">
+          </router-link>
           <div class="m_r">
             <router-link to="/home/xianBao">
-              <!--@click="toXianBao"-->
-              <div class="m_r_t"></div>
+              <img class="m_r_t" src="static/images/xianbao_img.png">
             </router-link>
-
             <router-link to="/home/fuLi">
-              <div class="m_r_b"></div>
+              <img class="m_r_b" src="static/images/fuli_img.png">
             </router-link>
           </div>
         </div>
         <div class="main_goods">
           <ul class="goods">
-            <li class="goods_list" v-for="goods in goodsList">
-              <img src="../assets/logo.png" alt="">
-              <div class="content">
-                <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-                <div class="des_b">
-                  <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                  <span class="num">518件已售</span>
+            <router-link tag="li" v-for="goods in goodsList" class="goods_list" to="">
+                <img :src="goods.pict_url" alt="">
+                <div class="content">
+                  <div class="des">{{goods.title}}</div>
+                  <div class="des_b">
+                    <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price}}</span>
+                    <span class="num">{{goods.volume}}件已售</span>
+                  </div>
                 </div>
-              </div>
-            </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -73,20 +53,7 @@
   import Vue from 'vue'
   import AppHeader from './Header'
   import VueScroller from 'vue-scroller'
-
   Vue.use(VueScroller)
-  const imgList = []
-
-//  const imgList = [
-//    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
-//    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
-//    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
-//    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
-//  ]
-  const demoList = imgList.map((item, index) => ({
-    url: 'javascript:',
-    img: item.banner_image
-  }))
   export default {
     name: 'Home',
     components: {
@@ -96,36 +63,52 @@
     },
     data() {
       return {
-        demoList: demoList,
-        noData: '',
-        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        demoList: [],
+        typeList:[],
+        storeTypeList:[],
+        goodsList:[],
+        noData: ''
       }
     },
     methods: {
-      getList:function(){
+      //      获取首页轮播图
+      getBannerList:function(){
         this.$http({
           method:'POST',
           url:'/api/index_banner'
         }).then((res)=>{
           const imgList = res.data.data.index_banner
-          console.log(imgList)
           const demoList = imgList.map((item, index) => ({
             url: 'javascript:',
             img: item.banner_image
           }))
-          console.log(demoList)
+          this.demoList = demoList
         },(err)=>{
           console.log(err)
         })
       },
-
-
-
-
-
-      toYuanBaoShop() {
-        this.$router.push({
-          path: '/home/yuanBaoShop'
+//      获取商品分类
+      getTypeList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/index_type'
+        }).then((res)=>{
+          this.typeList = res.data.data.goods_type_up
+//          console.log(this.typeList)
+        },(err)=>{
+          console.log(err)
+        })
+      },
+//      获取商店分类
+      getGoodsList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/index_goods'
+        }).then((res)=>{
+          this.goodsList = res.data.data.goods
+//          console.log(this.goodsList)
+        },(err)=>{
+          console.log(err)
         })
       },
       infinite(done) {
@@ -152,7 +135,6 @@
           done()
         }, 1500)
       },
-
 //done()表示这次异步加载数据完成，加载下一次
 //因为这个是同步的，加了setTimeout就是异步加载数据；
 //因为涉及到this指向问题，所以将他放在一个变量里。
@@ -174,7 +156,9 @@
       })
     },
     created: function(){
-      this.getList()
+      this.getBannerList()
+      this.getTypeList()
+      this.getGoodsList()
     }
   }
 </script>
@@ -220,7 +204,6 @@
     display: inline-block;
     border-right: .02rem solid #f4f4f4;
     box-sizing: border-box;
-    background-color: yellow;
   }
 
   .zhiNan {
@@ -229,14 +212,12 @@
     display: inline-block;
     border-right: .02rem solid #f4f4f4;
     box-sizing: border-box;
-    background-color: red;
   }
 
   .m_r {
     width: 44%;
     height: 100%;
     display: inline-block;
-    background-color: green;
   }
 
   .m_r_t, .m_r_b {

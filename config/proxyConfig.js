@@ -1,6 +1,6 @@
 module.exports={
   proxy:{
-    '/api': {  //将www.exaple.com印射为/apis
+    '/api': {  //将192.168.1.101印射为/api
       target: 'http://192.168.1.101', // 接口域名
       changeOrigin: true, //是否跨域
       pathRewrite: {

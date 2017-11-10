@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">服饰</x-header>-->
-    <!-- style="position: fixed;top: .88rem;z-index: 10;"-->
     <div class="allSort">
       <div class="sortMenu clearfix" style="position: fixed;z-index: 10;">
         <div style="width: calc(100% - 24px)">
@@ -24,10 +22,10 @@
       </div>
     </div>
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
-      <div class="main_goods">
+      <div class="main_goods" style="margin-top: 40px; ">
         <ul class="goods">
           <li class="goods_list" v-for="goods in goodsList">
-            <img src="../assets/logo.png" alt="">
+            <img :src="goods.pict_url" alt="">
             <div class="content">
               <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div class="des_b">
@@ -46,7 +44,6 @@
   import Vue from 'vue'
   import VueScroller from 'vue-scroller'
   Vue.use(VueScroller)
-
   export default {
     name: 'jiFen',
     components: {
@@ -54,17 +51,14 @@
       XHeader,
       VueScroller
     },
-    methods: {
-      toExchange() {
-        this.$router.push({
-          path: '/home/Exchange'
-        })
-      }
-    },
     data() {
       return {
+        totalCount:'',
+        pageIndex:1,
+        pageSize:10,
         noData: '',
-        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        goodsList: [],
+        cate_id:'',
         sortMenu: [
           { sortname: '全部' },
           { sortname: '家用电器' },
@@ -96,50 +90,69 @@
       }
     },
     methods: {
-      infinite(done) {
-        if (this.noData) {
-          console.log(this.noData)
-          if (this.noData) {
-            setTimeout(() => {
-              this.$refs.myscroller.finishInfinite(2);
-            })
+      toExchange() {
+        this.$router.push({
+          path: '/home/Exchange'
+        })
+      },
+      //      获取商品列表
+      getGoodsList:function(){
+        const routerParams = this.$route.params.id;
+        this.cate_id = routerParams;
+        console.log(this.cate_id);
+        this.$http({
+          method:'POST',
+          url:'/api/goodslist',
+          data:{
+            cate_id:this.cate_id
           }
+        }).then((res)=>{
+          if(res.data.code == '200'){
+            this.goodsList = res.data.data.goodsList
+            this.totalCount = this.goodsList.goods_count
+            console.log(res.data.data)
+          }
+        },(err)=>{})
+      },
+//      //      获取商品分类
+//      getTypeList:function(){
+//        this.$http({
+//          method:'POST',
+//          url:'/api/goodslist_type'
+//        }).then((res)=>{
+//          this.goodsList = res.data.data.allGoodsType
+//          console.log(this.goodsList)
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
+      refresh:function(){
+        setTimeout(()=>{
+          this.pageIndex=1;
+          this.getGoodsList();
+        },1500)
+      },
+      infinite:function(){
+        if(this.noData){
+          setTimeout(()=>{
+            this.$refs.myscroller.finishInfinite(2);
+          })
           return;
         }
-        let self = this;//this指向问题
-        let start = this.goodsList.length;
-
-        setTimeout(() => {
-          for (let i = start + 1; i < start + 10; i++) {
-            self.goodsList.push(i)
-          }
-          if (start >= 18) {
-            self.noData = "没有更多数据"
-          }
-          self.$refs.myscroller.resize();
-          done()
-        }, 1500)
-      },
-
-//done()表示这次异步加载数据完成，加载下一次
-//因为这个是同步的，加了setTimeout就是异步加载数据；
-//因为涉及到this指向问题，所以将他放在一个变量里。
-      refresh(done) {
-        var self = this
-        setTimeout(function () {
-          var start = self.top - 1
-          for (var i = start; i > start - 10; i--) {
-            self.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
-          }
-          self.top = self.top - 10;
-          done();
-        }, 1500)
+        setTimeout(()=>{
+          this.pageIndex+=1;
+          this.getGoodsList()
+        },1500)
       }
     },
     mounted: function () {
       this.$nextTick(function () {
 
       })
+    },
+    created:function(){
+//      this.getGoodsList()
+
     }
   }
 </script>
