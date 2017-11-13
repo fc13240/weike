@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!--<app-header title="个人中心"></app-header>-->
-    <!--<div style="height: .88rem;"></div>-->
-    <!--<router-link tag="div" to="/PersonCenter/notice" style="position: absolute;right: .3rem;top:.3rem;z-index: 10000;">-->
-      <!--<img src="../assets/message.png" alt="" style="width: .36rem;height: .28rem;">-->
-      <!--<span style="width: .16rem;height: .16rem;border-radius: 50%;background-color:#ffde0d;opacity: .9;display: block;position: relative;right: -.27rem;top: -.45rem; "></span>-->
-    <!--</router-link>-->
     <router-link class="top" to="/personCenter/userInfo" tag="div">
       <img src="../assets/1.jpg" alt="" class="photo">
       <div class="info">
@@ -16,18 +10,18 @@
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
     </router-link>
     <group>
-      <cell title="我的订单" value="查看全部" is-link link="/PersonCenter/myOrder"></cell>
+      <cell title="我的订单" value="查看全部" is-link :link="{name:'myOrder',params:{type: 0}}"></cell>
     </group>
     <div>
       <ul class="nav-small">
-        <router-link to="/PersonCenter/myOrder" tag="li">
+        <router-link :to="{name:'myOrder',params:{type: 0}}" tag="li">
           <img src="../assets/add_order.png">
           <span>添加</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/all_order.png">
+        <router-link :to="{name:'myOrder',params:{type: 1}}" tag="li"><img src="../assets/all_order.png">
           <span>全部</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/stay_order.png">
+        <router-link :to="{name:'myOrder',params:{type: 2}}" tag="li"><img src="../assets/stay_order.png">
           <span>待返</span></router-link>
-        <router-link to="/PersonCenter/myOrder" tag="li"><img src="../assets/return_order.png">
+        <router-link :to="{name:'myOrder',params:{type: 3}}" tag="li"><img src="../assets/return_order.png">
           <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">

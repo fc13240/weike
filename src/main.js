@@ -134,7 +134,8 @@ const routes = [
     component: classify,
   },
   {
-    path: '/PersonCenter/myOrder',
+    path: '/PersonCenter/myOrder/:type',
+    name:'myOrder',
     component: myOrder,
     meta: {
       title:'我的订单'

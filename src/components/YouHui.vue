@@ -1,10 +1,12 @@
 <template>
   <div>
-    <!--<app-header title="超实惠"></app-header>-->
-    <!--<div style="height: .88rem;"></div>-->
     <router-link to="/YouHui/subjects">
       <nav>
-        <img src="../assets/logo.png" alt="" class="nav_btn">
+        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
+          <p style="font-size: .28rem;">XX专区</p>
+          <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+        </div>
         <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
       </nav>
     </router-link>
@@ -21,7 +23,11 @@
     </scroller>
     <router-link to="/YouHui/subjects">
       <nav>
-        <img src="../assets/logo.png" alt="" class="nav_btn">
+        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
+          <p style="font-size: .28rem;">XX专区</p>
+          <img src="/static/images/youhui_bd2_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+        </div>
         <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
       </nav>
     </router-link>
@@ -38,7 +44,11 @@
     </scroller>
     <router-link to="/YouHui/discount">
       <nav>
-        <img src="../assets/logo.png" alt="" class="nav_btn">
+        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd3.png);background-size: 100%;">
+          <p style="font-size: .28rem;">XX专区</p>
+          <img src="/static/images/youhui_bd3_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+        </div>
         <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
       </nav>
     </router-link>
@@ -55,7 +65,11 @@
     </scroller>
     <router-link to="/YouHui/essential">
       <nav>
-        <img src="../assets/logo.png" alt="" class="nav_btn">
+        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
+          <p style="font-size: .28rem;">XX专区</p>
+          <img src="/static/images/youhui_bd4_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+        </div>
       </nav>
     </router-link>
     <div class="main">
@@ -156,19 +170,17 @@
     width: 100%;
     height: 2.96rem;
     position: relative;
-    background-image: url(../assets/logo.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
   }
 
   .nav_btn {
     position: absolute;
-    border: 1px solid red;
-    width: 2.28rem;
-    height: .88rem;
+    color: white;
+    height: .76rem;
     border-radius: .44rem;
-    top: .2rem;
-    left: .2rem;
+    top: .08rem;
+    left: .08rem;
+    text-align: center;
+    padding: 0 .4rem;
   }
 
   .sanjiao {

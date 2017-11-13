@@ -9,7 +9,7 @@
         <ul class="nav-small">
           <router-link tag="li" v-for="type in typeList" :to="{name:'classify',params:{id:type.id}}">
             <img :src="type.image_url">
-            <span>{{type.cate_name}}{{type.id}}</span>
+            <span>{{type.cate_name}}</span>
           </router-link>
         </ul>
       </div>
@@ -77,12 +77,15 @@
           method:'POST',
           url:'/api/index_banner'
         }).then((res)=>{
-          const imgList = res.data.data.index_banner
-          const demoList = imgList.map((item, index) => ({
-            url: 'javascript:',
-            img: item.banner_image
-          }))
-          this.demoList = demoList
+          if(res.data.code=='200'){
+            const imgList = res.data.data.index_banner
+            const demoList = imgList.map((item, index) => ({
+              url: 'javascript:',
+              img: item.banner_image
+            }))
+            this.demoList = demoList
+//          console.log(imgList)
+          }
         },(err)=>{
           console.log(err)
         })
@@ -93,8 +96,10 @@
           method:'POST',
           url:'/api/index_type'
         }).then((res)=>{
-          this.typeList = res.data.data.goods_type_up
-//          console.log(this.typeList)
+         if(res.data.code=='200'){
+           const typeList = res.data.data.goods_type_up
+           this.typeList = typeList
+         }
         },(err)=>{
           console.log(err)
         })
@@ -105,8 +110,10 @@
           method:'POST',
           url:'/api/index_goods'
         }).then((res)=>{
-          this.goodsList = res.data.data.goods
+         if(res.data.code=='200'){
+           this.goodsList = res.data.data.goods
 //          console.log(this.goodsList)
+         }
         },(err)=>{
           console.log(err)
         })

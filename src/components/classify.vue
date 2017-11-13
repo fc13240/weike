@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="allSort">
+    <div class="allSort" v-show="cate_id !==1">
       <div class="sortMenu clearfix" style="position: fixed;z-index: 10;">
         <div style="width: calc(100% - 24px)">
           <ul class="sortMenu-ul">
-            <li class="cell" v-for="item in sortMenu">
-              <a href="">{{item.sortname}}</a>
+            <li class="cell" v-for="item in typeList">
+              <a href="">{{item.cate_name}}</a>
             </li>
           </ul>
         </div>
@@ -14,15 +14,15 @@
         </div>
         <div v-show="subitemsExpanded" class="pull-down">
           <ul class="pull-down-sort">
-            <li class="" v-for="pulldow in sortName">
-              <a href="">{{pulldow.sortname}}</a>
+            <li class="cell" v-for="item in typeList">
+              <a href="">{{item.cate_name}}</a>
             </li>
           </ul>
         </div>
       </div>
     </div>
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
-      <div class="main_goods" style="margin-top: 40px; ">
+      <div class="main_goods">
         <ul class="goods">
           <li class="goods_list" v-for="goods in goodsList">
             <img :src="goods.pict_url" alt="">
@@ -59,33 +59,7 @@
         noData: '',
         goodsList: [],
         cate_id:'',
-        sortMenu: [
-          { sortname: '全部' },
-          { sortname: '家用电器' },
-          { sortname: '大家电' },
-          { sortname: '生活用品' },
-          { sortname: '食品' },
-          { sortname: '美妆' },
-          { sortname: '书籍' },
-          { sortname: '洗护用品' },
-          { sortname: '母婴用品' },
-          { sortname: '家居' }
-        ],
-        sortName: [
-          { sortname: '家用电器' },
-          { sortname: '母婴' },
-          { sortname: '百货' },
-          { sortname: '珠宝配饰' },
-          { sortname: '运动户外' },
-          { sortname: '食品' },
-          { sortname: '美妆' },
-          { sortname: '家装' },
-          { sortname: '家居家纺' },
-          { sortname: '鲜花宠物' },
-          { sortname: '图书乐器' },
-          { sortname: '生活服务' },
-          { sortname: '游戏动漫' }
-        ],
+        typeList:[],
         subitemsExpanded: false
       }
     },
@@ -99,7 +73,7 @@
       getGoodsList:function(){
         const routerParams = this.$route.params.id;
         this.cate_id = routerParams;
-        console.log(this.cate_id);
+//        console.log(this.cate_id);
         this.$http({
           method:'POST',
           url:'/api/goodslist',
@@ -110,22 +84,30 @@
           if(res.data.code == '200'){
             this.goodsList = res.data.data.goodsList
             this.totalCount = this.goodsList.goods_count
-            console.log(res.data.data)
+//            console.log(res.data.data)
           }
         },(err)=>{})
       },
-//      //      获取商品分类
-//      getTypeList:function(){
-//        this.$http({
-//          method:'POST',
-//          url:'/api/goodslist_type'
-//        }).then((res)=>{
-//          this.goodsList = res.data.data.allGoodsType
-//          console.log(this.goodsList)
-//        },(err)=>{
-//          console.log(err)
-//        })
-//      },
+      //      获取商品分类
+      getTypeList:function(){
+        const routerParams = this.$route.params.id;
+        this.cate_id = routerParams;
+        this.$http({
+          method:'POST',
+          url:'/api/goodslist_type',
+          data:{
+            cate_id:this.cate_id
+          }
+        }).then((res)=>{
+         if(res.data.code=='200'){
+           const typeList =res.data.data.allGoodsType
+           this.typeList = typeList
+           console.log(typeList)
+         }
+        },(err)=>{
+          console.log(err)
+        })
+      },
       refresh:function(){
         setTimeout(()=>{
           this.pageIndex=1;
@@ -146,13 +128,15 @@
       }
     },
     mounted: function () {
-      this.$nextTick(function () {
-
-      })
+      if(this.cate_id==1){
+        document.getElementsByClassName('main_goods')[0].style.marginTop='0px'
+      }else{
+        document.getElementsByClassName('main_goods')[0].style.marginTop='40px'
+      }
     },
     created:function(){
-//      this.getGoodsList()
-
+      this.getGoodsList();
+      this.getTypeList();
     }
   }
 </script>

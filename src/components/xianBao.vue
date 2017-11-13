@@ -1,17 +1,13 @@
 <template>
   <div>
-    <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">超值线报</x-header>-->
-    <!--<div style="height: .88rem;"></div>-->
-    <swiper auto :list="demo03_list" style="width:100%;" height="1.8rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+    <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
     <div class="main">
       <ul class="timeTab">
-        <!--<router-link tag="li" to="/home/xianBao/list1" :class="{active:isActive}">09:00抢购中</router-link>-->
-        <!--<router-link tag="li" to="/home/xianBao/list2">13:00开抢</router-link>-->
-        <!--<router-link tag="li" to="/home/xianBao/list3">19:00开抢</router-link>-->
-        <!--<router-link tag="li" to="/home/xianBao/list4">21:00开抢</router-link>-->
-        <!--<router-link tag="li" to="/home/xianBao/list1" :class="[item.active ? activeClass:'']" v-for="item in items" v-on:click="navClickEvent(item,index)">{{item.text}}</router-link>-->
-        <li :class="[item.active ? activeClass:'']" v-for="(item,index) in items"
-            v-on:click="navClickEvent(items,index)">{{item.text+item.texts}}
+        <li :class="[item.active? activeClass:'']" v-for="(item,index) in time"
+            v-on:click="navClickEvent(time,index)">{{item.start_time}}
+          <span v-show="item.status==3">已开抢</span>
+          <span v-show="item.status==2">抢购中</span>
+          <span v-show="item.status==1">待开抢</span>
         </li>
       </ul>
       <!--<router-view></router-view>-->
@@ -116,68 +112,61 @@
   </div>
 </template>
 <script>
-  import {Swiper} from 'vux'
   import Vue from 'vue'
   import {XHeader} from 'vux'
-  const imgList = [
-    'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
-    'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
-    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff',
-    'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
-  ];
-  const demoList = imgList.map((one, index) => ({
-    url: 'javascript:',
-    img: one
-  }));
   export default {
     name: 'xianBao',
     components: {
-      Swiper,
       Vue,
       XHeader
     },
     data: function () {
       return {
-        demo03_list: demoList,
+        banner:'',
         activeClass: 'active',
-        items: [
-          {
-            text: '09:00',
-            texts:'抢购中',
-            active: true
-          },
-          {
-            text: '13:00',
-            texts:'开抢',
-            active: false
-          },
-          {
-            text: '19:00',
-            texts:'开抢',
-            active: false
-          },
-          {
-            text: '21:00',
-            texts:'开抢',
-            active: false
-          }
-        ]
+        time:[],
       }
     },
     methods: {
-      navClickEvent: function (items, index) {
+      navClickEvent: function (time, index) {
         /*默认切换类的动作*/
-        items.forEach(function (el) {
+        time.forEach(function (el) {
           el.active = false;
-          el.texts="开抢";
         });
-        items[index].active = true;
-        items[index].texts = "抢购中"
-      }
+        time[index].active = true;
+      },
+      //      获取超值线报banner
+      getBanner:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/newspaper_banner'
+        }).then((res)=>{
+          const banner = res.data.data.banner[0].banner_image;
+          this.banner = banner;
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      获取超值线报抢购时间
+      getTime:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/newspaper_time'
+        }).then((res)=>{
+          const time = res.data.data.time;
+          this.time = time;
+          console.log(time)
+        },(err)=>{
+          console.log(err)
+        })
+      },
     },
     mounted(){
-//      const title = document.getElementsByClassName('vux-header-title');
-//      title[0].style.color='#333'
+
+    },
+    created:function(){
+      this.getBanner()
+      this.getTime()
     }
   }
 
