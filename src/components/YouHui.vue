@@ -1,26 +1,28 @@
 <template>
   <div>
-    <router-link to="/YouHui/subjects">
-      <nav>
-        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
-        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
-          <p style="font-size: .28rem;">XX专区</p>
-          <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-        </div>
-        <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
-      </nav>
-    </router-link>
-    <scroller lock-y :scrollbar-x=false>
-      <div class="box1" ref="nav1">
-        <div class="box1-item" v-for="i in item1" id="box1-item" style="width: 2.49rem;">
-          <img src="../assets/logo.png" alt="">
-          <span class="dess">
+    <div v-for="list1 in list1">
+      <router-link to="/YouHui/subjects">
+        <nav>
+          <img  :alt="list1.type.image" style="width: 100%;height: 100%;">
+          <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
+            <p style="font-size: .28rem;" v-text="list1.type.store_name">XX专区</p>
+            <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+          </div>
+          <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
+        </nav>
+      </router-link>
+      <scroller lock-y :scrollbar-x=false>
+        <div class="box1" ref="nav1">
+          <div class="box1-item" v-for="i in item1" id="box1-item" style="width: 2.49rem;">
+            <img src="../assets/logo.png" alt="">
+            <span class="dess">
             <p class="des_name">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
             <p class="des_price"><span class="new_price">￥8.8</span><del class="old_price">￥48</del></p>
           </span>
+          </div>
         </div>
-      </div>
-    </scroller>
+      </scroller>
+    </div>
     <router-link to="/YouHui/subjects">
       <nav>
         <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
@@ -136,6 +138,7 @@
     },
     data() {
       return {
+        list1:[],
         showList1: true,
         scrollTop: 0,
         onFetching: false,
@@ -153,7 +156,6 @@
       init() {
         const self = this;
         const w = document.getElementById('box1-item').offsetWidth;
-        console.log(w)
         const n1 = self.item1.length;
         const n2 = self.item2.length;
         const n3 = self.item3.length;
@@ -161,7 +163,26 @@
         self.$refs.nav1.style.width = (w * n1) + 'px';
         self.$refs.nav2.style.width = (w * n2) + 'px';
         self.$refs.nav3.style.width = (w * n3) + 'px';
-      }
+      },
+      //      9.9专区
+      getlist1:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/c_index_nine',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.list1 = res.data.data
+          }else if(res.data.code=='400'){
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+//      this.getlist1()
     }
   }
 </script>

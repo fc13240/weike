@@ -8,7 +8,7 @@
       <div>
         <ul class="nav-small">
           <router-link tag="li" v-for="type in typeList" :to="{name:'classify',params:{id:type.id}}">
-            <img :src="type.image_url">
+            <img :src="type.image_url" :onerror="defaultImg">
             <span>{{type.cate_name}}</span>
           </router-link>
         </ul>
@@ -33,11 +33,12 @@
         <div class="main_goods">
           <ul class="goods">
             <router-link tag="li" v-for="goods in goodsList" class="goods_list" to="">
-                <img :src="goods.pict_url" alt="">
+                <img :src="goods.pict_url" alt="" :onerror="defaultImg">
                 <div class="content">
                   <div class="des">{{goods.title}}</div>
                   <div class="des_b">
-                    <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price}}</span>
+                    <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
+                    <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
                     <span class="num">{{goods.volume}}件已售</span>
                   </div>
                 </div>
@@ -67,7 +68,9 @@
         typeList:[],
         storeTypeList:[],
         goodsList:[],
-        noData: ''
+        noData: '',
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+
       }
     },
     methods: {

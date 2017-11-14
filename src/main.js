@@ -29,12 +29,14 @@ import SearchPage from '@/components/searchPage'
 import toShowList from '@/components/toShowList'
 import addressList from '@/components/addressList'
 import addAddress from '@/components/addAddress'
-import {AlertPlugin,ToastPlugin,AjaxPlugin } from 'vux'
+import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
+Vue.use(LoadingPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueRouter)
 Vue.use(require('vue-wechat-title'))
+Vue.use(ConfirmPlugin)
 const routes = [
   {
     path: '/',

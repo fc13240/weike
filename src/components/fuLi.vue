@@ -118,7 +118,7 @@
         goodList2:[],
         goodList3:[],
         goodList4:[],
-        defaultImg: 'this.src="' + require('../../static/images/empty_img.png') + '"',
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
         banner:'',
         demo03_list: demoList,
         list2: list(),

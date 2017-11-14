@@ -4,62 +4,40 @@
      <!--<div style="height: .88rem;"></div>-->
      <div>
        <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
-         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index" style="color: white;">
+         <tab-item class="vux-center" :selected=" type=== index" v-for="(item, index) in list2" :key="index" style="color: white;">
            <img :src="item.src" alt="" style="width: .38rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
        </tab>
      </div>
      <div class="main">
-        <div class="list_m">
-          <div class="list">
-            <div class="user_info">
-              <img src="../assets/1.jpg" alt="" class="user_pic">
-              <div class="user_des">
-                <p class="user_name">昵称</p>
-                <p class="user_time">2017-10-14</p>
+        <div v-show="index==0">
+          <div class="list_m" v-for="list in orderSquareList">
+            <div class="list">
+              <div class="user_info">
+                <img :src="list.head_image" alt="" class="user_pic">
+                <div class="user_des">
+                  <p class="user_name" v-text="list.member_name">昵称</p>
+                  <p class="user_time" v-text="list.create_time">2017-10-14</p>
+                </div>
               </div>
-            </div>
-            <p class="message">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
-            <div class="m_pic">
-              <img src="../assets/1.jpg" alt="">
-              <img src="../assets/1.jpg" alt="">
-              <img src="../assets/1.jpg" alt="">
-              <img src="../assets/1.jpg" alt="">
-              <img src="../assets/1.jpg" alt="">
+              <p class="message" v-text="list.evaluate_detail">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
+              <div class="m_pic">
+                <img :src="lists.image" alt="" class="pics"  v-for="lists in list.evaluate_url" :onerror="defaultImg">
+              </div>
             </div>
           </div>
         </div>
-       <div class="list_m">
-         <div class="list">
-           <div class="user_info">
-             <img src="../assets/1.jpg" alt="" class="user_pic">
-             <div class="user_des">
-               <p class="user_name">昵称</p>
-               <p class="user_time">2017-10-14</p>
+       <div v-show="index==1">
+         <div class="list_m" v-for="list2 in myOrderList">
+           <div class="list">
+             <div class="user_info">
+               <div class="user_des">
+                 <p class="user_time" v-text="list2.create_time">2017-10-14</p>
+               </div>
              </div>
-           </div>
-           <p class="message">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
-           <div class="m_pic">
-             <img src="../assets/1.jpg" alt="">
-             <img src="../assets/1.jpg" alt="">
-           </div>
-         </div>
-       </div>
-       <div class="list_m">
-         <div class="list">
-           <div class="user_info">
-             <img src="../assets/1.jpg" alt="" class="user_pic">
-             <div class="user_des">
-               <p class="user_name">昵称</p>
-               <p class="user_time">2017-10-14</p>
+             <p class="message" v-text="list2.evaluate_detail">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
+             <div class="m_pic">
+               <img :src="listss.image" alt="" class="pics"  v-for="listss in list2.evaluate_url" :onerror="defaultImg">
              </div>
-           </div>
-           <p class="message">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
-           <div class="m_pic">
-             <img src="../assets/1.jpg" alt="">
-             <img src="../assets/1.jpg" alt="">
-             <img src="../assets/1.jpg" alt="">
-             <img src="../assets/1.jpg" alt="">
-             <img src="../assets/1.jpg" alt="">
            </div>
          </div>
        </div>
@@ -92,46 +70,54 @@
     },
     data () {
       return {
+        orderSquareList:[],
+        myOrderList:[],
         list2: list(),
-        demo2: '晒单广场',
         index: 0,
+        type:0,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
         }
       }
     },
     methods: {
-      onItemClick (index) {
-        console.log('on item click:', index)
+      //      获取晒单广场晒单列表
+      getOrderSquareList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/orderSquare',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.orderSquareList = res.data.data.order_square
+//            console.log(this.orderSquareList)
+          }
+        },(err)=>{
+          console.log(err)
+        })
       },
-      addTab () {
-        if (this.list2.length < 5) {
-          this.list2 = list().slice(0, this.list2.length + 1)
-        }
+      //      获取晒单广场我的晒单列表
+      getMyShareOrder:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/myShareOrder',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.myOrderList = res.data.data.my_order
+//            console.log(this.myOrderList)
+          }
+        },(err)=>{
+          console.log(err)
+        })
       },
-      removeTab () {
-        if (this.list2.length > 1) {
-          this.list2 = list().slice(0, this.list2.length - 1)
-        }
-      },
-      next () {
-        if (this.index === this.list2.length - 1) {
-          this.index = 0
-        } else {
-          ++this.index
-        }
-      },
-      prev () {
-        if (this.index === 0) {
-          this.index = this.list2.length - 1
-        } else {
-          --this.index
-        }
-      }
     },
     mounted(){
-//      const title = document.getElementsByClassName('vux-header-title');
-//      title[0].style.color='#333'
+
+    },
+    created:function(){
+
+      this.getOrderSquareList();
+      this.getMyShareOrder();
     }
   }
 </script>
@@ -169,10 +155,12 @@
   }
   .m_pic{
     margin-top: .24rem;
+    font-size: 0;
   }
-  .m_pic img{
+  .pics{
     width: 2.28rem;
     height: 2.28rem;
+    margin-right: .06rem;
   }
   .btn{
     width: 100%;

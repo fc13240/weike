@@ -11,12 +11,12 @@
     <div class="main">
       <div class="page1" v-show="index==0">
         <div>
-            <x-input title="订单号" placeholder="请输入订单号" keyboard="number" type="number" style="color: #333;font-size: .32rem;border-top: .16rem solid #f4f4f4;border-bottom: .16rem solid #f4f4f4;padding: .4rem .5rem"></x-input>
+            <x-input title="订单号" placeholder="请输入订单号" keyboard="number" type="number" style="color: #333;font-size: .32rem;border-top: .16rem solid #f4f4f4;border-bottom: .16rem solid #f4f4f4;padding: .4rem .5rem" v-model="orderNum"></x-input>
             <p style="border-bottom: 1px solid #f4f4f4;padding: .4rem 0 .2rem;margin: 0 .5rem;font-size: .24rem;color: #333;">如何找到返元宝订单号？</p>
           <img src="../assets/detail2.png" alt="" style="width: 100%;">
           <div style="height: 1.56rem;"></div>
           <div class="btn">
-            <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">确认提交</x-button>
+            <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">确认提交</x-button>
           </div>
         </div>
       </div>
@@ -37,16 +37,17 @@
               </div>
              </div>
           </div>
-          <p class="orderNum" style="color: #999;">总价: <span style="font-size: .24rem;color: #ff526d;">￥</span><span style="color: #ff526d;font-size: .32rem;" v-text="list.back_acer">88.8</span><span class="btn2">去晒单</span></p>
+          <p class="orderNum" style="color: #999;">总价: <span style="font-size: .24rem;color: #ff526d;">￥</span><span style="color: #ff526d;font-size: .32rem;" v-text="list.back_acer">88.8</span>
+            <router-link to="/personCenter/toShowList"><span class="btn2">去晒单</span></router-link>
+          </p>
         </div>
       </div>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {XHeader} from 'vux'
-  import { Tab, TabItem, XInput,XButton} from 'vux'
-  import Vue from 'vue'
+  import { XHeader,Tab, TabItem, XInput,XButton,Toast,Loading} from 'vux'
   const list = () => ['添加订单', '全部订单', '待返订单','已返订单'];
 
   export default {
@@ -54,13 +55,17 @@
     components: {
       Tab,
       TabItem,
-      Vue,
+      Toast,
       XHeader,
       XInput,
-      XButton
+      XButton,
+      Loading
     },
     data () {
       return {
+        showLoading:false,
+        loadText:'加载中...',
+        orderNum:'',
         type:'',
         list2: list(),
         index: 0,
@@ -72,60 +77,58 @@
     },
     methods: {
       //      获取订单列表
-      getOrderList:function(e){
+      getOrderList: function (e) {
         this.$http({
-          method:'POST',
-          url:'/api/myOrder',
-          data:{back_status:e}
-        }).then((res)=>{
-          if(res.data.code=='200'){
+          method: 'POST',
+          url: '/api/myOrder',
+          data: {back_status: e}
+        }).then((res) => {
+          if (res.data.code == '200') {
+            this.showLoading = false
             this.orderList = res.data.data.order_list
-//            console.log(this.orderList)
+            //       console.log(this.orderList)
           }
-        },(err)=>{
+        }, (err) => {
           console.log(err)
         })
       },
-      change:function(list2,index){
-        this.type = index
+      //      提交订单操作
+      submit: function () {
+        console.log(this.orderNum)
+        this.$http({
+          method: 'POST',
+          url: '/api/addOrder',
+          data: {order_num: this.orderNum}
+        }).then((res) => {
+          if (res.data.code == '200') {
+            this.orderNum = ''
+            this.$vux.toast.show({
+              text: res.data.data.message
+            })
+
+          } else {
+            this.$vux.toast.show({
+              text: res.data.data.message
+            })
+          }
+        }, (err) => {
+          console.log(err)
+        })
+      },
+      change: function (list2, index) {
+        this.orderList='';
+        this.showLoading = true
+        this.type = index;
         this.getOrderList(this.type)
       },
-      onItemClick (index) {
-        console.log('on item click:', index)
-      },
-      addTab () {
-        if (this.list2.length < 5) {
-          this.list2 = list().slice(0, this.list2.length + 1)
-        }
-      },
-      removeTab () {
-        if (this.list2.length > 1) {
-          this.list2 = list().slice(0, this.list2.length - 1)
-        }
-      },
-      next () {
-        if (this.index === this.list2.length - 1) {
-          this.index = 0
-        } else {
-          ++this.index
-        }
-      },
-      prev () {
-        if (this.index === 0) {
-          this.index = this.list2.length - 1
-        } else {
-          --this.index
-        }
-      }
     },
     mounted(){
-//      const title = document.getElementsByClassName('vux-header-title');
-//      title[0].style.color='#333'
 
       const add_b = document.getElementsByClassName('weui-cell__primary');
       add_b[0].style.borderBottom='1px solid #f4f4f4'
     },
     created:function(){
+      this.showLoading = true
       const routerParams = this.$route.params.type;
       this.type = routerParams;
       this.getOrderList(this.type)

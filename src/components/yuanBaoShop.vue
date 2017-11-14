@@ -16,13 +16,13 @@
       <h3><i></i>优先推荐</h3>
       <ul class="goods_list">
         <router-link tag="li" to="/home/exchangeDetail" class="goods" v-for="acerList in acer_list">
-          <img :src="acerList.product_image" alt="" class="photo">
+          <img :src="acerList.product_image" alt="" class="photo" :onerror="defaultImg">
           <div class="content">
             <p class="des">{{acerList.product_name}}</p>
             <div class="des_b">
                <span class="yuanBao">{{acerList.exchange_acer}}</span>
               <img src="../assets/yuanBao_red.png" alt="" class="y_img">
-              <del>￥{{acerList.market_price}}</del>
+              <del>￥{{acerList.market_price.rmb+'.'+acerList.market_price.corner}}</del>
               <span class="num">库存 <span>{{acerList.stock}}</span></span>
             </div>
           </div>
@@ -43,7 +43,8 @@
     data (){
       return{
         member_acer:[],
-        acer_list:[]
+        acer_list:[],
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods:{
