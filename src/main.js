@@ -165,7 +165,8 @@ const routes = [
     }
   },
   {
-    path:'/home/exchangeDetail',
+    path:'/home/exchangeDetail/:id',
+    name:'exchangeDetail',
     component:exchangeDetail,
     meta: {
       title:'兑换详情'
@@ -201,9 +202,18 @@ const routes = [
   },
   {
     path:'/personCenter/addressList',
+    name:'addressList',
     component:addressList,
     meta: {
       title:'收货管理'
+    }
+  },
+  {
+    path:'/personCenter/addAddress/:id',
+    name:'addAddress',
+    component:addAddress,
+    meta: {
+      title:'地址管理'
     }
   },
   {

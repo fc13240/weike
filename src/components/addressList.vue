@@ -4,59 +4,25 @@
     <!--<p style="color: #ff526d;font-size: .28rem;text-align: center;line-height: .88rem;background-color: white;border-bottom: .02rem solid #f4f4f4;">+添加地址</p>-->
     <!--</router-link>-->
     <div>
-      <div>
-        <router-link to="/PersonCenter/addAddress">
+      <div v-for="list in addressList">
+        <router-link :to="{name:'addAddress',params:{id:list.address_id}}">
           <group>
             <div style="padding: .3rem .3rem;">
-              <p><span style="font-size: .28rem;color: #333;margin-right: .3rem;">李静</span><span
-                style="font-size: .24rem;color: #666;">13298309372</span></p>
-              <p style="font-size: .24rem;color: #666;margin-top: .1rem;">浙江省杭州市某某某地区</p>
+              <p><span style="font-size: .28rem;color: #333;margin-right: .3rem;" v-text="list.person_name">李静</span><span
+                style="font-size: .24rem;color: #666;" v-text="list.telephone">13298309372</span></p>
+              <p style="font-size: .24rem;color: #666;margin-top: .1rem;" v-text="list.province+list.country+list.district+list.address">浙江省杭州市某某某地区</p>
             </div>
             <div class="right_ft"></div>
           </group>
         </router-link>
         <p
           style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;">
-          <img src="../assets/checked.png" alt=""
-               style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;">
-          默认地址 <span style="color: #333;float: right;"><img src="../assets/trash.png" alt=""
+         <span v-show="list.is_default==1"> <img src="../assets/checked.png" alt=""
+                     style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;">
+          默认地址 </span>
+          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;" v-show="list.is_default==2">使用</span>
+          <span style="color: #333;float: right;" @click="del(list.address_id)"><img src="../assets/trash.png" alt=""
                                                             style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
-        </p>
-      </div>
-      <div>
-        <router-link to="/PersonCenter/addAddress">
-          <group>
-            <div style="padding: .3rem .3rem;">
-              <p><span style="font-size: .28rem;color: #333;margin-right: .3rem;">李静</span><span
-                style="font-size: .24rem;color: #666;">13298309372</span></p>
-              <p style="font-size: .24rem;color: #666;margin-top: .1rem;">浙江省杭州市某某某地区</p>
-            </div>
-            <div class="right_ft"></div>
-          </group>
-        </router-link>
-        <p
-          style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;overflow: hidden;">
-          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;">使用</span>
-          <span style="color: #333;float: right;"><img src="../assets/trash.png" alt=""
-                                                       style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
-        </p>
-      </div>
-      <div>
-        <router-link to="/PersonCenter/addAddress">
-          <group>
-            <div style="padding: .3rem .3rem;">
-              <p><span style="font-size: .28rem;color: #333;margin-right: .3rem;">李静</span><span
-                style="font-size: .24rem;color: #666;">13298309372</span></p>
-              <p style="font-size: .24rem;color: #666;margin-top: .1rem;">浙江省杭州市某某某地区</p>
-            </div>
-            <div class="right_ft"></div>
-          </group>
-        </router-link>
-        <p
-          style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;overflow: hidden;">
-          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;">使用</span>
-          <span style="color: #333;float: right;"><img src="../assets/trash.png" alt=""
-                                                       style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
         </p>
       </div>
     </div>
@@ -67,17 +33,70 @@
         </x-button>
       </div>
     </router-link>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {Group, Cell, XButton} from 'vux'
+  import {Group, Cell, XButton,Loading} from 'vux'
 
   export default {
     name: 'addressList',
     components: {
       Group,
       Cell,
-      XButton
+      XButton,
+      Loading
+    },
+    data() {
+      return {
+        showLoading:false,
+        loadText:'加载中...',
+        addressList:[],
+      }
+    },
+    methods:{
+      //      收货地址列表
+      getAddressList:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/address_list',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.addressList = res.data.data.address_list
+          }else if(res.data.code=='400'){
+             this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      刪除选中的收货地址
+      del(e){
+        this.showLoading=true
+        console.log(e)
+        this.$http({
+          method:'POST',
+          url:'/api/delAddress',
+          data:{address_id:e}
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.$vux.toast.show({
+              text:res.data.data.message
+            })
+            this.getAddressList()
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+      this.getAddressList()
     }
   }
 </script>

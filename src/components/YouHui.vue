@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div v-for="list1 in list1">
-      <router-link to="/YouHui/subjects">
-        <nav>
-          <img  :alt="list1.type.image" style="width: 100%;height: 100%;">
-          <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
-            <p style="font-size: .28rem;" v-text="list1.type.store_name">XX专区</p>
-            <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-          </div>
-          <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
-        </nav>
-      </router-link>
+    <div>
+      <!--<router-link to="/YouHui/subjects">-->
+        <!--<nav>-->
+          <!--<img  :alt="list1.type.image" style="width: 100%;height: 100%;">-->
+          <!--<div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">-->
+            <!--<p style="font-size: .28rem;" v-text="list1.type.store_name">XX专区</p>-->
+            <!--<img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">-->
+          <!--</div>-->
+          <!--<img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">-->
+        <!--</nav>-->
+      <!--</router-link>-->
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
           <div class="box1-item" v-for="i in item1" id="box1-item" style="width: 2.49rem;">

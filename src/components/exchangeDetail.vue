@@ -6,15 +6,15 @@
     <!--<div style="height: .88rem;"></div>-->
     <div class="main">
       <div class="goods">
-          <img src="../assets/1.jpg" alt="" class="pic">
+          <img :src="data.product_image" alt="" class="pic" :onerror="defaultImg">
           <div style="display: inline-block;vertical-align: middle;">
-            <p class="goods_title">10元现金红包</p>
-            <p><span style="font-size: .36rem;color: #ff526d;">1000</span> <img src="../assets/logo.png" alt=""
+            <p class="goods_title" v-text="data.product_name">10元现金红包</p>
+            <p><span style="font-size: .36rem;color: #ff526d;" v-text="data.exchange_acer">1000</span> <img src="/static/images/yuanbao_red.png" alt=""
                                                                                 class="yuanBao">
-              <del style="font-size: .24rem;color: #999;">￥10.0</del>
+              <del style="font-size: .24rem;color: #999;">￥{{rmb}} <span v-show="corner!=='00'">.{{corner}}</span></del>
             </p>
           </div>
-          <p class="has_num">剩余 <span style="color: #ff526d;">88</span> 件</p>
+          <p class="has_num">剩余 <span style="color: #ff526d;" v-text="data.stock">88</span> 件</p>
       </div>
         <x-number :value="1"  fillable :title="'请输入兑换数量'" style="padding: 10px 0;font-size: .24rem;color: #666666;border-bottom: 1px solid #e9e9e9;"></x-number>
     </div>
@@ -37,31 +37,30 @@
       <div style="padding-bottom: .25rem;">
           <cell title="配送至:" value="修改地址" is-link link="/PersonCenter/addressList"></cell>
         <div style="font-size: .24rem;border: 1px solid #f4f4f4;width: 5.8rem;margin: 0 auto;padding: .26rem .3rem;">
-          <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;">默认</span>浙江省杭州市西湖区一栋32号</p>
-          <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;">姓名</span><span>13298309372</span></p>
+          <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;">默认</span>{{address.province+address.country+address.district+address.address}}</p>
+          <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;" v-text="address.person_name">姓名</span><span v-text="address.telephone">13298309372</span></p>
         </div>
       </div>
     </div>
     <div class="des">
       <h4>兑换说明：</h4>
-      <p style="font-size: .24rem;color: #999;">成功提交后奖品将在1-3个工作日内发放到提交账户内。</p>
-      <p style="font-size: .24rem;color: #999;">请耐心等待并在我的兑换内进行查看。</p>
+      <p style="font-size: .24rem;color: #999;" v-text="data.exchange_brief">成功提交后奖品将在1-3个工作日内发放到提交账户内。</p>
+      <!--<p style="font-size: .24rem;color: #999;">请耐心等待并在我的兑换内进行查看。</p>-->
       <h4>商品详情：</h4>
-      <p class="contents">介绍内容介绍内容介绍内容介绍内容介绍内容介绍内容介绍内容</p>
+      <p class="contents" v-text="data.content">介绍内容介绍内容介绍内容介绍内容介绍内容介绍内容介绍内容</p>
       <div class="picture">
-        <img src="../assets/1.jpg" alt="">
-        <img src="../assets/1.jpg" alt="">
-        <img src="../assets/1.jpg" alt="">
+        <img :src="list.image" alt="" :onerror="defaultImg" v-for="list in data.small_images">
       </div>
     </div>
     <div style="height: 1.56rem;"></div>
     <div class="btn">
       <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">立刻兑换</x-button>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {XHeader, XNumber,XButton,Group,Cell} from 'vux'
+  import {XHeader, XNumber,XButton,Group,Cell,Loading} from 'vux'
 
   export default {
     name: 'exchangeDetail',
@@ -70,14 +69,79 @@
       XNumber,
       XButton,
       Group,
-      Cell
+      Cell,
+      Loading
     },
     data () {
       return {
+        showLoading:false,
+        loadText:'加载中...',
         roundValue: 0,
+        data:{},
+//        id:'',
+//        product_image:'',
+//        product_name:'',
+        rmb:'',
+        corner:'',
+//        exchange_acer:'',
+//        stock:'',
+//        exchange_brief:'',
+//        content:'',
+//        product_type:'',
+//        small_images:[],
+        address:{},
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods: {
+      //      兑换详情-商品详情
+      getExchangeInfo:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/exchangeinfo',
+          data:{product_id:this.id}
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            const data = res.data.data.product_info
+            this.data= data
+//            this.product_image = data.product_image
+//            this.product_id=data.product_id
+//            this.product_name=data.product_name
+            this.corner = data.market_price.corner
+            this.rmb = data.market_price.rmb
+//            this.exchange_acer=data.exchange_acer
+//            this.stock = data.stock
+//            this.exchange_brief = data.exchange_brief
+//            this.content=data.content
+//            this.product_type = data.product_type
+//            this.small_images = data.small_images
+
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      默认的收货地址
+      getAddress:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/exchangeinfo_address',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.address = res.data.data.default_address
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
       change (val) {
         console.log('change', val)
       }
@@ -92,6 +156,13 @@
       plus[0].style.cssText="background-color:#e1e1e1;width:.38rem;padding:4px 4px 2px;";
       svg[0].style.fill='#878787';
       svg[1].style.fill='#878787';
+    },
+    created:function(){
+      this.showLoading=true
+      const id = this.$route.params.id
+      this.id = id
+      this.getExchangeInfo()
+      this.getAddress()
     }
   }
 </script>

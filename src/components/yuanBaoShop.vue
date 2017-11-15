@@ -15,7 +15,7 @@
     <div class="main">
       <h3><i></i>优先推荐</h3>
       <ul class="goods_list">
-        <router-link tag="li" to="/home/exchangeDetail" class="goods" v-for="acerList in acer_list">
+        <router-link tag="li" :to="{name:'exchangeDetail',params:{id:acerList.product_id}}" class="goods" v-for="acerList in acer_list">
           <img :src="acerList.product_image" alt="" class="photo" :onerror="defaultImg">
           <div class="content">
             <p class="des">{{acerList.product_name}}</p>

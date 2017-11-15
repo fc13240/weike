@@ -1,20 +1,23 @@
 <template>
   <div>
-    <group>
-      <x-input title="姓名" name="username" placeholder="请输入姓名" is-type="china-name" style="font-size: .28rem;"></x-input>
-      <x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" style="font-size: .28rem;"></x-input>
-      <x-address title="所在地区" v-model="value" raw-value :list="addressData" value-text-align="center" style="font-size: .28rem;"></x-address>
-      <textarea name="des" placeholder="详细地址" class="des">
+    <div>
+      <group>
+        <x-input title="姓名" name="username" placeholder="请输入姓名" is-type="china-name" style="font-size: .28rem;" v-model="name"></x-input>
+        <x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" style="font-size: .28rem;" v-model="tel"></x-input>
+        <x-address title="所在地区" v-model="address"  :list="addressData" value-text-align="center" style="font-size: .28rem;" ></x-address>
+        <textarea name="des" placeholder="详细地址" class="des" v-model="detail">
     </textarea>
-    </group>
-    <checklist required :options="commonList" v-model="checklist001" @on-change="change"></checklist>
-    <div class="btn">
-      <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">保存</x-button>
+      <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check"></checklist>
+        </group>
+      <div class="btn">
+        <x-button @click.native="click()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">保存</x-button>
+      </div>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {ChinaAddressV4Data,Group, XAddress,XInput,Checklist,XButton} from 'vux'
+  import {Cell,ChinaAddressV4Data,Group,XAddress,XInput,Checklist,XButton,Loading,Value2nameFilter as value2name } from 'vux'
 
   export default {
     name: 'addAddress',
@@ -24,50 +27,138 @@
       XAddress,
       XInput,
       Checklist,
-      XButton
+      XButton,
+      Loading,
+      Cell
     },
     data () {
       return {
-        value: [],
         addressData: ChinaAddressV4Data,
-        commonList: [ '设为默认'],
-        checklist001: [],
+        commonList: [{key:'1', value:'设为默认'}],
+        checkValue: [],
+        address_id:'',
+        showLoading:false,
+        loadText:'加载中...',
+        name:'',
+        tel:'',
+        address:[],
+        detail:'',
+        type:'',
+        value2name:''
       }
     },
     methods: {
+      //      新增收货地址
+      addAddress:function(){
+        this.getName(this.address)
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/addAddress',
+          data:{
+            person_name:this.name,
+            telephone:this.tel,
+            detail:this.detail,
+            address:this.value2name,
+            is_default:this.type
+          }
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            console.log('成功')
+            this.$router.replace({name: 'addressList'})
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+            console.log('失敗')
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      修改收货地址详情
+      update:function(){
+        this.getName(this.address)
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/updateAddress',
+          data:{
+            address_id:this.address_id,
+            person_name:this.name,
+            telephone:this.tel,
+            detail:this.detail,
+            address:this.value2name,
+            is_default:this.type
+          }
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.$router.replace({name: 'addressList'})
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      收货地址详情
+  getAddressDetail:function(){
+        this.showLoading=true
+        this.$http({
+          method:'GET',
+          url:'/api/updateAddress',
+          params:{address_id:this.address_id}
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.name=res.data.data.address_info.person_name
+            this.tel=res.data.data.address_info.telephone
+            this.address=res.data.data.address_info.address_array
+            this.type = res.data.data.address_info.is_default
+            this.detail=res.data.data.address_info.address
+            if(res.data.data.address_info.is_default=='1'){
+              this.checkValue=['1']
+            }else{
+              this.checkValue=[]
+            }
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
       doShowAddress () {
         this.showAddress = true
         setTimeout(() => {
           this.showAddress = false
         }, 2000)
       },
-      onShadowChange (ids, names) {
-        console.log(ids, names)
-      },
-      changeData () {
-        this.value2 = ['430000', '430400', '430407']
-      },
-      changeDataByLabels () {
-        this.value2 = ['广东省', '广州市', '天河区']
-      },
-      changeDataByLabels2 () {
-        this.value2 = ['广东省', '中山市', '--']
-      },
-      getName (value) {
-        return value2name(value, ChinaAddressV4Data)
-      },
-      logHide (str) {
-        console.log('on-hide', str)
-      },
-      logShow (str) {
-        console.log('on-show')
-      },
       change (val, label) {
-        console.log('change', val, label)
+          if (val == '1') {
+            this.type = '1'
+          } else {
+            this.type = '2'
+          }
       },
-      selectFirst () {
-        this.checklist001 = ['China']
+      getName:function(value){
+        this.value2name= value2name(value, ChinaAddressV4Data)
+      },
+      click(){
+        if(this.address_id){
+           this.update()
+        }else{
+           this.addAddress()
+        }
       }
+    },
+    created:function(){
+      const address_id = this.$route.params.id
+      this.address_id = address_id
+      this.getAddressDetail()
+    },
+    mounted:function(){
+
     }
 
   }
