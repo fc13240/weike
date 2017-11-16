@@ -1,23 +1,25 @@
 <template>
   <div>
     <div>
-      <!--<router-link to="/YouHui/subjects">-->
-        <!--<nav>-->
-          <!--<img  :alt="list1.type.image" style="width: 100%;height: 100%;">-->
-          <!--<div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">-->
-            <!--<p style="font-size: .28rem;" v-text="list1.type.store_name">XX专区</p>-->
-            <!--<img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">-->
-          <!--</div>-->
-          <!--<img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">-->
-        <!--</nav>-->
-      <!--</router-link>-->
+      <router-link to="/YouHui/subjects">
+        <nav>
+          <img  :src="type1.image" style="width: 100%;height: 100%;">
+          <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
+            <p style="font-size: .28rem;" v-text="type1.store_name">XX专区</p>
+            <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
+          </div>
+          <img src="../assets/sanjiao.png" alt="" class="sanjiao">
+        </nav>
+      </router-link>
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
-          <div class="box1-item" v-for="i in item1" id="box1-item" style="width: 2.49rem;">
-            <img src="../assets/logo.png" alt="">
+          <div class="box1-item" v-for="goods1 in goods1" id="box1-item" style="width: 2.49rem;">
+            <img :src="goods1.pict_url" alt="">
             <span class="dess">
-            <p class="des_name">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥8.8</span><del class="old_price">￥48</del></p>
+            <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
+            <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span>
+              <del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del>
+            </p>
           </span>
           </div>
         </div>
@@ -25,51 +27,55 @@
     </div>
     <router-link to="/YouHui/subjects">
       <nav>
-        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <img :src="type2.image" alt="" style="width: 100%;height: 100%;">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
-          <p style="font-size: .28rem;">XX专区</p>
+          <p style="font-size: .28rem;" v-text="type2.store_name">XX专区</p>
           <img src="/static/images/youhui_bd2_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
         </div>
-        <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
+        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
       </nav>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav2">
-        <div class="box1-item" v-for="i in item2" id="box2-item" style="width: 2.49rem;">
-          <img src="../assets/logo.png" alt="">
+        <div class="box1-item" v-for="goods2 in goods2" id="box2-item" style="width: 2.49rem;">
+          <img :src="goods2.pict_url" alt="">
           <span class="dess">
-            <p class="des_name">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥8.8</span><del class="old_price">￥48</del></p>
+            <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
+            <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span>
+              <del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del>
+            </p>
           </span>
         </div>
       </div>
     </scroller>
     <router-link to="/YouHui/discount">
       <nav>
-        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <img :src="type3.image" alt="" style="width: 100%;height: 100%;">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd3.png);background-size: 100%;">
-          <p style="font-size: .28rem;">XX专区</p>
+          <p style="font-size: .28rem;" v-text="type3.store_name">XX专区</p>
           <img src="/static/images/youhui_bd3_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
         </div>
-        <img src="../assets/sanjiao.png" alt="" style="border: 1px solid red" class="sanjiao">
+        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
       </nav>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav3">
-        <div class="box1-item" v-for="i in item2" id="box3-item" style="width: 2.49rem;">
-          <img src="../assets/logo.png" alt="">
+        <div class="box1-item" v-for="goods3 in goods3" id="box3-item" style="width: 2.49rem;">
+          <img :src="goods3.pict_url" alt="">
           <span class="dess">
-            <p class="des_name">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥8.8</span><del class="old_price">￥48</del></p>
+            <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
+            <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span>
+              <del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>
+            </p>
           </span>
         </div>
       </div>
     </scroller>
     <router-link to="/YouHui/essential">
       <nav>
-        <img src="../assets/logo.png" alt="" style="width: 100%;height: 100%;">
+        <img :src="type4.image" alt="" style="width: 100%;height: 100%;">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
-          <p style="font-size: .28rem;">XX专区</p>
+          <p style="font-size: .28rem;" v-text="type4.store_name">XX专区</p>
           <img src="/static/images/youhui_bd4_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
         </div>
       </nav>
@@ -77,40 +83,10 @@
     <div class="main">
       <div class="main_goods">
         <ul class="goods">
-          <li class="goods_list">
-            <img src="../assets/logo.png" alt="">
+          <li class="goods_list" v-for="list in goods4">
+            <img :src="list.pict_url" alt="">
             <div class="content">
-              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                <span class="num">518件已售</span>
-              </div>
-            </div>
-          </li>
-          <li class="goods_list">
-            <img src="../assets/logo.png" alt="">
-            <div class="content">
-              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                <span class="num">518件已售</span>
-              </div>
-            </div>
-          </li>
-          <li class="goods_list">
-            <img src="../assets/logo.png" alt="">
-            <div class="content">
-              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                <span class="num">518件已售</span>
-              </div>
-            </div>
-          </li>
-          <li class="goods_list">
-            <img src="../assets/logo.png" alt="">
-            <div class="content">
-              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+              <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div class="des_b">
                 <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
                 <span class="num">518件已售</span>
@@ -138,32 +114,35 @@
     },
     data() {
       return {
-        list1:[],
+        type1:{},
+        goods1:[],
+        type2:{},
+        goods2:[],
+        type3:{},
+        goods3:[],
+        type4:{},
+        goods4:[],
         showList1: true,
         scrollTop: 0,
         onFetching: false,
         bottomCount: 20,
-        item1: [0, 1, 3, 4, 4, 4, 4, 4],
-        item2: [0, 1, 3, 4, 4, 4, 4, 4],
-        item3: [0, 1, 3, 4, 4, 4, 4, 4]
       }
     },
     mounted() {
-      this.init()
-    },
-    methods: {
-//      动态的更改scroller的宽度
-      init() {
+      this.$nextTick(function(){
+        //      动态的更改scroller的宽度
         const self = this;
         const w = document.getElementById('box1-item').offsetWidth;
-        const n1 = self.item1.length;
-        const n2 = self.item2.length;
-        const n3 = self.item3.length;
-//        屏幕大小变化时会报错
+        const n1 = self.goods1.length;
+        const n2 = self.goods2.length;
+        const n3 = self.goods3.length;
         self.$refs.nav1.style.width = (w * n1) + 'px';
         self.$refs.nav2.style.width = (w * n2) + 'px';
         self.$refs.nav3.style.width = (w * n3) + 'px';
-      },
+      })
+
+    },
+    methods: {
       //      9.9专区
       getlist1:function(){
         this.showLoading=true
@@ -172,7 +151,60 @@
           url:'/api/c_index_nine',
         }).then((res)=>{
           if(res.data.code=='200'){
-            this.list1 = res.data.data
+            this.type1 = res.data.data.type
+            this.goods1 = res.data.data.goods
+          }else if(res.data.code=='400'){
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+
+      //      19.9专区
+      getlist2:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/c_index_nineteen',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.type2 = res.data.data.type
+            this.goods2 = res.data.data.goods
+          }else if(res.data.code=='400'){
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      应季必备专区
+      getlist3:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/c_index_discount',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.type3 = res.data.data.type
+            this.goods3 = res.data.data.goods
+          }else if(res.data.code=='400'){
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      聚折扣专区
+      getlist4:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/c_index_season',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.type4 = res.data.data.type
+            this.goods4 = res.data.data.goods
           }else if(res.data.code=='400'){
 
           }
@@ -182,7 +214,10 @@
       },
     },
     created:function(){
-//      this.getlist1()
+      this.getlist1()
+      this.getlist2()
+      this.getlist3()
+      this.getlist4()
     }
   }
 </script>
@@ -228,7 +263,7 @@
 
   .box1-item img {
     width: 2.42rem;
-    height: 1.5rem;
+    height: 2rem;
   }
 
   .box1-item:first-child {
@@ -236,13 +271,13 @@
   }
 
   .dess {
-    text-align: center;
+    /*text-align: center;*/
     font-size: .24rem;
   }
 
   .des_name {
     color: #333;
-    padding: 0 .1rem;
+    padding: 0 .1rem .1rem;
     word-wrap: break-word;
     -webkit-line-clamp: 2;
     display: -webkit-box;

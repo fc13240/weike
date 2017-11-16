@@ -9,7 +9,7 @@
        </tab>
      </div>
      <div class="main">
-        <div v-show="index==0">
+        <div v-show="index==1">
           <div class="list_m" v-for="list in orderSquareList">
             <div class="list">
               <div class="user_info">
@@ -26,7 +26,7 @@
             </div>
           </div>
         </div>
-       <div v-show="index==1">
+       <div v-show="index==0">
          <div class="list_m" v-for="list2 in myOrderList">
            <div class="list">
              <div class="user_info">
@@ -42,34 +42,40 @@
          </div>
        </div>
      </div>
-     <div style="height: 1.56rem;"></div>
-     <div class="btn">
-       <router-link to="/personCenter/toShowList">
-         <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">去晒单</x-button>
-       </router-link>
-     </div>
+     <!--<div style="height: 1.56rem;"></div>-->
+     <!--<div class="btn">-->
+       <!--<router-link to="/personCenter/toShowList">-->
+         <!--<x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">去晒单</x-button>-->
+       <!--</router-link>-->
+     <!--</div>-->
+     <loading v-model="showLoading" :text="loadText"></loading>
+
    </div>
 </template>
 <script>
-  import {XHeader,Tab, TabItem, XButton } from 'vux'
+  import {XHeader,Tab, TabItem, XButton,Loading} from 'vux'
   const list = () => [
-    {
-    title:'晒单广场',
-      src:'../static/images/shaidan1.png'
-  }, {
+     {
     title:'我的晒单',
       src:'../static/images/shaidan2.png'
-  }]
+  },{
+      title:'晒单广场',
+      src:'../static/images/shaidan1.png'
+    }
+  ]
   export default {
     name:'shareList',
     components:{
       XHeader,
       Tab, TabItem,
-      XButton
+      XButton,
+      Loading
 
     },
     data () {
       return {
+        showLoading:false,
+        loadText:'加载中...',
         orderSquareList:[],
         myOrderList:[],
         list2: list(),

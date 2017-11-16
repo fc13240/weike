@@ -6,7 +6,7 @@
     <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
     <div>
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
-        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item"
+        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @on-item-click="change(list2,index)"
                   :key="index">{{item}}
         </tab-item>
       </tab>
@@ -17,7 +17,7 @@
       <!--</swiper>-->
     </div>
     <div class="main_goods">
-      <div v-show="index==0">
+      <div>
         <ul class="goods" v-for="goodList1 in goodList1">
           <li class="goods_list">
             <img :src="goodList1.small_images" alt="" :onerror="defaultImg">
@@ -28,67 +28,74 @@
                   <!--{{goodList1.volume}}</span>件</span>-->
               </p>
               <p class="des_b" style="position: relative;margin-top: .1rem;">
-                <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price}}</span>
+                <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price.rmb}}<span v-show="goodList1.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList1.zk_final_price.corner}}</span></span>
                 <span class="num">{{goodList1.volume}}件已售</span>
               </p>
             </div>
           </li>
         </ul>
       </div>
-      <div v-show="index==1">
-        <ul class="goods" v-for="goodList2 in goodList2">
-          <li class="goods_list">
-            <img :src="goodList2.small_images" alt="" :onerror="defaultImg">
-            <div class="content">
-              <div class="des" v-text="goodList2.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList2.volume}}元宝</span><span class="right">剩余<span
-                style="color: #ffb205;">{{goodList2.volume}}</span>件</span></p>
-              <p class="des_b" style="position: relative;margin-top: .1rem;">
-                <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList2.zk_final_price}}</span>
-                <span class="num">{{goodList2.volume}}件已售</span>
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div v-show="index==2">
-        <ul class="goods" v-for="goodList3 in goodList3">
-          <li class="goods_list">
-            <img :src="goodList3.small_images" alt="" :onerror="defaultImg">
-            <div class="content">
-              <div class="des" v-text="goodList3.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList3.volume}}元宝</span><span class="right">剩余<span
-                style="color: #ffb205;">{{goodList3.volume}}</span>件</span></p>
-              <p class="des_b" style="position: relative;margin-top: .1rem;">
-                <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList3.zk_final_price}}</span>
-                <span class="num">{{goodList3.volume}}件已售</span>
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div v-show="index==3">
-        <ul class="goods" v-for="goodList4 in goodList4">
-          <li class="goods_list">
-            <img :src="goodList4.small_images" alt="" :onerror="defaultImg">
-            <div class="content">
-              <div class="des" v-text="goodList4.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList4.volume}}元宝</span><span class="right">剩余<span
-                style="color: #ffb205;">{{goodList4.volume}}</span>件</span></p>
-              <p class="des_b" style="position: relative;margin-top: .1rem;">
-                <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList4.zk_final_price}}</span>
-                <span class="num">{{goodList4.volume}}件已售</span>
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <!--<div v-show="index==1">-->
+        <!--<ul class="goods" v-for="goodList2 in goodList2">-->
+          <!--<li class="goods_list">-->
+            <!--<img :src="goodList2.small_images" alt="" :onerror="defaultImg">-->
+            <!--<div class="content">-->
+              <!--<div class="des" v-text="goodList2.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
+              <!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList2.volume}}元宝</span>-->
+                <!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
+                <!--&lt;!&ndash;style="color: #ffb205;">{{goodList2.volume}}</span>件</span>&ndash;&gt;-->
+              <!--</p>-->
+              <!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
+                <!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList2.zk_final_price.rmb}}<span v-show="goodList2.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList2.zk_final_price.corner}}</span></span>-->
+                <!--<span class="num">{{goodList2.volume}}件已售</span>-->
+              <!--</p>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div v-show="index==2">-->
+        <!--<ul class="goods" v-for="goodList3 in goodList3">-->
+          <!--<li class="goods_list">-->
+            <!--<img :src="goodList3.small_images" alt="" :onerror="defaultImg">-->
+            <!--<div class="content">-->
+              <!--<div class="des" v-text="goodList3.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
+              <!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList3.volume}}元宝</span>-->
+                <!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
+                <!--&lt;!&ndash;style="color: #ffb205;">{{goodList3.volume}}</span>件</span>&ndash;&gt;-->
+              <!--</p>-->
+              <!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
+                <!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList3.zk_final_price.rmb}}<span v-show="goodList3.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList3.zk_final_price.corner}}</span></span>-->
+                <!--<span class="num">{{goodList3.volume}}件已售</span>-->
+              <!--</p>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div v-show="index==3">-->
+        <!--<ul class="goods" v-for="goodList4 in goodList4">-->
+          <!--<li class="goods_list">-->
+            <!--<img :src="goodList4.small_images" alt="" :onerror="defaultImg">-->
+            <!--<div class="content">-->
+              <!--<div class="des" v-text="goodList4.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
+              <!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList4.volume}}元宝</span>-->
+                <!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
+                <!--&lt;!&ndash;style="color: #ffb205;">{{goodList4.volume}}</span>件</span>&ndash;&gt;-->
+              <!--</p>-->
+              <!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
+                <!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList4.zk_final_price.rmb}}<span v-show="goodList4.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList4.zk_final_price.corner}}</span></span>-->
+                <!--<span class="num">{{goodList4.volume}}件已售</span>-->
+              <!--</p>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
+
   </div>
 </template>
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem,XHeader} from 'vux'
-  import Vue from 'vue'
+  import {Tab, TabItem, Swiper, SwiperItem,XHeader,Loading} from 'vux'
 
   const list = () => ['价格优先', '销量优先', '元宝优先', '时间优先']
   const imgList = [
@@ -108,22 +115,24 @@
       TabItem,
       Swiper,
       SwiperItem,
-      Vue,
+      Loading,
       XHeader
     },
     data() {
       return {
 
         goodList1:[],
-        goodList2:[],
-        goodList3:[],
-        goodList4:[],
+//        goodList2:[],
+//        goodList3:[],
+//        goodList4:[],
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
         banner:'',
         demo03_list: demoList,
         list2: list(),
         demo2: '全部',
         index: 0,
+        showLoading:false,
+        loadText:'加载中...',
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
         }
@@ -132,111 +141,122 @@
     methods: {
       //      获取粉丝福利banner
       getBanner:function(){
+        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/fanswelfare_banner'
         }).then((res)=>{
-          const banner = res.data.data.banner[0].banner_image
-          this.banner = banner
+         if(res.data.code=='200'){
+           this.showLoading=false
+           const banner = res.data.data.banner[0].banner_image
+           this.banner = banner
+         }else{
+           this.showLoading=false
+         }
         },(err)=>{
           console.log(err)
         })
       },
       //      获取粉丝福利商品列表====价格
-      getList1:function(){
+      getList1:function(e){
+        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/fanswelfare',
-          data:{sorts_type:5}
+          data:{sorts_type:e}
         }).then((res)=>{
-          const goodList1 = res.data.data.goods_list
-          this.goodList1 = goodList1
+          if(res.data.code=='200'){
+            this.showLoading=false
+            const goodList1 = res.data.data.goods_list
+            this.goodList1 = goodList1
+          }else{
+            this.showLoading=false
+          }
 //          console.log(priceList)
         },(err)=>{
           console.log(err)
         })
       },
-      //      获取粉丝福利商品列表====销量
-      getList2:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/fanswelfare',
-          data:{sorts_type:6}
-        }).then((res)=>{
-          const goodList2 = res.data.data.goods_list
-          this.goodList2= goodList2
-//          console.log(priceList)
-        },(err)=>{
-          console.log(err)
-        })
-      },
-      //      获取粉丝福利商品列表====元宝
-      getList3:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/fanswelfare',
-          data:{sorts_type:7}
-        }).then((res)=>{
-          const goodList3 = res.data.data.goods_list
-          this.goodList3 = goodList3
-//          console.log(priceList)
-        },(err)=>{
-          console.log(err)
-        })
-      },
-      //      获取粉丝福利商品列表====时间
-      getList4:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/fanswelfare',
-          data:{sorts_type:8}
-        }).then((res)=>{
-          const goodList4 = res.data.data.goods_list
-          this.goodList4 = goodList4
-//          console.log(priceList)
-        },(err)=>{
-          console.log(err)
-        })
-      },
-
-      onItemClick(index) {
-        console.log('on item click:', index)
-      },
-      addTab() {
-        if (this.list2.length < 5) {
-          this.list2 = list().slice(0, this.list2.length + 1)
-        }
-      },
-      removeTab() {
-        if (this.list2.length > 1) {
-          this.list2 = list().slice(0, this.list2.length - 1)
-        }
-      },
-      next() {
-        if (this.index === this.list2.length - 1) {
-          this.index = 0
-        } else {
-          ++this.index
-        }
-      },
-      prev() {
-        if (this.index === 0) {
-          this.index = this.list2.length - 1
-        } else {
-          --this.index
+//      //      获取粉丝福利商品列表====销量
+//      getList2:function(){
+//        this.showLoading=true
+//        this.$http({
+//          method:'POST',
+//          url:'/api/fanswelfare',
+//          data:{sorts_type:6}
+//        }).then((res)=>{
+//         if(res.data.code=='200'){
+//           this.showLoading=false
+//           const goodList2 = res.data.data.goods_list
+//           this.goodList2= goodList2
+//         }else{
+//           this.showLoading=false
+//         }
+////          console.log(priceList)
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
+//      //      获取粉丝福利商品列表====元宝
+//      getList3:function(){
+//        this.showLoading=true
+//        this.$http({
+//          method:'POST',
+//          url:'/api/fanswelfare',
+//          data:{sorts_type:7}
+//        }).then((res)=>{
+//          if(res.data.code=='200'){
+//            this.showLoading=false
+//            const goodList3 = res.data.data.goods_list
+//            this.goodList3 = goodList3
+//          }else{
+//            this.showLoading=false
+//          }
+////          console.log(priceList)
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
+//      //      获取粉丝福利商品列表====时间
+//      getList4:function(){
+//        this.showLoading=true
+//        this.$http({
+//          method:'POST',
+//          url:'/api/fanswelfare',
+//          data:{sorts_type:8}
+//        }).then((res)=>{
+//          const goodList4 = res.data.data.goods_list
+//          this.goodList4 = goodList4
+////          console.log(priceList)
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
+      change(list2,index){
+        this.goodList1=''
+        if(index==0){
+           this.getList1(5)
+        }else if(index==1){
+          this.getList1(6)
+        }else if(index==2){
+          this.getList1(7)
+        }else if(index==3){
+          this.getList1(8)
         }
       }
+
     },
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
 //      title[0].style.color='#333'
     },
     created:function(){
+      this.showLoading=true
       this.getBanner();
-      this.getList1();
-      this.getList2();
-      this.getList3();
-      this.getList4();
+      this.getList1(5);
+//      this.getList2();
+//      this.getList3();
+//      this.getList4();
     }
   }
 </script>

@@ -77,6 +77,7 @@ const routes = [
   },
   {
     path: '/PersonCenter',
+    name:'PersonCenter',
     component: PersonCenter,
     meta: {
       showFooter: true,
@@ -85,6 +86,7 @@ const routes = [
   },
   {
     path: '/home/yuanBaoShop',
+    name:'yuanBaoShop',
     component: yuanBaoShop,
     meta: {
       title:'元宝商城'
@@ -145,6 +147,7 @@ const routes = [
   },
   {
     path: '/PersonCenter/userInfo',
+    name:'userInfo',
     component: userInfo,
     meta: {
       title:'用户信息'
@@ -164,8 +167,16 @@ const routes = [
       title:'我的足迹'
     }
   },
+  // {
+  //   path:'/home/exchangeDetail/:id/:address_id',
+  //   name:'exchangeDetail',
+  //   component:exchangeDetail,
+  //   meta: {
+  //     title:'兑换详情'
+  //   }
+  // },
   {
-    path:'/home/exchangeDetail/:id',
+    path:'/home/exchangeDetail',
     name:'exchangeDetail',
     component:exchangeDetail,
     meta: {
@@ -181,6 +192,7 @@ const routes = [
   },
   {
     path:'/personCenter/sign',
+    name:'sign',
     component:sign,
     meta: {
       title:'每日签到'
@@ -188,6 +200,7 @@ const routes = [
   },
   {
     path:'/personCenter/feedback',
+    name:'feedback',
     component:feedback,
     meta: {
       title:'意见反馈'
@@ -201,7 +214,7 @@ const routes = [
     }
   },
   {
-    path:'/personCenter/addressList',
+    path:'/personCenter/addressList/:type',
     name:'addressList',
     component:addressList,
     meta: {

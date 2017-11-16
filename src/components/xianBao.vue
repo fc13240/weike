@@ -160,6 +160,19 @@
           console.log(err)
         })
       },
+//      //      获取超值线报抢购商品
+//      getGoodsList:function(){
+//        this.$http({
+//          method:'POST',
+//          url:'/api/newspaper_goods'
+//        }).then((res)=>{
+//          const time = res.data.data.time;
+//          this.time = time;
+//          console.log(time)
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
     },
     mounted(){
 
@@ -167,6 +180,7 @@
     created:function(){
       this.getBanner()
       this.getTime()
+//      this.getGoodsList()
     }
   }
 

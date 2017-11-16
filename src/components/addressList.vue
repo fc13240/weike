@@ -16,11 +16,13 @@
           </group>
         </router-link>
         <p
-          style="background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;">
+          style="overflow:hidden;background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;">
          <span v-show="list.is_default==1"> <img src="../assets/checked.png" alt=""
                      style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;">
           默认地址 </span>
-          <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;" v-show="list.is_default==2">使用</span>
+          <router-link :to="{name:'exchangeDetail',query:{id:id,address_id:list.address_id}}" v-show="from==1">
+            <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;" v-show="list.is_default==2">使用</span>
+          </router-link>
           <span style="color: #333;float: right;" @click="del(list.address_id)"><img src="../assets/trash.png" alt=""
                                                             style="margin: -.09rem .1rem 0 0; width: .28rem;height: .28rem;vertical-align: middle;">删除</span>
         </p>
@@ -52,6 +54,8 @@
         showLoading:false,
         loadText:'加载中...',
         addressList:[],
+        from:'',
+        id:'',
       }
     },
     methods:{
@@ -96,6 +100,9 @@
       },
     },
     created:function(){
+      this.id = this.$route.params.id
+//      判断该页面是从兑换商品还是个人中心跳转过来的
+      this.from = this.$route.params.type
       this.getAddressList()
     }
   }

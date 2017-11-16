@@ -17,19 +17,11 @@
     <div v-show="searchResults" id="hot">
       <p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>
       <ul class="hot_list">
-        <li>冬装</li>
-        <li>雪地靴</li>
-        <li>iPhone手机壳</li>
-        <li>火锅</li>
-        <li>烤箱</li>
+        <li v-for="hotList in hotList" v-text="hotList.keywords">冬装</li>
       </ul>
-      <p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;"></p>
+      <p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;" @click="del"></p>
       <ul class="hot_list">
-        <li>冬装</li>
-        <li>雪地靴</li>
-        <li>机壳</li>
-        <li>火锅</li>
-        <li>烤箱</li>
+        <li v-for="historyList in historyList" v-text="historyList.keywords">冬装</li>
       </ul>
     </div>
     <div v-show="!searchResults" id="results">
@@ -69,6 +61,22 @@
       Tab,
       TabItem
     },
+    data() {
+      return {
+        hotList:[],
+        historyList:[],
+        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        searchResults:true,
+        results: [],
+        value: '',
+        list2: list(),
+        demo2: '全部',
+        index: 0,
+        getBarWidth: function (index) {
+          return (index + 1) * 22 + 'px'
+        }
+      }
+    },
     mounted() {
 //      const title = document.getElementsByClassName('vux-header-title');
 //      title[0].style.color = '#333'
@@ -76,6 +84,54 @@
       search[0].style.cssText="color:#333;font-size:.28rem;"
     },
     methods: {
+      //      热门推荐列表
+      getHotList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/searchHot'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.hotList = res.data.data.hot
+          }else{
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      搜索历史列表
+      getHistoryList:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/searchPage'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.historyList = res.data.data.history
+          }else{
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      清除历史列表
+      del:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/delSearch'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.$vux.toast.show({
+              text:res.data.data.message
+            })
+            this.historyList=[]
+          }else{
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
       setFocus() {
         this.$refs.search.setFocus()
       },
@@ -136,19 +192,9 @@
         }
       }
     },
-    data() {
-      return {
-        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-        searchResults:true,
-        results: [],
-        value: '',
-        list2: list(),
-        demo2: '全部',
-        index: 0,
-        getBarWidth: function (index) {
-          return (index + 1) * 22 + 'px'
-        }
-      }
+    created:function(){
+      this.getHotList()
+      this.getHistoryList()
     }
   }
 //  function getResult (val) {

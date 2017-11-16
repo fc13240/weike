@@ -16,29 +16,29 @@
           </div>
           <p class="has_num">剩余 <span style="color: #ff526d;" v-text="data.stock">88</span> 件</p>
       </div>
-        <x-number :value="1"  fillable :title="'请输入兑换数量'" style="padding: 10px 0;font-size: .24rem;color: #666666;border-bottom: 1px solid #e9e9e9;"></x-number>
+        <x-number v-model="value"  fillable :title="'请输入兑换数量'" style="padding: 10px 0;font-size: .24rem;color: #666666;border-bottom: 1px solid #e9e9e9;"></x-number>
     </div>
     <div style=" background-color: white;">
-      <div style="padding: .2rem .3rem;" v-show="false">
+      <div style="padding: .2rem .3rem;" v-show="data.type==2">
         <p style="font-size: .24rem;color: #666;padding: .2rem  0 .1rem;">请输入您提现的支付宝账号</p>
         <div style="margin: .2rem 0 .5rem;">
           <img src="../assets/alipay_img.png" alt="" style="width: 1.38rem;height: .48rem;vertical-align: middle">
-          <input type="text"
+          <input type="text" v-model="alipay"
                  style="vertical-align: middle;outline: none;width: 4.8rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
         </div>
       </div>
-      <div style="padding: .2rem .3rem;" v-show="false">
+      <div style="padding: .2rem .3rem;" v-show="data.type==1">
         <p style="font-size: .24rem;color: #666;margin: .2rem  0 .1rem;">请输入您要充值的手机号</p>
         <div style="display: inline-block;">
           <input type="text"
-                 style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
+                 style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;" v-model="tel">
         </div>
       </div>
-      <div style="padding-bottom: .25rem;">
-          <cell title="配送至:" value="修改地址" is-link link="/PersonCenter/addressList"></cell>
+      <div style="padding-bottom: .25rem;" v-show="data.product_type==2">
+          <cell title="配送至:" value="修改地址" is-link :link="{name:'addressList',params:{type:'1',id:id}}"></cell>
         <div style="font-size: .24rem;border: 1px solid #f4f4f4;width: 5.8rem;margin: 0 auto;padding: .26rem .3rem;">
-          <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;">默认</span>{{address.province+address.country+address.district+address.address}}</p>
-          <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;" v-text="address.person_name">姓名</span><span v-text="address.telephone">13298309372</span></p>
+          <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;" v-text="addressInfo.is_default==1?'默认':'地址'">默认</span>{{addressInfo.address_array+addressInfo.address}}</p>
+          <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;" v-text="addressInfo.person_name">姓名</span><span v-text="addressInfo.telephone">13298309372</span></p>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
     </div>
     <div style="height: 1.56rem;"></div>
     <div class="btn">
-      <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">立刻兑换</x-button>
+      <x-button @click.native="toExchange()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">立刻兑换</x-button>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
@@ -78,24 +78,23 @@
         loadText:'加载中...',
         roundValue: 0,
         data:{},
-//        id:'',
-//        product_image:'',
-//        product_name:'',
         rmb:'',
         corner:'',
-//        exchange_acer:'',
-//        stock:'',
-//        exchange_brief:'',
-//        content:'',
-//        product_type:'',
-//        small_images:[],
         address:{},
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+        type:1,
+        value:1,
+        id:'',
+        tel:'',
+        alipay:'',
+        address_id:'',
+        addressInfo:{}
       }
     },
     methods: {
       //      兑换详情-商品详情
       getExchangeInfo:function(){
+        this.ids = this.$route.query.address_id
         this.showLoading=true
         this.$http({
           method:'POST',
@@ -106,17 +105,18 @@
             this.showLoading=false
             const data = res.data.data.product_info
             this.data= data
-//            this.product_image = data.product_image
-//            this.product_id=data.product_id
-//            this.product_name=data.product_name
+            this.address_id = res.data.data.default_address.address_id
             this.corner = data.market_price.corner
             this.rmb = data.market_price.rmb
-//            this.exchange_acer=data.exchange_acer
-//            this.stock = data.stock
-//            this.exchange_brief = data.exchange_brief
-//            this.content=data.content
-//            this.product_type = data.product_type
-//            this.small_images = data.small_images
+//            console.log(res.data.data.)
+            if(this.ids){
+              console.log('111')
+              console.log(this.ids)
+              this.getAddressDetail(this.ids)
+            }else{
+              console.log('222')
+              this.getAddressDetail(res.data.data.default_address.address_id)
+            }
 
           }else if(res.data.code=='400'){
             this.showLoading=false
@@ -125,16 +125,59 @@
           console.log(err)
         })
       },
-      //      默认的收货地址
-      getAddress:function(){
+      //      收货地址详情
+      getAddressDetail:function(e){
+        this.showLoading=true;
+        this.$http({
+          method:'GET',
+          url:'/api/updateAddress',
+          params:{address_id:e}
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false;
+            this.addressInfo=res.data.data.address_info
+            console.log(this.addressInfo)
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      兑换商品
+      toExchange:function(){
+
+        if(this.ids){
+          var data={
+            number:this.value,
+            product_id:this.id,
+            telephone:this.tel,
+            alipay:this.alipay,
+            address_id:this.ids
+          }
+        }else{
+          var data={
+            number:this.value,
+            product_id:this.id,
+            telephone:this.tel,
+            alipay:this.alipay,
+            address_id:this.address_id
+          }
+        }
+        console.log(data)
         this.showLoading=true
         this.$http({
           method:'POST',
-          url:'/api/exchangeinfo_address',
+          url:'/api/exchange',
+          data:data
         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            this.address = res.data.data.default_address
+            this.$vux.toast.show({
+              text:res.data.data.message
+            })
+            this.$router.replace({name: 'yuanBaoShop'})
+
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
@@ -158,11 +201,10 @@
       svg[1].style.fill='#878787';
     },
     created:function(){
+
       this.showLoading=true
-      const id = this.$route.params.id
-      this.id = id
+      this.id = this.$route.query.id
       this.getExchangeInfo()
-      this.getAddress()
     }
   }
 </script>

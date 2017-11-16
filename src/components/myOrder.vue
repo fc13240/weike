@@ -31,8 +31,8 @@
             <img src="../assets/1.jpg" alt="">
             <div class="order_main_des" style="width: calc(100% - 1.44rem);">
               <div style="padding: 0 .15rem;">
-                <p style="font-size: .28rem;color: #333;">{{list.title}} <span style="float: right;">￥{{list.zk_final_price}}</span></p>
-                <p style="font-size: .24rem;color: #999;">{{list.title}}<del style="float: right;">￥{{list.reserve_price}}</del></p>
+                <p style="font-size: .28rem;color: #333;">{{list.title}} <span style="float: right;">￥{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span></p>
+                <p style="font-size: .24rem;color: #999;">{{list.title}}<del style="float: right;">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del></p>
                 <p style="margin-top: .3rem;"> <span class="btn1">返{{list.back_acer}}元宝</span><span class="num">×{{list.back_acer}}</span></p>
               </div>
              </div>

@@ -7,7 +7,7 @@
         <x-address title="所在地区" v-model="address"  :list="addressData" value-text-align="center" style="font-size: .28rem;" ></x-address>
         <textarea name="des" placeholder="详细地址" class="des" v-model="detail">
     </textarea>
-      <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check"></checklist>
+      <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check" v-show="is_default!==1"></checklist>
         </group>
       <div class="btn">
         <x-button @click.native="click()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">保存</x-button>
@@ -44,7 +44,8 @@
         address:[],
         detail:'',
         type:'',
-        value2name:''
+        value2name:'',
+        is_default:'',
       }
     },
     methods: {
@@ -115,6 +116,7 @@
             this.tel=res.data.data.address_info.telephone
             this.address=res.data.data.address_info.address_array
             this.type = res.data.data.address_info.is_default
+            this.is_default=res.data.data.address_info.is_default
             this.detail=res.data.data.address_info.address
             if(res.data.data.address_info.is_default=='1'){
               this.checkValue=['1']

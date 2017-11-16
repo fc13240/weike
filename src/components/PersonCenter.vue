@@ -1,10 +1,10 @@
 <template>
   <div>
     <router-link class="top" to="/personCenter/userInfo" tag="div">
-      <img src="../assets/1.jpg" alt="" class="photo">
+      <img :src="info.head_image" alt="" class="photo" :onerror="defaultImg">
       <div class="info">
-        <p class="name">昵称</p>
-        <p class="num"><img src="../assets/yuanBao_white.png" alt="" class="yuanBao">元宝 88</p>
+        <p class="name" v-text="info.user_name">昵称</p>
+        <p class="num"><img src="../assets/yuanBao_white.png" alt="" class="yuanBao">元宝 {{info.user_acer}}</p>
       </div>
       <img src="../assets/gt.png" alt=""
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
@@ -25,7 +25,7 @@
           <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">
-        <router-link tag="li" to="/PersonCenter/addressList"><img src="../assets/receive_manage.png">
+        <router-link tag="li" :to="{name:'addressList',params:{type:2}}"><img src="../assets/receive_manage.png">
           <span>收货管理</span></router-link>
         <router-link tag="li" to="/PersonCenter/myTracks"><img src="../assets/my_footer.png">
           <span>我的足迹</span></router-link>
@@ -40,19 +40,17 @@
       <cell title="消息中心" is-link link="/PersonCenter/notice" style="padding-left: 45px;">
         <div class="badge-value">
           <span class="vertical-middle"> &nbsp;</span>
-          <badge text="888"></badge>
+          <badge :text="info.message_count" v-show="info.message_count!==0"></badge>
         </div>
       </cell>
     </div>
     <panel :list="list" :type="type" style="margin-bottom: 1.06rem;margin-top: 0;"></panel>
-
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 
 </template>
 <script>
-  import Vue from 'vue'
-  import AppHeader from './Header'
-  import {Badge,Group, Cell, CellBox,Panel} from 'vux'
+  import {Badge,Group, Cell, CellBox,Panel,Loading} from 'vux'
   import  share_list from '../assets/share_list.png'
   import share_oters from '../assets/share_others.png'
   import help_center from '../assets/help_center.png'
@@ -61,22 +59,25 @@
   export default {
     name: 'PersonCenter',
     components: {
-      Vue,
-      AppHeader,
       Group,
       Cell,
       CellBox,
       Panel,
-      Badge
+      Badge,
+      Loading
     },
-    methods: {},
     data() {
       return {
+        info:{},
+        from:'',
         type: '3',
+        showLoading:false,
+        loadText:'加载中...',
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
         list: [
           {
             src: share_list,
-            title: '晒单赚元宝<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">评价晒单赚元宝</span>',
+            title: '我的晒单<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">评价晒单赚元宝</span>',
             url: '/personCenter/shareList'
           },
           {
@@ -102,6 +103,31 @@
 
         ]
       }
+    },
+    methods: {
+//      用户信息
+      userInfo:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/center',
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.showLoading=false
+            this.info = res.data.data
+          }else if(res.data.code=='400'){
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+     this.userInfo()
+    },
+    mounted:function(){
+
     }
   }
 </script>
@@ -133,6 +159,7 @@
 
   .num {
     font-size: .2rem;
+
   }
 
   .yuanBao {

@@ -110,7 +110,7 @@
             this.getNums = res.data.data.acer
             this.is_sign = res.data.data.is_sign;
             this.member_acer = res.data.data.member_acer
-            console.log(res.data.data.is_sign)
+//            console.log(res.data.data.is_sign)
           }else if(res.data.code=='400'){
 
           }
@@ -179,6 +179,7 @@
       cancel(){
         document.body.style.overflow = 'scroll';
         this.show=false
+        this.$router.replace({name: 'sign'})
       }
     },
     created:function(){
