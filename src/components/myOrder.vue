@@ -38,7 +38,7 @@
              </div>
           </div>
           <p class="orderNum" style="color: #999;">总价: <span style="font-size: .24rem;color: #ff526d;">￥</span><span style="color: #ff526d;font-size: .32rem;" v-text="list.back_acer">88.8</span>
-            <router-link to="/personCenter/toShowList"><span class="btn2">去晒单</span></router-link>
+            <router-link :to="{name:'toShowList',query:{order_num:list.order_num}}"><span class="btn2">去晒单</span></router-link>
           </p>
         </div>
       </div>
@@ -94,26 +94,33 @@
       },
       //      提交订单操作
       submit: function () {
-        console.log(this.orderNum)
-        this.$http({
-          method: 'POST',
-          url: '/api/addOrder',
-          data: {order_num: this.orderNum}
-        }).then((res) => {
-          if (res.data.code == '200') {
-            this.orderNum = ''
-            this.$vux.toast.show({
-              text: res.data.data.message
-            })
+        if(this.orderNum !==''){
+          this.$http({
+            method: 'POST',
+            url: '/api/addOrder',
+            data: {order_num: this.orderNum}
+          }).then((res) => {
+            if (res.data.code == '200') {
+              this.orderNum = ''
+              this.$vux.toast.show({
+                text: res.data.data.message
+              })
 
-          } else {
-            this.$vux.toast.show({
-              text: res.data.data.message
-            })
-          }
-        }, (err) => {
-          console.log(err)
-        })
+            } else {
+              this.$vux.toast.show({
+                text: res.data.data.message
+              })
+            }
+          }, (err) => {
+            console.log(err)
+          })
+        }else{
+          this.$vux.toast.show({
+            type:'warn',
+            text: "订单号不能为空！"
+          })
+        }
+
       },
       change: function (list2, index) {
         this.orderList='';

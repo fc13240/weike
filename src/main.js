@@ -115,14 +115,17 @@ const routes = [
   },
   {
     path: '/YouHui/subjects',
+    name:'subjects',
     component: subjects,
   },
   {
     path: '/YouHui/discount',
+    name:'discount',
     component: discount,
   },
   {
     path: '/YouHui/essential',
+    name:'essential',
     component: essential,
   },
   {
@@ -208,6 +211,7 @@ const routes = [
   },
   {
     path:'/personCenter/toShowList',
+    name:'toShowList',
     component:toShowList,
     meta: {
       title:'晒单'

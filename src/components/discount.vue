@@ -5,72 +5,64 @@
     <!--<div style="height: .88rem;"></div>-->
     <div class="main_goods">
       <ul class="goods">
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
+        <li class="goods_list" v-for="list in goodsList">
+          <img :src="list.pict_url" alt="">
           <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">4.9折</span><span class="right">10元劵</span></p>
+            <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+            <p style="position: relative;margin-top: .1rem;"><span class="left">{{list.number}}折</span><span class="right">{{list.number}}元劵</span></p>
             <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span><del style="font-size: .2rem;color: #999;margin-left: .1rem;">￥50</del>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">4.9折</span><span class="right">10元劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span><del style="font-size: .2rem;color: #999;margin-left: .1rem;">￥50</del>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">4.9折</span><span class="right">10元劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span><del style="font-size: .2rem;color: #999;margin-left: .1rem;">￥50</del>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">4.9折</span><span class="right">10元劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span><del style="font-size: .2rem;color: #999;margin-left: .1rem;">￥50</del>
-              <span class="num">518件已售</span>
+              <span class="price"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{list.zk_final_price.corner}}</span></span>
+              <del style="font-size: .2rem;color: #999;margin-left: .1rem;"><i>￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></i></del>
+              <span class="num">{{list.volume}}件已售</span>
             </p>
           </div>
         </li>
       </ul>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {Tab,TabItem,XHeader} from 'vux'
-  import Vue from 'vue'
+  import {Tab,TabItem,XHeader,Loading} from 'vux'
   export default {
     name: 'discount',
     components: {
       Tab,
       TabItem,
-      Vue,
-      XHeader
+      XHeader,
+      Loading
     },
     data() {
       return {
-
+        goodsList:[],
+        showLoading:false,
+        loadText:'加载中...',
       }
     },
     methods: {
-
+      //      聚折扣专区商品
+      getGoods:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/discount'
+        }).then((res)=>{
+          this.showLoading=false
+          if(res.data.code=='200'){
+            this.goodsList = res.data.data.discount_products
+          }else if(res.data.code=='400'){
+//            this.$vux.toast.show({
+//              type:"cancel",
+//              text:res.data.message
+//            })
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+          this.getGoods()
     },
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');

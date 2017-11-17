@@ -9,7 +9,7 @@
       @result-click="resultClick"
       @on-change="getResult"
       :results="results"
-      v-model="value"
+      v-model="keywords"
       @on-focus="onFocus"
       @on-cancel="onCancel"
       @on-submit="onSubmit"
@@ -47,10 +47,11 @@
         </ul>
       </div>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {Search, XHeader,Tab, TabItem} from 'vux'
+  import {Search, XHeader,Tab, TabItem,Loading} from 'vux'
   const list = () => ['综合排序', '销量优先', '价格优先']
 
   export default {
@@ -59,16 +60,19 @@
       XHeader,
       Search,
       Tab,
-      TabItem
+      TabItem,
+      Loading
     },
     data() {
       return {
+        showLoading:false,
+        loadText:'加载中...',
         hotList:[],
         historyList:[],
         goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         searchResults:true,
         results: [],
-        value: '',
+        keywords: '',
         list2: list(),
         demo2: '全部',
         index: 0,
@@ -144,11 +148,9 @@
       onSubmit() {
         this.$refs.search.setBlur();
         this.searchResults=false;
-//        this.$vux.toast.show({
-//          type: 'text',
-//          position: 'top',
-//          text: 'on submit'
-//        })
+        console.log('开始搜索')
+        console.log(this.keywords)
+
       },
       onFocus() {
         this.searchResults=true

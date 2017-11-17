@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <router-link to="/YouHui/subjects">
+      <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
         <nav>
           <img  :src="type1.image" style="width: 100%;height: 100%;">
           <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
@@ -25,7 +25,7 @@
         </div>
       </scroller>
     </div>
-    <router-link to="/YouHui/subjects">
+    <router-link to="/YouHui/subjects" :to="{name:'subjects',query:{type_id:type2.type_id}}">
       <nav>
         <img :src="type2.image" alt="" style="width: 100%;height: 100%;">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
@@ -97,18 +97,17 @@
 
       </div>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
+
   </div>
 </template>
 <script>
-  import {Scroller} from 'vux'
-  import Vue from 'vue'
-  import AppHeader from './Header'
+  import {Scroller,Loading} from 'vux'
 
   export default {
     name: 'ChaoShiHui',
     components: {
-      Vue,
-      AppHeader,
+      Loading,
       Scroller
 
     },
@@ -126,21 +125,9 @@
         scrollTop: 0,
         onFetching: false,
         bottomCount: 20,
+        showLoading:false,
+        loadText:'加载中...',
       }
-    },
-    mounted() {
-      this.$nextTick(function(){
-        //      动态的更改scroller的宽度
-        const self = this;
-        const w = document.getElementById('box1-item').offsetWidth;
-        const n1 = self.goods1.length;
-        const n2 = self.goods2.length;
-        const n3 = self.goods3.length;
-        self.$refs.nav1.style.width = (w * n1) + 'px';
-        self.$refs.nav2.style.width = (w * n2) + 'px';
-        self.$refs.nav3.style.width = (w * n3) + 'px';
-      })
-
     },
     methods: {
       //      9.9专区
@@ -150,11 +137,11 @@
           method:'POST',
           url:'/api/c_index_nine',
         }).then((res)=>{
+          this.showLoading=false
           if(res.data.code=='200'){
             this.type1 = res.data.data.type
             this.goods1 = res.data.data.goods
           }else if(res.data.code=='400'){
-
           }
         },(err)=>{
           console.log(err)
@@ -168,6 +155,7 @@
           method:'POST',
           url:'/api/c_index_nineteen',
         }).then((res)=>{
+          this.showLoading=false
           if(res.data.code=='200'){
             this.type2 = res.data.data.type
             this.goods2 = res.data.data.goods
@@ -185,6 +173,7 @@
           method:'POST',
           url:'/api/c_index_discount',
         }).then((res)=>{
+          this.showLoading=false
           if(res.data.code=='200'){
             this.type3 = res.data.data.type
             this.goods3 = res.data.data.goods
@@ -202,10 +191,12 @@
           method:'POST',
           url:'/api/c_index_season',
         }).then((res)=>{
+          this.showLoading=false
           if(res.data.code=='200'){
             this.type4 = res.data.data.type
             this.goods4 = res.data.data.goods
           }else if(res.data.code=='400'){
+
 
           }
         },(err)=>{
@@ -218,6 +209,20 @@
       this.getlist2()
       this.getlist3()
       this.getlist4()
+    },
+    mounted() {
+      this.$nextTick(function(){
+        //      动态的更改scroller的宽度
+        const self = this;
+        const w = document.getElementById('box1-item').offsetWidth;
+        const n1 = self.goods1.length;
+        const n2 = self.goods2.length;
+        const n3 = self.goods3.length;
+        self.$refs.nav1.style.width = (w * n1) + 'px';
+        self.$refs.nav2.style.width = (w * n2) + 'px';
+        self.$refs.nav3.style.width = (w * n3) + 'px';
+      })
+
     }
   }
 </script>

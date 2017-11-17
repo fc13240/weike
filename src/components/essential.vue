@@ -3,76 +3,92 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">应季必备</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <nav style="width: 7.5rem;height: 2.6rem;background-color: red;"></nav>
+    <nav>
+      <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;">
+    </nav>
     <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="../assets/logo.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早上10点晚9点上新</p>
     <div class="main_goods">
       <ul class="goods">
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
+        <li class="goods_list" v-for="list in goodsList">
+          <img :src="list.pict_url" alt="">
           <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">送50元宝</span><span class="right">剩余2000张劵</span></p>
+            <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+            <!--<p style="position: relative;margin-top: .1rem;"><span class="left">送元宝</span><span class="right">剩余2000张劵</span></p>-->
             <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">劵后 ￥</span>88.8</span>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">送50元宝</span><span class="right">剩余2000张劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">劵后 ￥</span>88.8</span>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">送50元宝</span><span class="right">剩余2000张劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">劵后 ￥</span>88.8</span>
-              <span class="num">518件已售</span>
-            </p>
-          </div>
-        </li>
-        <li class="goods_list">
-          <img src="../assets/logo.png" alt="">
-          <div class="content">
-            <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">送50元宝</span><span class="right">剩余2000张劵</span></p>
-            <p class="des_b" style="position: relative;margin-top: .1rem;">
-              <span class="price"><span style="font-size: .2rem;">劵后 ￥</span>88.8</span>
-              <span class="num">518件已售</span>
+              <span class="price"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{list.zk_final_price.corner}}</span>
+                <del style="font-size: .2rem;color: #999;margin-left: .1rem;"><i>￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></i></del>
+              </span>
+              <span class="num">{{list.volume}}件已售</span>
             </p>
           </div>
         </li>
       </ul>
     </div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import {Tab,TabItem,XHeader} from 'vux'
-  import Vue from 'vue'
+  import {Tab,TabItem,Loading} from 'vux'
   export default {
     name: 'essential',
     components: {
       Tab,
       TabItem,
-      Vue,
-      XHeader
+      Loading
     },
     data() {
       return {
-
+        goodsList:[],
+        banner:'',
+        showLoading:false,
+        loadText:'加载中...',
       }
     },
     methods: {
-
+      //      应季必备banner
+      getBanner:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/season_banner'
+        }).then((res)=>{
+          this.showLoading=false
+          if(res.data.code=='200'){
+            this.banner = res.data.data.banner[0].banner_image
+          }else if(res.data.code=='400'){
+//            this.$vux.toast.show({
+//              type:"cancel",
+//              text:res.data.message
+//            })
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      应季必备专区商品
+      getGoods:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/seasonindex'
+        }).then((res)=>{
+          this.showLoading=false
+          if(res.data.code=='200'){
+            this.goodsList = res.data.data.season_products
+          }else if(res.data.code=='400'){
+//            this.$vux.toast.show({
+//              type:"cancel",
+//              text:res.data.message
+//            })
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+    },
+    created:function(){
+     this.getGoods()
+      this.getBanner()
     },
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
