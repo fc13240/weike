@@ -8,7 +8,7 @@
             <p style="font-size: .28rem;" v-text="type1.store_name">XX专区</p>
             <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
           </div>
-          <img src="../assets/sanjiao.png" alt="" class="sanjiao">
+          <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
         </nav>
       </router-link>
       <scroller lock-y :scrollbar-x=false>
@@ -32,7 +32,7 @@
           <p style="font-size: .28rem;" v-text="type2.store_name">XX专区</p>
           <img src="/static/images/youhui_bd2_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
         </div>
-        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
+        <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
       </nav>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
@@ -55,7 +55,7 @@
           <p style="font-size: .28rem;" v-text="type3.store_name">XX专区</p>
           <img src="/static/images/youhui_bd3_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
         </div>
-        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
+        <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
       </nav>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
@@ -253,10 +253,12 @@
   }
 
   .box1 {
-    height: 3.12rem;
+    height: 3.2rem;
     min-width: 7.50rem;
     position: relative;
     background-color: white;
+    border-top: .1rem solid #f4f4f4;
+    border-bottom: .1rem solid #f4f4f4;
   }
 
   .box1-item {
@@ -281,6 +283,7 @@
   }
 
   .des_name {
+    height: .60rem;
     color: #333;
     padding: 0 .1rem .1rem;
     word-wrap: break-word;
@@ -307,6 +310,7 @@
 
   .main {
     margin-bottom: 1.06rem;
+    border-top: .1rem solid #f4f4f4;
   }
 
   .goods {

@@ -1,6 +1,6 @@
 <template>
   <!--<div> {{$route.params.time}}</div>-->
-  <div>
+  <div style="font-size: 0;">
     <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">粉丝福利</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
     <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
@@ -18,9 +18,9 @@
     </div>
     <div class="main_goods">
       <div>
-        <ul class="goods" v-for="goodList1 in goodList1">
-          <li class="goods_list">
-            <img :src="goodList1.small_images" alt="" :onerror="defaultImg">
+        <ul class="goods">
+          <li class="goods_list" v-for="goodList1 in goodList1">
+            <img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList1.volume}}元宝</span>

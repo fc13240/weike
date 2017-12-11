@@ -1,27 +1,27 @@
 <template>
   <div>
-    <div class="allSort" v-show="cate_id !==1">
-      <div class="sortMenu clearfix" style="position: fixed;z-index: 10;">
-        <div style="width: calc(100% - 24px)">
-          <ul class="sortMenu-ul">
-            <li class="cell" v-for="item in typeList">
-              <a href="">{{item.cate_name}}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="all" v-on:click="subitemsExpanded=!subitemsExpanded">
-          <img src="../assets/down.png" alt="" style="width: 10px;height: 10px;">
-        </div>
-        <div v-show="subitemsExpanded" class="pull-down">
-          <ul class="pull-down-sort">
-            <li class="cell" v-for="item in typeList">
-              <a href="">{{item.cate_name}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
+    <!--<div class="allSort" v-show="cate_id !==1">-->
+      <!--<div class="sortMenu clearfix" style="position: fixed;z-index: 10;">-->
+        <!--<div style="width: calc(100% - 24px)">-->
+          <!--<ul class="sortMenu-ul">-->
+            <!--<li class="cell" v-for="item in typeList">-->
+              <!--<a href="">{{item.cate_name}}</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="all" v-on:click="subitemsExpanded=!subitemsExpanded">-->
+          <!--<img src="../assets/down.png" alt="" style="width: 10px;height: 10px;">-->
+        <!--</div>-->
+        <!--<div v-show="subitemsExpanded" class="pull-down">-->
+          <!--<ul class="pull-down-sort">-->
+            <!--<li class="cell" v-for="item in typeList">-->
+              <!--<a href="">{{item.cate_name}}</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">-->
       <div class="main_goods">
         <ul class="goods">
           <li class="goods_list" v-for="goods in goodsList">
@@ -38,7 +38,7 @@
           </li>
         </ul>
       </div>
-    </scroller>
+    <!--</scroller>-->
   </div>
 </template>
 <script>

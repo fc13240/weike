@@ -29,6 +29,8 @@ import SearchPage from '@/components/searchPage'
 import toShowList from '@/components/toShowList'
 import addressList from '@/components/addressList'
 import addAddress from '@/components/addAddress'
+import goodsDetail from '@/components/goodsDetail'
+import draw from '@/components/draw'
 import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(AjaxPlugin)
@@ -69,6 +71,24 @@ const routes = [
     meta: {
       showFooter: true,
       title:'智搜'
+    }
+  },
+  {
+    path: '/goodsDetail',
+    name:'goodsDetail',
+    component: goodsDetail,
+    meta: {
+      showFooter: false,
+      title:'商品详情'
+    }
+  },
+  {
+    path: '/goodsDetail/draw',
+    name:'draw',
+    component: draw,
+    meta: {
+      showFooter: false,
+      title:'浏览器领券'
     }
   },
   {

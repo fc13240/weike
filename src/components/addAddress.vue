@@ -165,7 +165,7 @@
 
   }
 </script>
-<style scoped>
+<style scoped="">
   .des{
     width: 100%;height: 1.94rem;outline: none;border: none;resize: none;
     font-size: .28rem;

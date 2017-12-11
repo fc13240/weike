@@ -79,27 +79,30 @@
             src: share_list,
             title: '我的晒单<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">评价晒单赚元宝</span>',
             url: '/personCenter/shareList'
-          },
-          {
-            src: share_oters,
-            title: '我要分羹<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">功能升级中</span>',
-            url: '/component/cell'
-          },
-          {
-            src:help_center ,
-            title: '帮助中心',
-            url: '/component/cell'
-          },
+          }
+//          ,
+//          {
+//            src: share_oters,
+//            title: '我要分羹<span style="float: right;font-size: .24rem;color: #999;margin-top: .03rem;">功能升级中</span>',
+//            url: '/component/cell'
+//          }
+          ,
+//          {
+//            src:help_center ,
+//            title: '帮助中心',
+//            url: '/component/cell'
+//          },
+
           {
             src: feedback_icon ,
             title: '意见反馈',
             url: '/personCenter/feedback'
           },
-          {
-            src: server_icon,
-            title: '官方客服',
-            url: '/component/cell'
-          }
+//          {
+//            src: server_icon,
+//            title: '官方客服',
+//            url: '/component/cell'
+//          }
 
         ]
       }

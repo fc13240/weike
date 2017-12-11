@@ -26,7 +26,7 @@
         style="font-size: .28rem;font-weight:bold;color: #fe425f;" v-text="member_acer">88</span></p>
       <router-link to="/personCenter/shareList">
         <div
-          style="line-height: .76rem; font-weight: bold; margin:.3rem auto 0;font-size: .32rem;color: #fe425f;border: 1px solid #fe425f;border-radius: .5rem;height: .76rem;width: 5.2rem;">
+          style="line-height: .76rem; font-weight: 500; margin:.3rem auto 0;font-size: .32rem;color: #fe425f;border: 1px solid #fe425f;border-radius: .5rem;height: .76rem;width: 5.2rem;">
           晒单赚元宝
         </div>
       </router-link>
@@ -155,7 +155,13 @@
       },
       //      签到请求
       sign:function(){
+        if(this.is_sign==1){
+          return
+        }else{
+
+        }
         this.showLoading=true
+        document.body.style.overflow = 'hidden';
         if(this.is_sign ==2){
           this.$http({
             method:'POST',
@@ -275,7 +281,6 @@
   .list img {
     width: 1.9rem;
     height: 1.1rem;
-    border: 1px solid red;
     float: left;
   }
 
@@ -330,8 +335,8 @@
   .model_main_des{
     position: absolute;
     bottom: .7rem;
-    left: 1.4rem;
     text-align: center;
+    width: 100%;
   }
   .big{
     font-size: .32rem;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="font-size: 0;">
     <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
     <div class="main">
       <ul class="timeTab">

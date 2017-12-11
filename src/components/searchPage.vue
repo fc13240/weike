@@ -5,7 +5,7 @@
       <!--搜索-->
     <!--</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <search placeholder="请输入商品名称" cancel-text="搜索"
+    <search placeholder="请输入商品名称" cancel-text="取消"
       @result-click="resultClick"
       @on-change="getResult"
       :results="results"
@@ -17,30 +17,30 @@
     <div v-show="searchResults" id="hot">
       <p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>
       <ul class="hot_list">
-        <li v-for="hotList in hotList" v-text="hotList.keywords">冬装</li>
+        <li v-for="hotList in hotList" v-text="hotList.keywords" @click="onSubmit(hotList.keywords)">冬装</li>
       </ul>
       <p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;" @click="del"></p>
       <ul class="hot_list">
-        <li v-for="historyList in historyList" v-text="historyList.keywords">冬装</li>
+        <li v-for="historyList in historyList" v-text="historyList.keywords" @click="onSubmit(historyList.keywords)">冬装</li>
       </ul>
     </div>
     <div v-show="!searchResults" id="results">
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
            style="border-bottom: 1px solid #e1e1e1;">
-        <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item"
-                  :key="index">{{item}}
+        <tab-item class="vux-center" :selected="index === 0" v-for="(item, index) in list" @on-item-click="change(item.id)"
+                  :key="index">{{item.sort_name}}
         </tab-item>
       </tab>
 
       <div class="main_goods">
         <ul class="goods">
           <li class="goods_list" v-for="goods in goodsList">
-            <img src="../assets/logo.png" alt="">
+            <img :src="goods.pict_url" alt="">
             <div class="content">
-              <div class="des">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+              <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                <span class="num">518件已售</span>
+                <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}} <span v-show="goods.zk_final_price.corner=='00'">.{{goods.zk_final_price.corner}}</span></span>
+                <span class="num">{{goods.volume}}件已售</span>
               </div>
             </div>
           </li>
@@ -52,8 +52,6 @@
 </template>
 <script>
   import {Search, XHeader,Tab, TabItem,Loading} from 'vux'
-  const list = () => ['综合排序', '销量优先', '价格优先']
-
   export default {
     name: 'searchPage',
     components: {
@@ -65,16 +63,17 @@
     },
     data() {
       return {
+        sort_id:'',
+        goodsList:[],
         showLoading:false,
         loadText:'加载中...',
         hotList:[],
         historyList:[],
-        goodsList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         searchResults:true,
         results: [],
         keywords: '',
-        list2: list(),
-        demo2: '全部',
+        list:[],
+//        demo2: '全部',
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
@@ -88,6 +87,44 @@
       search[0].style.cssText="color:#333;font-size:.28rem;"
     },
     methods: {
+      //      执行搜索
+      doSearch:function(e){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/doSearch',
+          data:{keywords:this.keywords,sort:this.sort_id}
+        }).then((res)=>{
+          this.showLoading=false
+          if(res.data.code=='200'){
+            this.searchResults=false;
+            this.goodsList=res.data.data.product_list
+            console.log(this.goodsList)
+          }else if(res.data.code=='400'){
+//            this.$vux.toast.show({
+//              type:"cancel",
+//              text:res.data.message
+//            })
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      //      热门推荐列表
+      getType:function(){
+        this.$http({
+          method:'POST',
+          url:'/api/serrchSort'
+        }).then((res)=>{
+          if(res.data.code=='200'){
+            this.list = res.data.data.sorts_type
+          }else{
+
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
       //      热门推荐列表
       getHotList:function(){
         this.$http({
@@ -145,11 +182,15 @@
       getResult(val) {
 //        this.results = val ? getResult(this.value) : []
       },
-      onSubmit() {
+      onSubmit(e) {
+        console.log(e)
         this.$refs.search.setBlur();
-        this.searchResults=false;
-        console.log('开始搜索')
-        console.log(this.keywords)
+        this.keywords=e
+        this.showLoading=true
+        this.doSearch()
+
+//        console.log('开始搜索')
+//        console.log(this.keywords)
 
       },
       onFocus() {
@@ -160,43 +201,49 @@
         results.style.marginTop='.88rem';
       },
       onCancel() {
-        this.searchResults=false
-        const hot = document.getElementById('hot')
-        hot.style.marginTop='.0rem'
-        const results = document.getElementById('results')
-        results.style.marginTop='0'
+//        this.searchResults=false
+//  应该返回到智搜首页
+        history.go(-1)
       },
-      onItemClick(index) {
-        console.log('on item click:', index)
-      },
-      addTab() {
-        if (this.list2.length < 5) {
-          this.list2 = list().slice(0, this.list2.length + 1)
-        }
-      },
-      removeTab() {
-        if (this.list2.length > 1) {
-          this.list2 = list().slice(0, this.list2.length - 1)
-        }
-      },
-      next() {
-        if (this.index === this.list2.length - 1) {
-          this.index = 0
-        } else {
-          ++this.index
-        }
-      },
-      prev() {
-        if (this.index === 0) {
-          this.index = this.list2.length - 1
-        } else {
-          --this.index
-        }
+//      onItemClick(index) {
+//        console.log('on item click:', index)
+//      },
+//      addTab() {
+//        if (this.list2.length < 5) {
+//          this.list2 = list().slice(0, this.list2.length + 1)
+//        }
+//      },
+//      removeTab() {
+//        if (this.list2.length > 1) {
+//          this.list2 = list().slice(0, this.list2.length - 1)
+//        }
+//      },
+//      next() {
+//        if (this.index === this.list2.length - 1) {
+//          this.index = 0
+//        } else {
+//          ++this.index
+//        }
+//      },
+//      prev() {
+//        if (this.index === 0) {
+//          this.index = this.list2.length - 1
+//        } else {
+//          --this.index
+//        }
+//      },
+      change(e){
+        console.log(e)
+        this.sort_id = e
+        this.goodsList=''
+        this.doSearch()
+
       }
     },
     created:function(){
       this.getHotList()
       this.getHistoryList()
+      this.getType()
     }
   }
 //  function getResult (val) {

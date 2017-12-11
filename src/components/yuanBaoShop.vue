@@ -15,7 +15,7 @@
     <div class="main">
       <h3><i></i>优先推荐</h3>
       <ul class="goods_list">
-        <router-link tag="li" :to="{name:'exchangeDetail',query:{id:acerList.product_id}}" class="goods" v-for="acerList in acer_list">
+        <router-link tag="li" :to="{name:'exchangeDetail',query:{id:acerList.product_id}}" class="goods" v-for="(acerList,index) in acer_list" :key="index">
           <img :src="acerList.product_image" alt="" class="photo" :onerror="defaultImg">
           <div class="content">
             <p class="des">{{acerList.product_name}}</p>
@@ -128,10 +128,14 @@
     color: #333;
     background-color: white;
     padding:.4rem .4rem .4rem 0;
+    font-weight: 500;
   }
   h3 i{
     border-left: .06rem solid #ff526d;
     margin-right: .2rem;
+  }
+  .goods{
+    margin-top: .1rem;
   }
   .goods:nth-of-type(old){
     border-right: .05rem solid #f4f4f4;

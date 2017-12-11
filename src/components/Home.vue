@@ -2,12 +2,12 @@
   <div>
     <!--<app-header title="微客"></app-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">
+    <!--<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">-->
       <swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
         <ul class="nav-small">
-          <router-link tag="li" v-for="type in typeList" :to="{name:'classify',params:{id:type.id}}">
+          <router-link tag="li" v-for="(type,index) in typeList" :to="{name:'classify',params:{id:type.id}}" :key="index">
             <img :src="type.image_url" :onerror="defaultImg">
             <span>{{type.cate_name}}</span>
           </router-link>
@@ -22,9 +22,9 @@
           <img class="zhiNan" src="/static/images/zhinan_img.png">
           </router-link>
           <div class="m_r">
-            <router-link to="/home/xianBao">
+            <!--<router-link to="/home/xianBao">-->
               <img class="m_r_t" src="static/images/xianbao_img.png">
-            </router-link>
+            <!--</router-link>-->
             <router-link to="/home/fuLi">
               <img class="m_r_b" src="static/images/fuli_img.png">
             </router-link>
@@ -32,7 +32,7 @@
         </div>
         <div class="main_goods">
           <ul class="goods">
-            <router-link tag="li" v-for="goods in goodsList" class="goods_list" to="">
+            <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
                 <img :src="goods.pict_url" alt="" :onerror="defaultImg">
                 <div class="content">
                   <div class="des">{{goods.title}}</div>
@@ -46,7 +46,7 @@
           </ul>
         </div>
       </div>
-    </scroller>
+    <!--</scroller>-->
   </div>
 </template>
 <script>
@@ -83,7 +83,7 @@
           if(res.data.code=='200'){
             const imgList = res.data.data.index_banner
             const demoList = imgList.map((item, index) => ({
-              url: 'javascript:',
+              url: item.banner_url,
               img: item.banner_image
             }))
             this.demoList = demoList
@@ -107,7 +107,7 @@
           console.log(err)
         })
       },
-//      获取商店分类
+//      获取商品列表
       getGoodsList:function(){
         this.$http({
           method:'POST',

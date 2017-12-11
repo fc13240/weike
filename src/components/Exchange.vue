@@ -169,7 +169,6 @@
   .list img{
     width: 1.9rem;
     height: 1.1rem;
-    border: 1px solid red;
     float: left;
   }
   .title{
