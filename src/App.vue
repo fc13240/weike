@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title="$route.meta.title"></router-view>
-    <app-footer v-show="$route.meta.showFooter"></app-footer>
+    <!--<keep-alive>-->
+      <router-view v-wechat-title="$route.meta.title"></router-view>
+    <!--</keep-alive>-->
+    <!--<keep-alive>-->
+      <app-footer v-show="$route.meta.showFooter"></app-footer>
+    <!--</keep-alive>-->
   </div>
 </template>
 <script>

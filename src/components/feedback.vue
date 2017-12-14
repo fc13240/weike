@@ -11,7 +11,7 @@
       <x-input v-model="tel" name="mobile" placeholder="请填写您的手机号" keyboard="number" is-type="china-mobile" style="font-size: .28rem;"></x-input>
     </group>
     <div class="btn">
-      <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">提交</x-button>
+      <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">提交</x-button>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
 

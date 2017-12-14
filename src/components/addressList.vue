@@ -5,7 +5,7 @@
     <!--</router-link>-->
     <div>
       <div v-for="list in addressList">
-        <router-link :to="{name:'addAddress',params:{id:list.address_id}}">
+        <router-link :to="{name:'addAddress',query:{id:list.address_id,pro_id:id,from:from}}">
           <group>
             <div style="padding: .3rem .3rem;">
               <p><span style="font-size: .28rem;color: #333;margin-right: .3rem;" v-text="list.person_name">李静</span><span
@@ -17,9 +17,10 @@
         </router-link>
         <p
           style="overflow:hidden;background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;">
-         <span v-show="list.is_default==1"> <img src="../assets/checked.png" alt=""
-                     style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;">
-          默认地址 </span>
+        <router-link :to="{name:'exchangeDetail',query:{id:id,address_id:list.address_id}}">
+           <span v-show="list.is_default==1" style="color: #ff526d;"> <img src="../assets/checked.png" alt=""
+                                                   style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;margin-right: .1rem;">默认地址 </span>
+        </router-link>
           <router-link :to="{name:'exchangeDetail',query:{id:id,address_id:list.address_id}}" v-show="from==1">
             <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;" v-show="list.is_default==2">使用</span>
           </router-link>
@@ -28,14 +29,17 @@
         </p>
       </div>
     </div>
-    <router-link to="/PersonCenter/addAddress">
+    <div style="height: 1.34rem;"></div>
+    <router-link :to="{name:'addAddress',query:{from:from,pro_id:id}}">
       <div class="btn">
         <x-button action-type="reset"
-                  style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">添加地址
+                  style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">添加地址
         </x-button>
       </div>
     </router-link>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -98,12 +102,27 @@
           console.log(err)
         })
       },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     created:function(){
-      this.id = this.$route.params.id
+      this.id = this.$route.query.id
 //      判断该页面是从兑换商品还是个人中心跳转过来的
-      this.from = this.$route.params.type
+      this.from = this.$route.query.type
       this.getAddressList()
+    },
+    mounted:function(){
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     }
   }
 </script>

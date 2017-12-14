@@ -7,9 +7,9 @@
       <p>昵称 <span style="position: absolute;right: .36rem; color: #999;" v-text="info.user_name">昵称</span></p>
       <p>性别 <span style="position: absolute;right: .36rem;color: #999;" v-text="info.sex==1?'男':'女'">女</span></p>
   </div>
-    <div class="btn">
-      <x-button @click.native="userInfo()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">同步微信资料</x-button>
-    </div>
+    <!--<div class="btn">-->
+      <!--<x-button @click.native="userInfo()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">同步微信资料</x-button>-->
+    <!--</div>-->
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>

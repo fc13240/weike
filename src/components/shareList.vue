@@ -2,13 +2,15 @@
    <div>
      <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">晒单赚元宝</x-header>-->
      <!--<div style="height: .88rem;"></div>-->
-     <div>
-       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
-         <tab-item class="vux-center" :selected=" type=== index" v-for="(item, index) in list2" :key="index" style="color: white;">
-           <img :src="item.src" alt="" style="width: .38rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
-       </tab>
-     </div>
-     <div class="main">
+     <!--去掉细线-->
+    <div style="font-size: 0">
+      <div>
+        <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
+          <tab-item class="vux-center" :selected=" type=== index" v-for="(item, index) in list2" :key="index" style="color: white;">
+            <img :src="item.src" alt="" style="width: .38rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
+        </tab>
+      </div>
+      <div class="main">
         <div v-show="index==1">
           <div class="list_m" v-for="list in orderSquareList">
             <div class="list">
@@ -26,29 +28,31 @@
             </div>
           </div>
         </div>
-       <div v-show="index==0">
-         <div class="list_m" v-for="list2 in myOrderList">
-           <div class="list">
-             <div class="user_info">
-               <div class="user_des">
-                 <p class="user_time" v-text="list2.create_time">2017-10-14</p>
-               </div>
-             </div>
-             <p class="message" v-text="list2.evaluate_detail">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
-             <div class="m_pic">
-               <img :src="listss.image" alt="" class="pics"  v-for="listss in list2.evaluate_url" :onerror="defaultImg">
-             </div>
-           </div>
-         </div>
-       </div>
+        <div v-show="index==0">
+          <div class="list_m" v-for="list2 in myOrderList">
+            <div class="list">
+              <div class="user_info">
+                <div class="user_des">
+                  <p class="user_time" v-text="list2.create_time">2017-10-14</p>
+                </div>
+              </div>
+              <p class="message" v-text="list2.evaluate_detail">留言内容留言内容留言内容留言内容留言内容留言内容内容留言内容留言内容</p>
+              <div class="m_pic">
+                <img :src="listss.image" alt="" class="pics"  v-for="listss in list2.evaluate_url" :onerror="defaultImg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div style="height: 1.34rem;"></div>
+     <div class="btn">
+       <router-link to="/personCenter/toShowList">
+         <x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">去晒单</x-button>
+       </router-link>
      </div>
-     <!--<div style="height: 1.56rem;"></div>-->
-     <!--<div class="btn">-->
-       <!--<router-link to="/personCenter/toShowList">-->
-         <!--<x-button  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">去晒单</x-button>-->
-       <!--</router-link>-->
-     <!--</div>-->
      <loading v-model="showLoading" :text="loadText"></loading>
+     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
    </div>
 </template>
@@ -116,9 +120,22 @@
           console.log(err)
         })
       },
+//      回到顶部
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     mounted(){
-
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     },
     created:function(){
 

@@ -34,7 +34,7 @@
 
       <div class="main_goods">
         <ul class="goods">
-          <li class="goods_list" v-for="goods in goodsList">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :key="index" :to="{name:'goodsDetail',query:{id:goods}}">
             <img :src="goods.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -43,11 +43,13 @@
                 <span class="num">{{goods.volume}}件已售</span>
               </div>
             </div>
-          </li>
+          </router-link>
         </ul>
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -85,6 +87,14 @@
 //      title[0].style.color = '#333'
       const search = document.getElementsByClassName('weui-search-bar__cancel-btn')
       search[0].style.cssText="color:#333;font-size:.28rem;"
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     },
     methods: {
       //      执行搜索
@@ -244,6 +254,9 @@
       this.getHotList()
       this.getHistoryList()
       this.getType()
+    },
+    toTop(){
+      document.documentElement.scrollTop = document.body.scrollTop =0;
     }
   }
 //  function getResult (val) {

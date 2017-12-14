@@ -1,10 +1,10 @@
 <template>
   <!--<div> {{$route.params.time}}</div>-->
-  <div style="font-size: 0;">
+  <div>
     <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">粉丝福利</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
-    <div>
+    <div style="font-size: 0;">
+      <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
         <tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @on-item-click="change(list2,index)"
                   :key="index">{{item}}
@@ -19,7 +19,7 @@
     <div class="main_goods">
       <div>
         <ul class="goods">
-          <li class="goods_list" v-for="goodList1 in goodList1">
+          <router-link  class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'goodsDetail',query:{id:goodList1}}" :key="index">
             <img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -32,7 +32,7 @@
                 <span class="num">{{goodList1.volume}}件已售</span>
               </p>
             </div>
-          </li>
+          </router-link>
         </ul>
       </div>
       <!--<div v-show="index==1">-->
@@ -90,6 +90,8 @@
         <!--</ul>-->
       <!--</div>-->
     </div>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
     <loading v-model="showLoading" :text="loadText"></loading>
 
   </div>
@@ -243,12 +245,25 @@
         }else if(index==3){
           this.getList1(8)
         }
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
       }
 
     },
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
 //      title[0].style.color='#333'
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     },
     created:function(){
       this.showLoading=true

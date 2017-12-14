@@ -25,7 +25,7 @@
           <span>已返</span></router-link>
       </ul>
       <ul class="nav-big">
-        <router-link tag="li" :to="{name:'addressList',params:{type:2}}"><img src="../assets/receive_manage.png">
+        <router-link tag="li" :to="{name:'addressList',query:{type:2}}"><img src="../assets/receive_manage.png">
           <span>收货管理</span></router-link>
         <router-link tag="li" to="/PersonCenter/myTracks"><img src="../assets/my_footer.png">
           <span>我的足迹</span></router-link>

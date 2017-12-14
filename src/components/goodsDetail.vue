@@ -6,11 +6,13 @@
       </div>
       <div class="detail">
         <p class="name">{{goodsDetail.title}}</p>
-        <span class="prices"><small>￥</small>{{goodsDetail.zk_final_price.rmb}}<small v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+        <span class="prices"><small>￥</small>{{goodsDetail.zk_final_price.rmb}}<small
+          v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
         <!--<span class="juan"><span class="juan_l">劵</span><span class="juan_r">20元</span></span>-->
         <!--<span class="return_yuanBao">返100元宝</span>-->
         <p class="old_price">价格
-          <del>￥{{goodsDetail.reserve_price.rmb}} <span v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
+          <del>￥{{goodsDetail.reserve_price.rmb}} <span
+            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
           <span>销量{{goodsDetail.volume}}件</span></p>
       </div>
     </div>
@@ -21,34 +23,35 @@
       :arrow-direction="show ? 'up' : 'down'"
       @click.native="show = !show" class="pic_detail"></cell>
 
-    <div class="slide" :class="show?'animate':''">
+    <div class="slide" :class="show?'animate':''" style="font-size: 0;">
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>
-   <div class="guss_main">
-     <p class="guss">猜你喜欢</p>
-     <div class="main_goods">
-       <ul class="goods">
-         <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" to="" :key="index">
-           <img :src="goods.pict_url" alt="" :onerror="defaultImg">
-           <div class="content">
-             <div class="des">{{goods.title}}</div>
-             <div class="des_b">
-               <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
-               <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
-               <span class="num">{{goods.volume}}件已售</span>
-             </div>
-           </div>
-         </router-link>
-       </ul>
-     </div>
-   </div>
+    <div class="guss_main">
+      <p class="guss">猜你喜欢</p>
+      <div class="main_goods">
+        <ul class="goods">
+          <li v-for="(goods,index) in goodsList" class="goods_list" @click="click(goods)" :key="index">
+            <img :src="goods.pict_url" alt="" :onerror="defaultImg">
+            <div class="content">
+              <div class="des">{{goods.title}}</div>
+              <div class="des_b">
+                <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span
+                  style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
+                <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
+                <span class="num">{{goods.volume}}件已售</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div style="height: .98rem;"></div>
     <div class="footer">
-        <div class="f_1 f1_l" @click="toHome">
-          <img src="/static/images/home.png" alt="">
-          <span>首页</span>
-        </div>
-      <div class="f_1 ">
+      <div class="f_1 f1_l" @click="toHome">
+        <img src="/static/images/home.png" alt="">
+        <span>首页</span>
+      </div>
+      <div class="f_1 " @click="toService">
         <img src="/static/images/service.png" alt="">
         <span>客服</span>
       </div>
@@ -64,15 +67,28 @@
       </div>
       <div class="model_main">
         <div class="model_main_des">
-
+          <p class="model_title">淘口令购买</p>
+          <input type="text" :value="command" class="word" id="kouling">
+          <p class="des">在点击复制后，打开淘宝APP购买</p>
+          <p class="des">若一键复制失败，请长按虚线内文字</p>
+          <button class="m_btn" data-clipboard-target="#kouling">
+            一键复制
+          </button>
         </div>
-        <img src="../../static/images/cancel_img.png" alt="" @click="cancel">
+        <img src="../../static/images/cancel_img.png" alt="" @click="cancel1">
       </div>
     </div>
+    <div v-show="show2" class="model">
+      <div class="model_bd"></div>
+      <img src="/static/images" alt="" class="model_main rq">
+      <img src="../../static/images/cancel_img.png" alt="" @click="cancel2" class="cancel">
+    </div>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
   </div>
 </template>
 <script>
-  import {Cell, CellBox, CellFormPreview, Group, Badge,Loading} from 'vux'
+  import {Cell, CellBox, CellFormPreview, Group, Badge, Loading} from 'vux'
+  import Clipboard from 'clipboard'
 
   export default {
     components: {
@@ -85,77 +101,160 @@
     },
     data() {
       return {
-        showLoading:false,
-        show1:false,
+        showLoading: false,
+        show2: false,
+        show1: false,
         show: false,
-        id:'',
-        goodsDetail:{
-          title:'',
-          pict_url:'',
-          small_images:[],
-          reserve_price:{
-            rmb:'',
-            corner:''
+        goodsDetail: {
+          title: '',
+          pict_url: '',
+          small_images: [],
+          reserve_price: {
+            rmb: '',
+            corner: ''
           },
-          zk_final_price:{
-            rmb:'',
-            corner:''
+          zk_final_price: {
+            rmb: '',
+            corner: ''
           },
-          volume:'',
+          volume: '',
+          category:''
         },
-        goodsList:[ ],
+        goodsList: [],
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+        command: '',
+//        click_url:''
       }
     },
-    methods:{
+    methods: {
       //      商品详情
-      getGoodsDetail:function(){
-        this.id=this.$route.query.id;
-        console.log(this.id)
+//      getGoodsDetail: function () {
+//        this.id = this.$route.query.id;
+//        console.log(this.id)
+//        this.$http({
+//          method: 'POST',
+//          url: '/api/goodsDetail',
+//          data: {goods_id: this.id}
+//        }).then((res) => {
+//          if (res.data.code == '200') {
+//            this.goodsDetail = res.data.data
+//            this.click_url=res.data.data.click_url
+//          }
+//        }, (err) => {
+//          console.log(err)
+//        })
+//      },
+      //     淘口令
+      getCommand: function () {
+//        this.id = this.$route.query.id;
         this.$http({
-          method:'POST',
-          url:'/api/goodsDetail',
-          data:{goods_id:1}
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.goodsDetail = res.data.data
+          method: 'POST',
+          url: '/api/command',
+          data: {click_url:this.goodsDetail.click_url,pict_url:this.goodsDetail.pict_url,title:this.goodsDetail.title}
+        }).then((res) => {
+          if (res.data.code == '200') {
+            this.command = res.data.data.command
           }
-        },(err)=>{
+        }, (err) => {
           console.log(err)
         })
       },
       //      获取猜你喜欢商品列表
-      getGoodsList:function(){
+      getGoodsList: function () {
         this.$http({
-          method:'POST',
-          url:'/api/index_goods'
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.goodsList = res.data.data.goods
+          method: 'POST',
+          url: '/api/relevance',
+          data:{category:this.goodsDetail.category}
+        }).then((res) => {
+          if (res.data.code == '200') {
+            this.goodsList = res.data.data.goodsList
 //          console.log(this.goodsList)
           }
-        },(err)=>{
+        }, (err) => {
           console.log(err)
         })
       },
-      toHome(){
-        this.$router.push({path:'/home'})
+      toHome() {
+        this.$router.push({path: '/home'})
       },
-      toDraw(){
-        this.$router.push({path:'/goodsDetail/draw'})
+      toDraw() {
+        var isWeixin = this.is_weixin()
+        if(isWeixin){
+          this.$router.push({path: '/goodsDetail/draw'})
+        }else{
+          location.href=this.goodsDetail.click_url
+        }
+
       },
-      toShow(){
-        this.show1=true
+      toService() {
+        this.show2 = true
         document.body.style.overflow = 'hidden';
       },
-      cancel(){
+      cancel2() {
         document.body.style.overflow = 'scroll';
-        this.show=false
+        this.show2 = false
+      },
+      toShow() {
+        this.getCommand()
+        this.show1 = true
+        document.body.style.overflow = 'hidden';
+      },
+      cancel1() {
+        document.body.style.overflow = 'scroll';
+        this.show1 = false
+      },
+      click(id){
+        this.toTop()
+        this.goodsDetail=id
+        this.$router.push({name:'goodsDetail',query:{id:id}})
+//        this.getGoodsDetail()
+      },
+      is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
       }
     },
-    created:function(){
-      this.getGoodsDetail()
+    created: function () {
+      this.goodsDetail=this.$route.query.id
+      console.log(this.goodsDetail)
+//      this.getGoodsDetail()
       this.getGoodsList()
+
+    },
+    mounted:function(){
+      this.$nextTick(function () {
+        let self = this
+        const clipboard = new Clipboard('.m_btn')
+        clipboard.on('success', function (e) {
+          self.$vux.toast.show({
+            text: "复制成功",
+          })
+          e.clearSelection();
+        });
+        clipboard.on('error', function (e) {
+          self.$vux.toast.show({
+            text: "请选择“拷贝”进行复制!",
+            type: 'warn'
+          })
+        });
+        // 返回顶部
+        let back_btn = document.getElementsByClassName('toTop')[0];
+        window.onscroll = function () {
+          let top = document.documentElement.scrollTop || document.body.scrollTop;
+          if (top > 800) {
+            back_btn.style.display = 'block';
+          } else {
+            back_btn.style.display = 'none';
+          }
+        }
+      })
 
     }
   }
@@ -235,9 +334,11 @@
     transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
     background-color: white;
   }
-  .slide img{
+
+  .slide img {
     width: 100%;
   }
+
   .animate {
     max-height: 9999px;
     transition-timing-function: cubic-bezier(0.5, 0, 1, 0);
@@ -249,16 +350,23 @@
     margin-top: .16rem;
     border-bottom: .01rem solid #f4f4f4;
   }
-  .guss{
-    font-size: .32rem;color: #333333;padding-left: .2rem;border-left: .05rem solid #ff526d;background-color: white;
+
+  .guss {
+    font-size: .32rem;
+    color: #333333;
+    padding-left: .2rem;
+    border-left: .05rem solid #ff526d;
+    background-color: white;
     line-height: .35rem;
     margin: .2rem 0;
   }
-.guss_main{
-  background-color: white;
-  overflow: hidden;
-}
-/*猜你喜欢商品*/
+
+  .guss_main {
+    background-color: white;
+    overflow: hidden;
+  }
+
+  /*猜你喜欢商品*/
   .goods {
     overflow: hidden;
   }
@@ -314,8 +422,7 @@
     margin-right: .15rem;
   }
 
-
-/*footer*/
+  /*footer*/
   .footer {
     width: 100%;
     text-align: center;
@@ -324,7 +431,7 @@
     height: .98rem;
     position: fixed;
     bottom: 0;
-    border-top:.01rem solid #eeeeee;
+    border-top: .01rem solid #eeeeee;
   }
 
   .f_1 {
@@ -377,35 +484,59 @@
   .footer > div {
     float: left;
   }
+
   /*签到弹出层*/
   .model_bd {
     width: 100%;
     height: 100%;
     opacity: .5;
     background-color: black;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 100;
   }
 
   .model_main {
     z-index: 200;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 75%;
-    height: 5.7rem;
-    margin: 2.5rem calc((100% - 75%) / 2);
+    width: 5.98rem;
+    height: 3.46rem;
+    margin: 2.5rem calc((100% - 5.98rem) / 2);
     background-color: white;
     border-radius: .15rem;
   }
-  .model_main_des{
+
+  .model_main_des {
     position: absolute;
-    bottom: .7rem;
     text-align: center;
     width: 100%;
   }
-  .model_main img{
+
+  .model_main_des > .des {
+    font-size: .2rem;
+    color: #666666;
+    margin: 0 .16rem;
+    line-height: .45rem;
+    height: .45rem;
+  }
+
+  .m_btn {
+    display: inline-block;
+    font-size: .24rem;
+    color: white;
+    width: 4.64rem;
+    line-height: .42rem;
+    border-radius: .3rem;
+    border: none;
+    background: -webkit-linear-gradient(left, #ff526d, #f8214f); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(left, #ff526d, #f8214f); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(left, #ff526d, #f8214f); /* Firefox 3.6 - 15 */
+    background: linear-gradient(left, #ff526d, #f8214f); /* 标准的语法 */
+  }
+
+  .model_main img {
     width: .5rem;
     height: .5rem;
     position: absolute;
@@ -413,4 +544,41 @@
     right: -.6rem;
   }
 
+  .model_title {
+    color: white;
+    font-size: .32rem;
+    text-align: center;
+    line-height: .72rem;
+    border-radius: .15rem .15rem 0 0;
+    background: -webkit-linear-gradient(left, #ff526d, #f8214f); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(left, #ff526d, #f8214f); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(left, #ff526d, #f8214f); /* Firefox 3.6 - 15 */
+    background: linear-gradient(left, #ff526d, #f8214f); /* 标准的语法 */
+  }
+
+  .word {
+    border: .01rem dotted #ff526d;
+    text-align: center;
+    background-color: #ffe7eb;
+    font-size: .32rem;
+    line-height: .88rem;
+    color: #666666;
+    margin: .10rem .16rem;
+    border-radius: .1rem;
+  }
+
+  .rq {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin: calc((100% - 2.2rem) / 2) calc((100% - 2.2rem) / 2);
+  }
+
+  .cancel {
+    width: .5rem;
+    height: .5rem;
+    position: fixed;
+    right: calc(((100% - 2.2rem) / 2) - .5rem);
+    top: calc(((100% - 2.2rem) / 2) - 3rem);
+    z-index: 200;
+  }
 </style>

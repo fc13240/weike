@@ -24,7 +24,7 @@
     <!--<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">-->
       <div class="main_goods">
         <ul class="goods">
-          <li class="goods_list" v-for="goods in goodsList">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods}}" :key="index">
             <img :src="goods.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -35,10 +35,12 @@
                 <span class="num">518件已售</span>
               </div>
             </div>
-          </li>
+          </router-link>
         </ul>
       </div>
     <!--</scroller>-->
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -127,6 +129,9 @@
           this.pageIndex+=1;
           this.getGoodsList()
         },1500)
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
       }
     },
     mounted: function () {
@@ -134,6 +139,16 @@
         document.getElementsByClassName('main_goods')[0].style.marginTop='0px'
       }else{
         document.getElementsByClassName('main_goods')[0].style.marginTop='40px'
+      }
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
       }
     },
     created:function(){

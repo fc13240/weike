@@ -30,12 +30,12 @@
       <div style="padding: .2rem .3rem;" v-show="data.type==1">
         <p style="font-size: .24rem;color: #666;margin: .2rem  0 .1rem;">请输入您要充值的手机号</p>
         <div style="display: inline-block;">
-          <input type="text"
+          <input type="number"
                  style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;" v-model="tel">
         </div>
       </div>
       <div style="padding-bottom: .25rem;" v-show="data.product_type==2">
-          <cell title="配送至:" value="修改地址" is-link :link="{name:'addressList',params:{type:'1',id:id}}"></cell>
+          <cell title="配送至:" value="修改地址" is-link :link="{name:'addressList',query:{type:'1',id:id}}"></cell>
         <div style="font-size: .24rem;border: 1px solid #f4f4f4;width: 5.8rem;margin: 0 auto;padding: .26rem .3rem;">
           <p style="color: #666;"><span style="margin-right: .24rem; padding: .01rem .1rem;color: #ff526d;border: 1px solid #ff526d;" v-text="addressInfo.is_default==1?'默认':'地址'">默认</span>{{addressInfo.address_array+addressInfo.address}}</p>
           <p style="color: #999;margin-left: .95rem;"><span style="margin-right: .1rem;" v-text="addressInfo.person_name">姓名</span><span v-text="addressInfo.telephone">13298309372</span></p>
@@ -52,9 +52,9 @@
         <img :src="list.image" alt="" :onerror="defaultImg" v-for="list in data.small_images">
       </div>
     </div>
-    <div style="height: 1.56rem;"></div>
+    <div style="height: 1.34rem;"></div>
     <div class="btn">
-      <x-button @click.native="toExchange()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">立刻兑换</x-button>
+      <x-button @click.native="toExchange()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">立刻兑换</x-button>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
@@ -110,11 +110,8 @@
             this.rmb = data.market_price.rmb
 //            console.log(res.data.data.)
             if(this.ids){
-              console.log('111')
-              console.log(this.ids)
               this.getAddressDetail(this.ids)
             }else{
-              console.log('222')
               this.getAddressDetail(res.data.data.default_address.address_id)
             }
 
@@ -136,7 +133,6 @@
           if(res.data.code=='200'){
             this.showLoading=false;
             this.addressInfo=res.data.data.address_info
-            console.log(this.addressInfo)
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
@@ -179,6 +175,10 @@
             this.$router.replace({name: 'yuanBaoShop'})
 
           }else if(res.data.code=='400'){
+            this.$vux.toast.show({
+              text:res.data.error,
+              type:'warn'
+            })
             this.showLoading=false
           }
         },(err)=>{
@@ -224,8 +224,8 @@
   }
 
   .pic {
-    width: 1.28rem;
-    height: 1.28rem;
+    width: 1.5rem;
+    height: 1rem;
     vertical-align: middle;
     margin-right: .1rem;
   }

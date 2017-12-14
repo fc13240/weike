@@ -9,7 +9,7 @@
           <img :src="list.pict_url" alt="">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">{{list.number}}折</span><span class="right">{{list.number}}元劵</span></p>
+            <p style="position: relative;margin-top: .1rem;"><span class="left">{{list.number}}折</span><span class="right">{{list.number}}元券</span></p>
             <p class="des_b" style="position: relative;margin-top: .1rem;">
               <span class="price"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{list.zk_final_price.corner}}</span></span>
               <del style="font-size: .2rem;color: #999;margin-left: .1rem;"><i>￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></i></del>
@@ -20,6 +20,8 @@
       </ul>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -60,6 +62,9 @@
           console.log(err)
         })
       },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     created:function(){
           this.getGoods()
@@ -67,6 +72,16 @@
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
 //      title[0].style.color='#333'
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     }
   }
 </script>

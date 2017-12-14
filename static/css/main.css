@@ -1,0 +1,16 @@
+.toTop {
+  position: fixed;
+  right: .6rem;
+  bottom: 1.3rem;
+  font-family: iconfont;
+  display: none;
+  font-size: .24rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: #fff;
+  border: .01rem solid #cccccc;
+  border-radius: 50%;
+  text-align: center;
+  z-index: 11;
+  color: #999999;
+}

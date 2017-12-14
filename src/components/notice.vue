@@ -19,9 +19,11 @@
       <p style="font-size: .28rem;color: #999;text-align: center; background-color: #f4f4f4;padding-top: 2rem;" v-show="!noticeList.length">您还没有收到任何通知呢</p>
     </div>
     <div class="btn" v-show="noticeList.length">
-      <x-button  @click.native="clear()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">清空</x-button>
+      <x-button  @click.native="clear()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">清空</x-button>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -87,10 +89,25 @@ import {XButton,Loading} from 'vux'
             })
           }
         })
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
       }
     },
     created:function(){
       this.getNoticeList()
+    },
+    mounted:function(){
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     }
   }
 </script>

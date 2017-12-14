@@ -31,6 +31,7 @@ import addressList from '@/components/addressList'
 import addAddress from '@/components/addAddress'
 import goodsDetail from '@/components/goodsDetail'
 import draw from '@/components/draw'
+import '../static/css/main.css'
 import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(AjaxPlugin)
@@ -190,14 +191,6 @@ const routes = [
       title:'我的足迹'
     }
   },
-  // {
-  //   path:'/home/exchangeDetail/:id/:address_id',
-  //   name:'exchangeDetail',
-  //   component:exchangeDetail,
-  //   meta: {
-  //     title:'兑换详情'
-  //   }
-  // },
   {
     path:'/home/exchangeDetail',
     name:'exchangeDetail',
@@ -238,7 +231,7 @@ const routes = [
     }
   },
   {
-    path:'/personCenter/addressList/:type',
+    path:'/personCenter/addressList',
     name:'addressList',
     component:addressList,
     meta: {
@@ -246,7 +239,7 @@ const routes = [
     }
   },
   {
-    path:'/personCenter/addAddress/:id',
+    path:'/personCenter/addAddress',
     name:'addAddress',
     component:addAddress,
     meta: {
@@ -275,4 +268,32 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app-box')
+
+// getQueryString=function(name){
+//   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+//   var r = window.location.search.substr(1).match(reg);
+//   if (r != null) return unescape(r[2]);
+//   return null;
+// }
+// global.browserQuery = {
+//   appid: getQueryString('appid'),
+//   cpid: getQueryString('cpid'),
+//   page: getQueryString('page')
+// }
+// router.beforeEach(({ meta, path, query }, from, next) => {
+//   if (browserQuery.appid && browserQuery.cpid) {
+//     store.commit('appid', browserQuery.appid);
+//     store.commit('cpid', browserQuery.cpid);
+//     delete browserQuery.appid;
+//     return next('/');
+//   }
+//   ///其它代码
+// })
+// router.afterEach(route => {
+//   if (browserQuery.page) {
+//     let p = browserQuery.page;
+//     browserQuery = {};
+//     router.push(p);//因为没有next对象，直接调用router跳转
+//   }
+// }
 

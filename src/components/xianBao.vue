@@ -1,8 +1,8 @@
 <template>
-  <div style="font-size: 0;">
-    <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
-    <div class="main">
-      <ul class="timeTab">
+  <div>
+    <div class="main" style="font-size: 0;">
+      <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
+      <ul class="timeTab" id="timeTab">
         <li :class="[item.active? activeClass:'']" v-for="(item,index) in time"
             v-on:click="navClickEvent(time,index)">{{item.start_time}}
           <span v-show="item.status==3">已开抢</span>
@@ -13,15 +13,15 @@
       <!--<router-view></router-view>-->
       <div class="goods_list">
         <ul class="goods">
-          <li>
-            <img src="../assets/logo.png" alt="" class="pic">
+          <li v-for="(list,index) in goodsList" :key="index" :onerror="defaultImg">
+            <img :src="list.pict_url" alt="" class="pic">
             <div class="content">
-              <p class="title">产品标题产品标题</p>
-              <p class="des">产品补充介绍</p>
+              <p class="title" v-text="list.title">产品标题产品标题</p>
+              <p class="des" v-text="list.item_description">产品补充介绍</p>
               <div style="margin-top: .35rem;position: relative;">
                 <div>
                   <div class="juan">
-                    <span class="j_num">200</span>
+                    <span class="j_num" v-text="list.coupon_number">200</span>
                   </div>
                   <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
                 </div>
@@ -30,101 +30,38 @@
                   <del class="old_num">￥124.00</del>
                 </div>
                 <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
-                  <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
+                  <p style="font-size: .24rem;color: #ff526d;">已抢{{list.volume}}件</p>
                   <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
                     src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
                 </div>
               </div>
             </div>
           </li>
-          <li>
-            <img src="../assets/logo.png" alt="" class="pic">
-            <div class="content">
-              <p class="title">产品标题产品标题</p>
-              <p class="des">产品补充介绍</p>
-              <div style="margin-top: .35rem;position: relative;">
-                <div>
-                  <div class="juan">
-                    <span class="j_num">20</span>
-                  </div>
-                  <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
-                </div>
-                <div>
-                  <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
-                  <del class="old_num">￥124.00</del>
-                </div>
-                <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
-                  <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
-                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/logo.png" alt="" class="pic">
-            <div class="content">
-              <p class="title">产品标题产品标题</p>
-              <p class="des">产品补充介绍</p>
-              <div style="margin-top: .35rem;position: relative;">
-                <div>
-                  <div class="juan">
-                    <span class="j_num">20</span>
-                  </div>
-                  <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
-                </div>
-                <div>
-                  <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
-                  <del class="old_num">￥124.00</del>
-                </div>
-                <div style="position: absolute;right: 0;bottom: .5rem;text-align: center;">
-                  <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
-                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/logo.png" alt="" class="pic">
-            <div class="content">
-              <p class="title">产品标题产品标题</p>
-              <p class="des">产品补充介绍</p>
-              <div style="margin-top: .35rem;position: relative;">
-                <div>
-                  <div class="juan">
-                    <span class="j_num">20</span>
-                  </div>
-                  <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
-                </div>
-                <div>
-                  <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
-                  <del class="old_num">￥124.00</del>
-                </div>
-                <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
-                  <p style="font-size: .24rem;color: #ff526d;">已抢101件</p>
-                  <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
-                    src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>                </div>
-              </div>
-            </div>
-          </li>
         </ul>
       </div>
     </div>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  import {XHeader} from 'vux'
+//  import Vue from 'vue'
+  import {Loading} from 'vux'
   export default {
     name: 'xianBao',
     components: {
-      Vue,
-      XHeader
+      Loading
     },
     data: function () {
       return {
+        showLoading:false,
+        loadText:'加载中...',
         banner:'',
         activeClass: 'active',
         time:[],
+        panic_id:'',
+        goodsList:[],
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods: {
@@ -134,53 +71,82 @@
           el.active = false;
         });
         time[index].active = true;
+        this.panic_id=time[index].panic_id
+        this.getGoodsList()
       },
       //      获取超值线报banner
       getBanner:function(){
+        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/newspaper_banner'
         }).then((res)=>{
-          const banner = res.data.data.banner[0].banner_image;
-          this.banner = banner;
+          if(res.data.code==200){
+            this.showLoading=false
+            const banner = res.data.data.banner[0].banner_image;
+            this.banner = banner;
+          }else{
+
+          }
         },(err)=>{
           console.log(err)
         })
       },
       //      获取超值线报抢购时间
       getTime:function(){
+        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/newspaper_time'
         }).then((res)=>{
-          const time = res.data.data.time;
-          this.time = time;
-          console.log(time)
+          if(res.data.code==200){
+            this.showLoading=false
+            const time = res.data.data.time;
+            this.time = time;
+          }else{
+
+          }
         },(err)=>{
           console.log(err)
         })
       },
-//      //      获取超值线报抢购商品
-//      getGoodsList:function(){
-//        this.$http({
-//          method:'POST',
-//          url:'/api/newspaper_goods'
-//        }).then((res)=>{
-//          const time = res.data.data.time;
-//          this.time = time;
-//          console.log(time)
-//        },(err)=>{
-//          console.log(err)
-//        })
-//      },
+      //      获取超值线报抢购商品
+      getGoodsList:function(){
+        this.showLoading=true
+        this.$http({
+          method:'POST',
+          url:'/api/overflow',
+          data:{panic_id:this.panic_id}
+        }).then((res)=>{
+          if(res.data.code==200){
+            this.goodsList=res.data.data.goods_list
+            this.showLoading=false
+          }
+        },(err)=>{
+          console.log(err)
+        })
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      },
     },
     mounted(){
-
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     },
     created:function(){
+      this.showLoading=true
       this.getBanner()
       this.getTime()
-//      this.getGoodsList()
+      this.getGoodsList()
     }
   }
 

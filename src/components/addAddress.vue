@@ -9,8 +9,9 @@
     </textarea>
       <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check" v-show="is_default!==1"></checklist>
         </group>
+      <div style="height: 1.34rem;"></div>
       <div class="btn">
-        <x-button @click.native="click()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">保存</x-button>
+        <x-button @click.native="click()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">保存</x-button>
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
@@ -46,6 +47,8 @@
         type:'',
         value2name:'',
         is_default:'',
+        from:'',
+        pro_id:''
       }
     },
     methods: {
@@ -66,11 +69,13 @@
         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            console.log('成功')
-            this.$router.replace({name: 'addressList'})
+            this.$router.push({path: '/personCenter/addressList',query:{type:this.from,id:this.pro_id}})
           }else if(res.data.code=='400'){
+            this.$vux.toast.show({
+              text:res.data.error,
+              type:'warn'
+            })
             this.showLoading=false
-            console.log('失敗')
           }
         },(err)=>{
           console.log(err)
@@ -94,7 +99,7 @@
         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            this.$router.replace({name: 'addressList'})
+            this.$router.push({path: '/personCenter/addressList',query:{id:this.pro_id,type:this.from}})
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
@@ -155,8 +160,11 @@
       }
     },
     created:function(){
-      const address_id = this.$route.params.id
+      const address_id = this.$route.query.id
+      const from = this.$route.query.from
       this.address_id = address_id
+      this.from =from
+      this.pro_id=this.$route.query.pro_id
       this.getAddressDetail()
     },
     mounted:function(){

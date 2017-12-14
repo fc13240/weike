@@ -14,9 +14,9 @@
             <x-input title="订单号" placeholder="请输入订单号" keyboard="number" type="number" style="color: #333;font-size: .32rem;border-top: .16rem solid #f4f4f4;border-bottom: .16rem solid #f4f4f4;padding: .4rem .5rem" v-model="orderNum"></x-input>
             <p style="border-bottom: 1px solid #f4f4f4;padding: .4rem 0 .2rem;margin: 0 .5rem;font-size: .24rem;color: #333;">如何找到返元宝订单号？</p>
           <img src="../assets/detail2.png" alt="" style="width: 100%;">
-          <div style="height: 1.56rem;"></div>
+          <div style="height: 1.34rem;"></div>
           <div class="btn">
-            <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .4rem auto;">确认提交</x-button>
+            <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">确认提交</x-button>
           </div>
         </div>
       </div>
@@ -44,6 +44,8 @@
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -128,11 +130,24 @@
         this.type = index;
         this.getOrderList(this.type)
       },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     mounted(){
 
       const add_b = document.getElementsByClassName('weui-cell__primary');
       add_b[0].style.borderBottom='1px solid #f4f4f4'
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     },
     created:function(){
       this.showLoading = true

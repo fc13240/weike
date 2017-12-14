@@ -96,20 +96,6 @@
                   this.imgList=res.data.data.image_url
                 }
               },(err)=>{})
-
-//                const list = this.$refs.file.files
-//                for (let i = 0; i < list.length; i++) {
-//                    if (!this.isContain(list[i])) {
-//                        const item = {
-//                            name: list[i].name,
-//                            size: list[i].size,
-//                            file: list[i]
-//                        }
-//                        this.html5Reader(list[i], item)
-//                        this.files.push(item)
-//                    }
-//                }
-//                this.$refs.file.value = ''
             },
             // 将图片文件转成BASE64格式
             html5Reader(file, item){
@@ -127,15 +113,15 @@
                 })
                 return false
             },
-            uploadProgress(evt) {
-                const component = this
-                if (evt.lengthComputable) {
-                    const percentComplete = Math.round((evt.loaded * 100) / evt.total)
-                    component.percent = percentComplete / 100
-                } else {
-                    console.warn('upload progress unable to compute')
-                }
-            }
+//            uploadProgress(evt) {
+//                const component = this
+//                if (evt.lengthComputable) {
+//                    const percentComplete = Math.round((evt.loaded * 100) / evt.total)
+//                    component.percent = percentComplete / 100
+//                } else {
+//                    console.warn('upload progress unable to compute')
+//                }
+//            }
         }
     }
 </script>

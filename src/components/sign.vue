@@ -7,13 +7,13 @@
     <!--<div style="height: .88rem;"></div>-->
     <div class="top">
       <!--<img src="../assets/sign_left.png" alt="">-->
-      <div class="sign_s" @click="sign" v-text="is_sign==1?'已签到':'签到'">签到</div>
-      <p style="font-size: .28rem;color: #ffe2e4;text-align: center;margin-top: .9rem;">今日签到可领取 <span
+      <div class="sign_s" @click="sign" v-text="is_sign=='1'?'已签到':'签到'">签到</div>
+      <p style="font-size: .28rem;color: #ffe2e4;text-align: center;margin-top: .9rem;"><span v-text="is_sign=='1'?'明日':'今日'"></span>签到可领取 <span
         style="font-size: .28rem;color: #ffe979;font-weight: bold;" v-text="getNums">4</span> 元宝</p>
       <p style="color: #ffaeaf;font-size: .2rem;text-align: center;margin-top: .05rem;">连续签到有更多惊喜哦</p>
       <div class="step" style="width: 90%;margin: 0 auto;">
         <ul class="step_m">
-          <li :class="list.sign==1?'active':''" v-for="list in signList">
+          <li :class="list.sign=='1'?'active':''" v-for="list in signList">
             <!--<span v-show="list.sign==1">+{{list.sign_acer}}</span> -->
             <i class="litter_dot"></i>{{list.week}}</li>
         </ul>
@@ -66,6 +66,8 @@
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -101,7 +103,7 @@
     methods: {
       //      今日签到奖励元宝数
       getNum:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/signpage_reward',
@@ -120,7 +122,7 @@
       },
       //      今日签到详情
       getSignDes:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/signpage_week',
@@ -138,7 +140,7 @@
       },
       //      签到页面----兑换记录
       getHistory:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/signpage_history',
@@ -155,14 +157,14 @@
       },
       //      签到请求
       sign:function(){
-        if(this.is_sign==1){
+        if(this.is_sign=='1'){
           return
         }else{
 
         }
         this.showLoading=true
         document.body.style.overflow = 'hidden';
-        if(this.is_sign ==2){
+        if(this.is_sign =='2'){
           this.$http({
             method:'POST',
             url:'/api/dosign',
@@ -171,7 +173,9 @@
               this.showLoading=false
               document.body.style.overflow = 'hidden';
               this.show = true;
-              this.is_sign=1
+              this.is_sign='1'
+              this.getNum()
+              this.getSignDes()
             }else if(res.data.code=='400'){
               this.showLoading=false
             }
@@ -186,6 +190,9 @@
         document.body.style.overflow = 'scroll';
         this.show=false
         this.$router.replace({name: 'sign'})
+      },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
       }
     },
     created:function(){
@@ -193,6 +200,18 @@
       this.getNum()
       this.getHistory();
       this.getSignDes()
+    },
+    mounted(){
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     }
   }
 </script>
@@ -308,14 +327,14 @@
     height: 100%;
     opacity: .5;
     background-color: black;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 100;
   }
 
   .model_main {
     z-index: 200;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-image: url('../../static/images/model_bd.png');

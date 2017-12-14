@@ -3,13 +3,15 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">应季必备</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <nav>
-      <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;">
-    </nav>
-    <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="../assets/logo.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早上10点晚9点上新</p>
+   <div style="font-size: 0;">
+     <nav>
+       <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;">
+     </nav>
+     <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="/static/images/essential_img.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早上10点晚9点上新</p>
+   </div>
     <div class="main_goods">
       <ul class="goods">
-        <li class="goods_list" v-for="list in goodsList">
+        <router-link tag="li" class="goods_list" v-for="(list,index) in goodsList" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">
           <img :src="list.pict_url" alt="">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -21,10 +23,12 @@
               <span class="num">{{list.volume}}件已售</span>
             </p>
           </div>
-        </li>
+        </router-link>
       </ul>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+
   </div>
 </template>
 <script>
@@ -85,6 +89,9 @@
           console.log(err)
         })
       },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     created:function(){
      this.getGoods()
@@ -93,6 +100,16 @@
     mounted(){
 //      const title = document.getElementsByClassName('vux-header-title');
 //      title[0].style.color='#333'
+      // 返回顶部
+      let back_btn = document.getElementsByClassName('toTop')[0];
+      window.onscroll = function () {
+        let top = document.documentElement.scrollTop || document.body.scrollTop;
+        if (top > 800) {
+          back_btn.style.display = 'block';
+        } else {
+          back_btn.style.display = 'none';
+        }
+      }
     }
   }
 </script>

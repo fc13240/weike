@@ -14,13 +14,15 @@
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
           <div class="box1-item" v-for="goods1 in goods1" id="box1-item" style="width: 2.49rem;">
-            <img :src="goods1.pict_url" alt="">
-            <span class="dess">
+            <router-link :to="{name:'goodsDetail',query:{id:goods1}}">
+              <img :src="goods1.pict_url" alt="">
+              <span class="dess">
             <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
             <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span>
               <del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del>
             </p>
           </span>
+            </router-link>
           </div>
         </div>
       </scroller>
@@ -38,6 +40,7 @@
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav2">
         <div class="box1-item" v-for="goods2 in goods2" id="box2-item" style="width: 2.49rem;">
+          <router-link :to="{name:'goodsDetail',query:{id:goods2}}">
           <img :src="goods2.pict_url" alt="">
           <span class="dess">
             <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -45,6 +48,7 @@
               <del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del>
             </p>
           </span>
+          </router-link>
         </div>
       </div>
     </scroller>
@@ -61,6 +65,7 @@
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav3">
         <div class="box1-item" v-for="goods3 in goods3" id="box3-item" style="width: 2.49rem;">
+          <router-link :to="{name:'goodsDetail',query:{id:goods3}}">
           <img :src="goods3.pict_url" alt="">
           <span class="dess">
             <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -68,6 +73,7 @@
               <del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>
             </p>
           </span>
+          </router-link>
         </div>
       </div>
     </scroller>
@@ -83,7 +89,7 @@
     <div class="main">
       <div class="main_goods">
         <ul class="goods">
-          <li class="goods_list" v-for="list in goods4">
+          <router-link tag="li" class="goods_list" v-for="list in goods4" :to="{name:'goodsDetail',query:{id:list}}">
             <img :src="list.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -92,12 +98,13 @@
                 <span class="num">518件已售</span>
               </div>
             </div>
-          </li>
+          </router-link>
         </ul>
 
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
   </div>
 </template>
@@ -203,6 +210,9 @@
           console.log(err)
         })
       },
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     created:function(){
       this.getlist1()
@@ -221,6 +231,16 @@
         self.$refs.nav1.style.width = (w * n1) + 'px';
         self.$refs.nav2.style.width = (w * n2) + 'px';
         self.$refs.nav3.style.width = (w * n3) + 'px';
+        // 返回顶部
+        let back_btn = document.getElementsByClassName('toTop')[0];
+        window.onscroll = function () {
+          let top = document.documentElement.scrollTop || document.body.scrollTop;
+          if (top > 800) {
+            back_btn.style.display = 'block';
+          } else {
+            back_btn.style.display = 'none';
+          }
+        }
       })
 
     }
