@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!--<app-header title="微客"></app-header>-->
-    <!--<div style="height: .88rem;"></div>-->
-    <!--<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="position: relative;">-->
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
       <swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
@@ -32,7 +30,6 @@
         </div>
         <div class="main_goods">
           <ul class="goods">
-            <!--query:{id:goods.id}}-->
             <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods}}" :key="index">
                 <img :src="goods.pict_url" alt="" :onerror="defaultImg">
                 <div class="content">
@@ -47,22 +44,19 @@
           </ul>
         </div>
       </div>
-    <!--</scroller>-->
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    </scroller>
+    <div class="toTop" @click="toTop()">
+      <img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;">
+      <span>顶部</span>
+    </div>
   </div>
 </template>
 <script>
   import {Swiper} from 'vux'
-  import Vue from 'vue'
-  import AppHeader from './Header'
-//  import VueScroller from 'vue-scroller'
-//  Vue.use(VueScroller)
   export default {
     name: 'Home',
     components: {
       Swiper,
-      Vue,
-      AppHeader,
     },
     data() {
       return {
@@ -70,9 +64,10 @@
         typeList:[],
         storeTypeList:[],
         goodsList:[],
-        noData: '',
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
-
+        pageIndex:1,
+        limit:10,
+        noData: false,
       }
     },
     methods: {
@@ -113,51 +108,49 @@
       getGoodsList:function(){
         this.$http({
           method:'POST',
-          url:'/api/index_goods'
+          url:'/api/index_goods',
+          data:{page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
          if(res.data.code=='200'){
-           this.goodsList = res.data.data.goods
-//          console.log(this.goodsList)
+           if(res.data.data.goods.length==0){
+             self.noData='没有更多数据了'
+           }else{
+             this.goodsList=this.goodsList.concat(res.data.data.goods)
+           }
          }
         },(err)=>{
           console.log(err)
         })
       },
+
       infinite(done) {
-//        if (this.noData) {
-//          console.log(this.noData)
-//          if (this.noData) {
-//            setTimeout(() => {
-//              this.$refs.myscroller.finishInfinite(2);
-//            })
-//          }
-//          return;
-//        }
-//        let self = this;//this指向问题
-//        let start = this.goodsList.length;
-//
-//        setTimeout(() => {
-//          for (let i = start + 1; i < start + 10; i++) {
-//            self.goodsList.push(i)
-//          }
-//          if (start >= 18) {
-//            self.noData = "没有更多数据"
-//          }
-//          self.$refs.myscroller.resize();
-//          done()
-//        }, 1500)
+        if (this.noData) {
+            setTimeout(() => {
+              this.$refs.myscroller.finishInfinite(2);
+            })
+          return;
+        }
+       else{
+          let self = this;//this指向问题
+//        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+              self.getGoodsList()
+              self.$refs.myscroller.resize()
+            done()
+          },1500)
+        }
       },
-//done()表示这次异步加载数据完成，加载下一次
-//因为这个是同步的，加了setTimeout就是异步加载数据；
-//因为涉及到this指向问题，所以将他放在一个变量里。
       refresh(done) {
         var self = this
+        this.pageIndex=1
+        this.goodsList=[]
         this.getBannerList()
         this.getTypeList()
         this.getGoodsList()
         setTimeout(function () {
           self.top = self.top - 10;
-          done();
+          done()
         }, 1500)
       },
       toTop(){
@@ -165,11 +158,12 @@
       }
     },
     mounted: function () {
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         // 返回顶部
         let back_btn = document.getElementsByClassName('toTop')[0];
-        window.onscroll = function () {
+        window.onscroll=function () {
           let top = document.documentElement.scrollTop || document.body.scrollTop;
+          console.log(top)
           if (top > 800) {
             back_btn.style.display = 'block';
           } else {
@@ -177,12 +171,12 @@
           }
         }
       })
-
     },
     created: function(){
       this.getBannerList()
       this.getTypeList()
       this.getGoodsList()
+
     }
   }
 

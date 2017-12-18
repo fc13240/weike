@@ -30,9 +30,12 @@ import toShowList from '@/components/toShowList'
 import addressList from '@/components/addressList'
 import addAddress from '@/components/addAddress'
 import goodsDetail from '@/components/goodsDetail'
-import draw from '@/components/draw'
+import draw from '@/components/draw';
+import searchResult from '@/components/searchResult';
 import '../static/css/main.css'
 import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
 Vue.use(LoadingPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
@@ -95,6 +98,11 @@ const routes = [
   {
     path: '/Search/searchPage',
     component: SearchPage
+  },
+  {
+    path: '/Search/searchResult',
+    name:'searchResult',
+    component: searchResult
   },
   {
     path: '/PersonCenter',

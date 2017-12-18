@@ -59,7 +59,7 @@
       </div>
       <div class="model_main">
          <div class="model_main_des">
-           <p class="big">恭喜您，获得 <span class="big_num" v-text="getNums">4</span> 个元宝</p>
+           <p class="big">恭喜您，获得 <span class="big_num" v-text="sign_acer">4</span> 个元宝</p>
             <p class="small">连续签到有更多奖励哦</p>
          </div>
         <img src="../../static/images/cancel_img.png" alt="" @click="cancel">
@@ -98,6 +98,7 @@
         continue_days:'',
         signList:'',
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+        sign_acer:''
       }
     },
     methods: {
@@ -170,6 +171,7 @@
             url:'/api/dosign',
           }).then((res)=>{
             if(res.data.code=='200'){
+              this.sign_acer=res.data.data.sign_acer
               this.showLoading=false
               document.body.style.overflow = 'hidden';
               this.show = true;

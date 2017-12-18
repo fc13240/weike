@@ -9,7 +9,7 @@
           <img :src="list.pict_url" alt="" class="pic" :onerror="defaultImg">
           <div class="content">
             <p class="title" v-text="list.title">产品标题产品标题</p>
-            <p class="des" v-text="list.title">产品补充介绍</p>
+            <!--<p class="des" v-text="list.title">产品补充介绍</p>-->
             <div style="margin-top: .35rem;position: relative;">
               <span style="font-size: .24rem;color: #999;">已售{{list.volume}}件</span>
               <div>
@@ -142,14 +142,18 @@
   }
 
   .title {
-    font-size: .32rem;
+    height: .9rem;
+    overflow: hidden;
+    font-size: .28rem;
     color: #333;
   }
 
-  .des {
-    font-size: .24rem;
-    color: #ff526d;
-  }
+  /*.des {*/
+    /*height: .4rem;*/
+    /*overflow: hidden;*/
+    /*font-size: .24rem;*/
+    /*color: #ff526d;*/
+  /*}*/
 
   .new_num {
     font-size: .36rem;

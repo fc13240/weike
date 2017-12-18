@@ -20,7 +20,7 @@ export default {
 //      showFooter:true
     }
   },
-  mouthed:{
+  mounted:function(){
 
   },
   watch:{

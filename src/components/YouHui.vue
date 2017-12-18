@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div>
-      <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
+    <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
         <nav>
           <img  :src="type1.image" style="width: 100%;height: 100%;">
           <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
@@ -26,7 +25,6 @@
           </div>
         </div>
       </scroller>
-    </div>
     <router-link to="/YouHui/subjects" :to="{name:'subjects',query:{type_id:type2.type_id}}">
       <nav>
         <img :src="type2.image" alt="" style="width: 100%;height: 100%;">
@@ -100,10 +98,10 @@
             </div>
           </router-link>
         </ul>
-
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
+
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
   </div>
@@ -212,7 +210,8 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
+
     },
     created:function(){
       this.getlist1()

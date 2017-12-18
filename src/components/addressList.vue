@@ -15,12 +15,9 @@
             <div class="right_ft"></div>
           </group>
         </router-link>
-        <p
-          style="overflow:hidden;background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;">
-        <router-link :to="{name:'exchangeDetail',query:{id:id,address_id:list.address_id}}">
-           <span v-show="list.is_default==1" style="color: #ff526d;"> <img src="../assets/checked.png" alt=""
+        <p class="address_bottom">
+           <span v-show="list.is_default==1" style="color: #ff526d;" @click="defaultClick(list.address_id)"> <img src="../assets/checked.png" alt=""
                                                    style="width: .28rem;height: .28rem;vertical-align: middle;margin-top: -.09rem;margin-right: .1rem;">默认地址 </span>
-        </router-link>
           <router-link :to="{name:'exchangeDetail',query:{id:id,address_id:list.address_id}}" v-show="from==1">
             <span style="border: 1px solid #999;color: #666;padding: 0 .1rem;border-radius: .05rem;" v-show="list.is_default==2">使用</span>
           </router-link>
@@ -104,11 +101,18 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
+      },
+      defaultClick(e){
+        if(this.from==1){
+          this.$router.push({name:'exchangeDetail',query:{id:this.id,address_id:e}})
+        }else{
+
+        }
       }
     },
     created:function(){
       this.id = this.$route.query.id
-//      判断该页面是从兑换商品还是个人中心跳转过来的
+//      判断该页面是从兑换商品还是个人中心跳转过来的 1.从兑换商品  2.从个人中心
       this.from = this.$route.query.type
       this.getAddressList()
     },
@@ -149,5 +153,8 @@
     position: fixed;
     bottom: 0;
     border-top: 1px solid #e9e9e9;
+  }
+  .address_bottom{
+    overflow:hidden;background-color: white; color: #ff526d;font-size: .20rem;padding: .1rem .3rem .1rem .3rem;margin-bottom: .1rem;
   }
 </style>

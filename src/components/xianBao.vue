@@ -1,5 +1,6 @@
 <template>
   <div>
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
     <div class="main" style="font-size: 0;">
       <img :src="banner" alt="" style="height: 1.8rem;width: 100%">
       <ul class="timeTab" id="timeTab">
@@ -26,8 +27,8 @@
                   <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
                 </div>
                 <div>
-                  <span class="new_num"><span style="font-size: .28rem;">￥</span>88.8</span>
-                  <del class="old_num">￥124.00</del>
+                  <span class="new_num"><span style="font-size: .28rem;">￥</span>{{list.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span>
+                  <del class="old_num">￥{{list.reserve_price}}</del>
                 </div>
                 <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢{{list.volume}}件</p>
@@ -40,6 +41,7 @@
         </ul>
       </div>
     </div>
+    </scroller>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
@@ -62,6 +64,10 @@
         panic_id:'',
         goodsList:[],
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+        pageIndex:1,
+        limit:10,
+        totalPage:0,
+        noData: false,
       }
     },
     methods: {
@@ -72,11 +78,12 @@
         });
         time[index].active = true;
         this.panic_id=time[index].panic_id
+         this.goodsList=[]
         this.getGoodsList()
       },
       //      获取超值线报banner
       getBanner:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/newspaper_banner'
@@ -94,7 +101,7 @@
       },
       //      获取超值线报抢购时间
       getTime:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/newspaper_time'
@@ -112,15 +119,20 @@
       },
       //      获取超值线报抢购商品
       getGoodsList:function(){
-        this.showLoading=true
+//        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/overflow',
-          data:{panic_id:this.panic_id}
+          data:{panic_id:this.panic_id,page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
           if(res.data.code==200){
-            this.goodsList=res.data.data.goods_list
-            this.showLoading=false
+            if(res.data.data.goods_list.length==0){
+              self.noData='没有更多数据了'
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.goods_list)
+              this.showLoading=false
+            }
+
           }
         },(err)=>{
           console.log(err)
@@ -128,6 +140,37 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
+      },
+      infinite(done) {
+        if (this.noData) {
+          setTimeout(() => {
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+//        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoodsList()
+            self.$refs.myscroller.resize()
+            done()
+          },1500)
+        }
+
+      },
+      refresh(done) {
+        var self = this
+        this.pageIndex=1
+        this.goodsList=[]
+        this.getBanner()
+        this.getTime()
+        this.getGoodsList()
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
       },
     },
     mounted(){
@@ -197,11 +240,15 @@
   .title {
     font-size: .32rem;
     color: #333333;
+    height: .5rem;
+    overflow: hidden;
   }
 
   .des {
     font-size: .24rem;
     color: #ff526d;
+    height: .38rem;
+    overflow: hidden;
   }
 
   .juan {

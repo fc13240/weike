@@ -21,7 +21,7 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
-    <!--<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">-->
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods}}" :key="index">
@@ -38,33 +38,33 @@
           </router-link>
         </ul>
       </div>
-    <!--</scroller>-->
+    </scroller>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
   </div>
 </template>
 <script>
-  import {XHeader} from 'vux'
-  import Vue from 'vue'
-  import VueScroller from 'vue-scroller'
-  Vue.use(VueScroller)
+//  import {XHeader} from 'vux'
+//  import Vue from 'vue'
+//  import VueScroller from 'vue-scroller'
+//  Vue.use(VueScroller)
   export default {
     name: 'jiFen',
     components: {
-      Vue,
-      XHeader,
-      VueScroller
+//      Vue,
+//      XHeader,
+//      VueScroller
     },
     data() {
       return {
         totalCount:'',
-        pageIndex:1,
-        pageSize:10,
-        noData: '',
         goodsList: [],
         cate_id:'',
         typeList:[],
-        subitemsExpanded: false
+        subitemsExpanded: false,
+        pageIndex:1,
+        limit:10,
+        noData: false,
       }
     },
     methods: {
@@ -82,13 +82,15 @@
           method:'POST',
           url:'/api/goodslist',
           data:{
-            cate_id:this.cate_id
+            cate_id:this.cate_id,page:this.pageIndex,limit:this.limit
           }
         }).then((res)=>{
           if(res.data.code == '200'){
-            this.goodsList = res.data.data.goodsList
-            this.totalCount = this.goodsList.goods_count
-//            console.log(res.data.data)
+            if(res.data.data.goodsList.length==0){
+              self.noData='没有更多数据了'
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.goodsList)
+            }
           }
         },(err)=>{})
       },
@@ -112,23 +114,33 @@
           console.log(err)
         })
       },
-      refresh:function(){
-        setTimeout(()=>{
-          this.pageIndex=1;
-          this.getGoodsList();
-        },1500)
-      },
-      infinite:function(){
+      infinite(done){
         if(this.noData){
           setTimeout(()=>{
             this.$refs.myscroller.finishInfinite(2);
           })
           return;
         }
-        setTimeout(()=>{
-          this.pageIndex+=1;
-          this.getGoodsList()
-        },1500)
+        else{
+          let self = this;//this指向问题
+//        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoodsList()
+            self.$refs.myscroller.resize()
+            done()
+          },1500)
+        }
+      },
+      refresh(done){
+        var self =this
+        this.goodsList=[]
+        this.pageIndex=1;
+        this.getGoodsList();
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
