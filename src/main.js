@@ -264,6 +264,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode:'history',
   routes
 })
 
@@ -277,31 +278,5 @@ new Vue({
   render: h => h(App)
 }).$mount('#app-box')
 
-// getQueryString=function(name){
-//   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-//   var r = window.location.search.substr(1).match(reg);
-//   if (r != null) return unescape(r[2]);
-//   return null;
-// }
-// global.browserQuery = {
-//   appid: getQueryString('appid'),
-//   cpid: getQueryString('cpid'),
-//   page: getQueryString('page')
-// }
-// router.beforeEach(({ meta, path, query }, from, next) => {
-//   if (browserQuery.appid && browserQuery.cpid) {
-//     store.commit('appid', browserQuery.appid);
-//     store.commit('cpid', browserQuery.cpid);
-//     delete browserQuery.appid;
-//     return next('/');
-//   }
-//   ///其它代码
-// })
-// router.afterEach(route => {
-//   if (browserQuery.page) {
-//     let p = browserQuery.page;
-//     browserQuery = {};
-//     router.push(p);//因为没有next对象，直接调用router跳转
-//   }
-// }
+
 

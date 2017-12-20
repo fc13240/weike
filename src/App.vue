@@ -27,17 +27,7 @@ export default {
 //    '$route':'fetchPath'
   },
   methods:{
-//    fetchPath(to,from,next){
-//      console.log(to)
-//      console.log(from)
-//      if(to.path==='/home' || to.path==='/Search' || to.path==='/YouHui' || to.path==='/PersonCenter'){
-//        this.showFooter = true;
-//      }else{
-//        this.showFooter = false;
-//      }
-//
-//
-//    }
+
   }
 }
 </script>

@@ -124,6 +124,7 @@
       },
 
       infinite(done) {
+        console.log('a')
         if (this.noData) {
             setTimeout(() => {
               this.$refs.myscroller.finishInfinite(2);
@@ -133,12 +134,12 @@
        else{
           let self = this;//this指向问题
 //        self.getGoodsList()
-          setTimeout(()=>{
-            self.pageIndex += 1
-              self.getGoodsList()
-              self.$refs.myscroller.resize()
-            done()
-          },1500)
+//          setTimeout(()=>{
+//            self.pageIndex += 1
+//              self.getGoodsList()
+//              self.$refs.myscroller.resize()
+//            done()
+//          },1500)
         }
       },
       refresh(done) {
@@ -163,7 +164,7 @@
         let back_btn = document.getElementsByClassName('toTop')[0];
         window.onscroll=function () {
           let top = document.documentElement.scrollTop || document.body.scrollTop;
-          console.log(top)
+//          console.log(top)
           if (top > 800) {
             back_btn.style.display = 'block';
           } else {

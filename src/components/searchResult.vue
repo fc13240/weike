@@ -5,18 +5,20 @@
     <!--搜索-->
     <!--</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <div class="goHome" @click="goHome()">
-      <img src="/static/images/home.png" alt="">
-    </div>
-    <search placeholder="请输入商品名称" cancel-text="取消"
-            @result-click="resultClick"
-            @on-change="getResult"
-            :results="results"
-            v-model="keywords"
-            @on-focus="onFocus"
-            @on-cancel="onCancel"
-            @on-submit="onSubmit"
-            ref="search"  style="width: 90%;margin-left: 10%;"></search>
+   <div style="position: fixed;z-index: 999999;width: 100%;">
+     <div class="goHome" @click="goHome()">
+       <img src="/static/images/home.png" alt="">
+     </div>
+     <div @click="onFocus">
+       <search placeholder="请输入商品名称" cancel-text="取消"
+               @result-click="resultClick"
+               @on-change="getResult"
+               :results="results"
+               v-model="keywords"
+               @click="onFocus"
+               ref="search"  style="width: 90%;margin-left: 10%;"></search>
+     </div>
+   </div>
     <!--<div v-show="searchResults" id="hot">-->
       <!--<p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>-->
       <!--<ul class="hot_list">-->
@@ -156,6 +158,7 @@
 
       },
       onFocus() {
+        console.log('aaaa')
         this.$router.push({path:'/Search/searchPage'})
       },
       onCancel() {
