@@ -9,7 +9,7 @@
      </router-link>
     </div>
     <div style="height: 1.52rem;"></div>
-    <img src="../assets/detail.png" alt="" class="detail">
+    <img src="/static/images/detail.png" alt="" class="detail">
   </div>
 </template>
 <script>

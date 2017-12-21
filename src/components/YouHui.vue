@@ -13,7 +13,7 @@
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
           <div class="box1-item" v-for="goods1 in goods1" id="box1-item" style="width: 2.49rem;">
-            <router-link :to="{name:'goodsDetail',query:{id:goods1}}">
+            <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}">
               <img :src="goods1.pict_url" alt="">
               <span class="dess">
             <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -38,7 +38,7 @@
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav2">
         <div class="box1-item" v-for="goods2 in goods2" id="box2-item" style="width: 2.49rem;">
-          <router-link :to="{name:'goodsDetail',query:{id:goods2}}">
+          <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}">
           <img :src="goods2.pict_url" alt="">
           <span class="dess">
             <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -62,8 +62,8 @@
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav3">
-        <div class="box1-item" v-for="goods3 in goods3" id="box3-item" style="width: 2.49rem;">
-          <router-link :to="{name:'goodsDetail',query:{id:goods3}}">
+        <div class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.49rem;" :key="index">
+          <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}">
           <img :src="goods3.pict_url" alt="">
           <span class="dess">
             <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
@@ -87,7 +87,7 @@
     <div class="main">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="list in goods4" :to="{name:'goodsDetail',query:{id:list}}">
+          <router-link tag="li" class="goods_list" v-for="(list,index) in goods4" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">
             <img :src="list.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -221,15 +221,17 @@
     },
     mounted() {
       this.$nextTick(function(){
-        //      动态的更改scroller的宽度
-        const self = this;
-        const w = document.getElementById('box1-item').offsetWidth;
-        const n1 = self.goods1.length;
-        const n2 = self.goods2.length;
-        const n3 = self.goods3.length;
-        self.$refs.nav1.style.width = (w * n1) + 'px';
-        self.$refs.nav2.style.width = (w * n2) + 'px';
-        self.$refs.nav3.style.width = (w * n3) + 'px';
+        setTimeout(()=>{
+          //      动态的更改scroller的宽度
+          const self = this;
+          const w = document.getElementById('box1-item').offsetWidth;
+          const n1 = self.goods1.length;
+          const n2 = self.goods2.length;
+          const n3 = self.goods3.length;
+          self.$refs.nav1.style.width = (w * n1) + 'px';
+          self.$refs.nav2.style.width = (w * n2) + 'px';
+          self.$refs.nav3.style.width = (w * n3) + 'px';
+        },1000)
         // 返回顶部
         let back_btn = document.getElementsByClassName('toTop')[0];
         window.onscroll = function () {

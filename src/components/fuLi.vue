@@ -19,14 +19,21 @@
     <div class="main_goods">
       <div>
         <ul class="goods">
-          <router-link  class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'goodsDetail',query:{id:goodList1}}" :key="index">
+          <router-link  class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'goodsDetail',query:{id:goodList1.id,type:1}}" :key="index">
             <img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList1.volume}}元宝</span>
-                <!--<span class="right">剩余<span style="color: #ffb205;">-->
-                  <!--{{goodList1.volume}}</span>件</span>-->
-              </p>
+              <!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList1.volume}}元宝</span>-->
+                <!--&lt;!&ndash;<span class="right">剩余<span style="color: #ffb205;">&ndash;&gt;-->
+                  <!--&lt;!&ndash;{{goodList1.volume}}</span>件</span>&ndash;&gt;-->
+              <!--</p>-->
+              <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goodList1.coupon_number}}元</span>
+                    </span>
+                <span class="return_num_style"  v-show="goodList1.fans_acer !==0">返{{goodList1.fans_acer}}元宝</span>
+              </div>
               <p class="des_b" style="position: relative;margin-top: .1rem;">
                 <span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price.rmb}}<span v-show="goodList1.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList1.zk_final_price.corner}}</span></span>
                 <span class="num">{{goodList1.volume}}件已售</span>
@@ -164,7 +171,7 @@
         this.showLoading=true
         this.$http({
           method:'POST',
-          url:'/api/fanswelfare',
+          url:'/api/fanswelfare_product',
           data:{sorts_type:e}
         }).then((res)=>{
           if(res.data.code=='200'){

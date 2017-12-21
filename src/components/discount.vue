@@ -5,7 +5,7 @@
     <!--<div style="height: .88rem;"></div>-->
     <div class="main_goods">
       <ul class="goods">
-        <li class="goods_list" v-for="list in goodsList">
+        <router-link tag="li" class="goods_list" v-for="(list,index) in goodsList" :to="{name:'goodsDetail',query:{id:list.id,type:3}}" :key="index">
           <img :src="list.pict_url" alt="">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -16,7 +16,7 @@
               <span class="num">{{list.volume}}件已售</span>
             </p>
           </div>
-        </li>
+        </router-link>
       </ul>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>

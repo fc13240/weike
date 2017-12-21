@@ -8,10 +8,16 @@
         <p class="name">{{goodsDetail.title}}</p>
         <span class="prices"><small>￥</small>{{goodsDetail.zk_final_price.rmb}}<small
           v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+        <div style="margin-left: .2rem;display: inline-block;">
+          <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
+                    </span>
+          <span class="return_num_style" v-show="goodsDetail.fans_acer !==0">返{{goodsDetail.fans_acer}}元宝</span>
+        </div>
         <!--<span class="juan"><span class="juan_l">劵</span><span class="juan_r">20元</span></span>-->
         <!--<span class="return_yuanBao">返100元宝</span>-->
-        <p class="old_price">价格
-          <del>￥{{goodsDetail.reserve_price.rmb}} <span
+        <p class="old_price">价格<del>￥{{goodsDetail.reserve_price.rmb}}<span
             v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
           <span>销量{{goodsDetail.volume}}件</span></p>
       </div>
@@ -124,29 +130,32 @@
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
         command: '',
 //        click_url:''
+        id:'',
+        type:'',
       }
     },
     methods: {
       //      商品详情
-//      getGoodsDetail: function () {
-//        this.id = this.$route.query.id;
-//        console.log(this.id)
-//        this.$http({
-//          method: 'POST',
-//          url: '/api/goodsDetail',
-//          data: {goods_id: this.id}
-//        }).then((res) => {
-//          if (res.data.code == '200') {
-//            this.goodsDetail = res.data.data
-//            this.click_url=res.data.data.click_url
-//          }
-//        }, (err) => {
-//          console.log(err)
-//        })
-//      },
+      getGoodsDetail: function () {
+        this.id = this.$route.query.id;
+        this.type=this.$route.query.type
+        console.log(this.id)
+        this.$http({
+          method: 'POST',
+          url: '/api/goodsDetail',
+          data: {goods_id: this.id,type:this.type}
+        }).then((res) => {
+          if (res.data.code == '200') {
+            this.goodsDetail = res.data.data
+            this.click_url=res.data.data.click_url
+          }
+        }, (err) => {
+          console.log(err)
+        })
+      },
       //     淘口令
       getCommand: function () {
-//        this.id = this.$route.query.id;
+        this.id = this.$route.query.id;
         this.$http({
           method: 'POST',
           url: '/api/command',
@@ -161,10 +170,11 @@
       },
       //      获取猜你喜欢商品列表
       getGoodsList: function () {
+        this.id = this.$route.query.id;
         this.$http({
           method: 'POST',
           url: '/api/relevance',
-          data:{category:this.goodsDetail.category}
+          data:{id:this.id}
         }).then((res) => {
           if (res.data.code == '200') {
             this.goodsList = res.data.data.goodsList
@@ -205,7 +215,7 @@
       },
       click(id){
         this.toTop()
-        this.goodsDetail=id
+        this.id=id
         this.$router.push({name:'goodsDetail',query:{id:id}})
 //        this.getGoodsDetail()
       },
@@ -222,10 +232,10 @@
       }
     },
     created: function () {
-      this.goodsDetail=this.$route.query.id
-      console.log(this.goodsDetail)
-//      this.getGoodsDetail()
+      this.id=this.$route.query.id
+      this.type=this.$route.query.type
       this.getGoodsList()
+      this.getGoodsDetail()
 
     },
     mounted:function(){
@@ -271,6 +281,7 @@
   }
 
   .detail {
+    font-size: 0;
     background: white;
     padding: .22rem .22rem .3rem;
   }

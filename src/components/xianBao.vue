@@ -15,7 +15,7 @@
       <div class="goods_list">
         <ul class="goods">
           <li v-for="(list,index) in goodsList" :key="index" :onerror="defaultImg">
-            <router-link :to="{name:'goodsDetail',query:{id:list}}">
+            <router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">
               <img :src="list.pict_url" alt="" class="pic">
             </router-link>
             <div class="content">
@@ -23,10 +23,14 @@
               <p class="des" v-text="list.item_description">产品补充介绍</p>
               <div style="margin-top: .35rem;position: relative;">
                 <div>
-                  <div class="juan">
-                    <span class="j_num" v-text="list.coupon_number">200</span>
-                  </div>
-                  <span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>
+                  <!--<div class="juan">-->
+                    <!--<span class="j_num" v-text="list.coupon_number">200</span>-->
+                  <!--</div>-->
+                  <!--<span style="font-size: .2rem;color: #ff526d;margin-left: .1rem;">折上折</span>-->
+                  <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{list.coupon_number}}元</span>
+                    </span>
                 </div>
                 <div>
                   <span class="new_num"><span style="font-size: .28rem;">￥</span>{{list.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span>
@@ -34,7 +38,7 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢{{list.volume}}件</p>
-                  <router-link :to="{name:'goodsDetail',query:{id:list}}">
+                  <router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">
                      <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
                        src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
                   </router-link>

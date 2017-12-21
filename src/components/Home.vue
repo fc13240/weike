@@ -30,10 +30,17 @@
         </div>
         <div class="main_goods">
           <ul class="goods">
-            <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods}}" :key="index">
+            <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
                 <img :src="goods.pict_url" alt="" :onerror="defaultImg">
                 <div class="content">
                   <div class="des">{{goods.title}}</div>
+                    <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goods.coupon_number}}元</span>
+                    </span>
+                      <span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
+                    </div>
                   <div class="des_b">
                     <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
                     <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
@@ -133,13 +140,13 @@
         }
        else{
           let self = this;//this指向问题
-//        self.getGoodsList()
-//          setTimeout(()=>{
-//            self.pageIndex += 1
-//              self.getGoodsList()
+        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+              self.getGoodsList()
 //              self.$refs.myscroller.resize()
-//            done()
-//          },1500)
+            done()
+          },1500)
         }
       },
       refresh(done) {
@@ -204,6 +211,7 @@
     height: .8rem;
     border-radius: 50%;
     margin: 0 auto;
+    word-break: break-all;
   }
 
   .nav-small li span {
@@ -260,6 +268,7 @@
   }
 
   .goods_list {
+    font-size: 0;
     background-color: white;
     list-style: none;
     float: left;
@@ -282,7 +291,7 @@
   }
 
   .content {
-    padding: .15rem;
+    padding:.1rem;
   }
 
   .des {
@@ -299,7 +308,7 @@
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {
@@ -312,6 +321,18 @@
 </style>
 <style>
   .vux-slider > .vux-indicator > a > .vux-icon-dot.active {
-    background-color: #ff7171 !important;
+    background-color: #ff425f !important;
+  }
+  .juan_style{
+    border: .01rem solid #ff425f;display: inline-block;border-radius: .02rem;
+  }
+  .juan_style_left{
+    font-size: .22rem;color: #ffeff2;background-color: #ff425f;height: 100%;display: inline-block;padding: 0 .05rem;
+  }
+  .juan_style_right{
+    font-size: .20rem;color: #ff425f;background-color: #ffeff2;height: 100%;display: inline-block;padding: 0 .05rem;
+  }
+  .return_num_style{
+    padding: 0 .05rem;color: #ff8a1e;font-size: .2rem;border-radius: .02rem;border: .01rem solid #ff8a1e;display: inline-block;margin-left: .1rem;
   }
 </style>

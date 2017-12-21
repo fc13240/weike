@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff526d">
+      <tab :line-width=3 active-color='#ff425f' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff425f">
         <tab-item class="vux-center" :selected="index === demo2" v-for="(item, index) in exchangeType" :key="index" @on-item-click="change(exchangeType,index)">{{item.type_name}}</tab-item>
       </tab>
     </div>
@@ -16,7 +16,13 @@
           <div class="list"  v-for="list1 in list1">
             <img :src="list1.product_image" alt="" :onerror="defaultImg">
             <div class="list_c">
-              <p class="title">{{list1.product_name}}</p>
+              <p class="title" style="line-height: .4rem;">
+                <span style="display: inline-block;width: 1.6rem;overflow: hidden;height: .4rem;">{{list1.product_name}}</span>
+                <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==1">未发货</span>
+                <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==2">待发货</span>
+                <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==3">已发货</span>
+              </p>
+              <p style="line-height: .3rem;margin-top: -.1rem;"><span style="font-size: .2rem;color: #333333;">x{{list1.exchange_num}}</span></p>
               <p class="date">日期：{{list1.update_time}}</p>
             </div>
           </div>
@@ -188,7 +194,6 @@
   .title{
     font-size: .24rem;
     color: #333;
-    line-height: .6rem;
   }
   .date{
     font-size: .2rem;
@@ -197,7 +202,6 @@
   }
   .list_c{
     height: 1.1rem;
-    display: inline-block;
-    margin-left: .3rem;
+    margin-left: 2.1rem;
   }
 </style>

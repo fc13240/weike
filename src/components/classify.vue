@@ -24,10 +24,17 @@
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods}}" :key="index">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
             <img :src="goods.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+              <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goods.coupon_number}}元</span>
+                    </span>
+                <span class="return_num_style"  v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
+              </div>
               <div class="des_b">
                 <!--<p>                <del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
                 <!--</p>-->
@@ -114,24 +121,24 @@
           console.log(err)
         })
       },
-//      infinite(done){
-//        if(this.noData){
-//          setTimeout(()=>{
-//            this.$refs.myscroller.finishInfinite(2);
-//          })
-//          return;
-//        }
-//        else{
-//          let self = this;//this指向问题
-////        self.getGoodsList()
-//          setTimeout(()=>{
-//            self.pageIndex += 1
-//            self.getGoodsList()
-////            self.$refs.myscroller.resize()
-//            done()
-//          },1500)
-//        }
-//      },
+      infinite(done){
+        if(this.noData){
+          setTimeout(()=>{
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+//        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoodsList()
+//            self.$refs.myscroller.resize()
+            done()
+          },1500)
+        }
+      },
       refresh(done){
         var self =this
         this.goodsList=[]
@@ -251,6 +258,7 @@
   }
 
   .goods_list {
+    font-size: 0;
     background-color: white;
     list-style: none;
     float: left;

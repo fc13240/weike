@@ -12,8 +12,18 @@
       <div class="page1" v-show="index==0">
         <div>
             <x-input title="订单号" placeholder="请输入订单号" keyboard="number" type="number" style="color: #333;font-size: .32rem;border-top: .16rem solid #f4f4f4;border-bottom: .16rem solid #f4f4f4;padding: .4rem .5rem" v-model="orderNum"></x-input>
-            <p style="border-bottom: 1px solid #f4f4f4;padding: .4rem 0 .2rem;margin: 0 .5rem;font-size: .24rem;color: #333;">如何找到返元宝订单号？</p>
-          <img src="../assets/detail2.png" alt="" style="width: 100%;">
+         <div style="padding: .20rem .34rem 0;">
+           <img src="/static/images/myOrder_header.png" alt="" style="height: 1.8rem;width: 100%;">
+           <p style="padding: .2rem 0 .15rem;font-size: .24rem;color: #333;">以下情况无法参与下单返元宝活动</p>
+           <div style="font-size: .22rem;color: #999999;line-height: .4rem;margin-left: .15rem;">
+             <p>1. 未使用本站淘口令或链接购买</p>
+             <p>2. 打开商品后没有直接下单</p>
+             <p>3. 同一个淘宝订单号提交多次</p>
+             <p>注：本活动最终解释权归本平台所有，如有疑问请联系客服。</p>
+           </div>
+           <p style="padding: .2rem 0 .2rem;border-bottom: 1px solid #f4f4f4;font-size: .24rem;color: #333;">如何找到返元宝订单号？</p>
+         </div>
+          <img src="/static/images/detail2.png" alt="" style="width: 100%;">
           <div style="height: 1.34rem;"></div>
           <div class="btn">
             <x-button @click.native="submit()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">确认提交</x-button>
@@ -80,6 +90,8 @@
     methods: {
       //      获取订单列表
       getOrderList: function (e) {
+        this.type = this.$route.params.type;
+        this.showLoading = true
         this.$http({
           method: 'POST',
           url: '/api/myOrder',
@@ -150,9 +162,7 @@
       }
     },
     created:function(){
-      this.showLoading = true
-      const routerParams = this.$route.params.type;
-      this.type = routerParams;
+      this.type = this.$route.params.type;
       this.getOrderList(this.type)
 
     }
