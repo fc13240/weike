@@ -2,7 +2,7 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">9.9专区</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
-    <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
+    <tab :line-width=3 active-color='#ff425f' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff425f"
          style="border-bottom: 1px solid #e1e1e1;">
       <tab-item class="vux-center" :selected="index==0" v-for="(item, index) in sortsType" @on-item-click="change(sortsType,index)"
                 :key="index">{{item.sort_name}}
@@ -17,17 +17,19 @@
           </router-link>
           <div class="content">
             <p class="title" v-text="list.title">产品标题产品标题</p>
-            <p class="des" v-text="list.title">产品补充介绍</p>
+            <!--<p class="des" v-text="list.title">产品补充介绍</p>-->
             <div style="margin-top: .35rem;position: relative;">
-              <span style="font-size: .24rem;color: #999;">已售 <span style="color: #ff526d;" v-text="list.volume">411</span>件</span>
+              <p>
+                <span style="font-size: .24rem;color: #999;">已售<span style="color: #ff425f;" v-text="list.volume">411</span>件</span>
+                <span style="font-size: .24rem;color: #ff425f;float: right;">领券立减{{list.coupon_number}}元</span>
+              </p>
               <div>
                 <span class="new_num"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem">.{{list.zk_final_price.corner}}</span></span>
-                <del class="old_num">￥{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></del>
+                <del class="old_num">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del>
               </div>
               <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
-                <p style="font-size: .24rem;color: #ff526d;">领券立减{{list.volume}}元</p>
                 <router-link :to="{name:'goodsDetail',query:{id:list.id}}">
-                  <span style="border-radius: .5rem; width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;margin-top: .05rem;">立刻抢 <img src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
+                  <span style="border-radius: .5rem; width: 1.16rem;font-size: .24rem;color: white;background-color: #ff425f;line-height: .46rem;display: inline-block;margin-top: .05rem;">立刻抢 <img src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
                 </router-link>
               </div>
             </div>
@@ -178,12 +180,12 @@
     height: .38rem;
     overflow: hidden;
     font-size: .24rem;
-    color: #ff526d;
+    color: #ff425f;
   }
 
   .new_num {
     font-size: .4rem;
-    color: #ff526d;
+    color: #ff425f;
   }
 
   .old_num {

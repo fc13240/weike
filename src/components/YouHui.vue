@@ -250,7 +250,7 @@
 <style scoped>
   nav {
     width: 100%;
-    height: 2.96rem;
+    height: 2.6rem;
     position: relative;
   }
 
@@ -319,8 +319,7 @@
   }
 
   .new_price {
-    color: #ff526d;
-    font-weight: bold;
+    color: #ff425f;
     margin-right: .1rem;
   }
 
@@ -378,7 +377,7 @@
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {

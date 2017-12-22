@@ -7,7 +7,7 @@
      <nav>
        <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;">
      </nav>
-     <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="/static/images/essential_img.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早上10点晚9点上新</p>
+     <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="/static/images/essential_img.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早10点晚9点上新</p>
    </div>
     <div class="main_goods">
       <ul class="goods">
@@ -16,6 +16,13 @@
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
             <!--<p style="position: relative;margin-top: .1rem;"><span class="left">送元宝</span><span class="right">剩余2000张劵</span></p>-->
+            <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{list.coupon_number}}元</span>
+                      </span>
+              <!--<span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
+            </div>
             <p class="des_b" style="position: relative;margin-top: .1rem;">
               <span class="price"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{list.zk_final_price.corner}}</span>
                 <del style="font-size: .2rem;color: #999;margin-left: .1rem;"><i>￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></i></del>
@@ -59,6 +66,7 @@
           this.showLoading=false
           if(res.data.code=='200'){
             this.banner = res.data.data.banner[0].banner_image
+            console.log(this.banner)
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -136,6 +144,7 @@
   }
 
   .goods_list {
+    font-size: 0;
     background-color: white;
     list-style: none;
     float: left;
@@ -182,7 +191,7 @@
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {

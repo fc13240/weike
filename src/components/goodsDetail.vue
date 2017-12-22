@@ -13,7 +13,7 @@
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
                     </span>
-          <span class="return_num_style" v-show="goodsDetail.fans_acer !==0">返{{goodsDetail.fans_acer}}元宝</span>
+          <span class="return_num_style" v-show="goodsDetail.fans_acer!==0">返{{goodsDetail.fans_acer}}元宝</span>
         </div>
         <!--<span class="juan"><span class="juan_l">劵</span><span class="juan_r">20元</span></span>-->
         <!--<span class="return_yuanBao">返100元宝</span>-->
@@ -190,7 +190,7 @@
       toDraw() {
         var isWeixin = this.is_weixin()
         if(isWeixin){
-          this.$router.push({path: '/goodsDetail/draw'})
+          this.$router.push({path: '/goodsDetail/draw',query:{url:this.goodsDetail.click_url}})
         }else{
           location.href=this.goodsDetail.click_url
         }
@@ -293,7 +293,7 @@
 
   .prices {
     font-size: .6rem;
-    color: #ff0137;
+    color:#ff425f;
   }
 
   .prices small {
@@ -302,14 +302,14 @@
 
   .juan {
     font-size: .2rem;
-    color: #ff0137;
-    border: .01rem solid #ff0137;
+    color: #ff425f;
+    border: .01rem solid #ff425f;
     border-radius: .05rem;
     margin-left: .2rem;
   }
 
   .juan_l {
-    border-right: .01rem dotted #ff0137;
+    border-right: .01rem dotted #ff425f;
     padding: 0 .05rem;
   }
 
@@ -366,7 +366,7 @@
     font-size: .32rem;
     color: #333333;
     padding-left: .2rem;
-    border-left: .05rem solid #ff526d;
+    border-left: .05rem solid #ff425f;
     background-color: white;
     line-height: .35rem;
     margin: .2rem 0;
@@ -422,7 +422,7 @@
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {
@@ -568,7 +568,7 @@
   }
 
   .word {
-    border: .01rem dotted #ff526d;
+    border: .01rem dotted #ff425f;
     text-align: center;
     background-color: #ffe7eb;
     font-size: .32rem;

@@ -38,7 +38,7 @@
                       <span class="juan_style">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
-                    </span>
+                      </span>
                       <span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
                     </div>
                   <div class="des_b">
@@ -131,7 +131,6 @@
       },
 
       infinite(done) {
-        console.log('a')
         if (this.noData) {
             setTimeout(() => {
               this.$refs.myscroller.finishInfinite(2);
@@ -183,7 +182,7 @@
     created: function(){
       this.getBannerList()
       this.getTypeList()
-      this.getGoodsList()
+//      this.getGoodsList()
 
     }
   }
@@ -327,12 +326,15 @@
     border: .01rem solid #ff425f;display: inline-block;border-radius: .02rem;
   }
   .juan_style_left{
-    font-size: .22rem;color: #ffeff2;background-color: #ff425f;height: 100%;display: inline-block;padding: 0 .05rem;
+    font-size: .20rem;color: #ffeff2;background-color: #ff425f;height: 100%;display: inline-block;padding: 0 .05rem;
   }
   .juan_style_right{
     font-size: .20rem;color: #ff425f;background-color: #ffeff2;height: 100%;display: inline-block;padding: 0 .05rem;
   }
   .return_num_style{
     padding: 0 .05rem;color: #ff8a1e;font-size: .2rem;border-radius: .02rem;border: .01rem solid #ff8a1e;display: inline-block;margin-left: .1rem;
+  }
+  .vux-slider > .vux-indicator, .vux-slider .vux-indicator-right {
+    bottom: 2px!important;
   }
 </style>

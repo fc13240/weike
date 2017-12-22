@@ -9,7 +9,14 @@
           <img :src="list.pict_url" alt="">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-            <p style="position: relative;margin-top: .1rem;"><span class="left">{{list.number}}折</span><span class="right">{{list.number}}元券</span></p>
+            <div style="margin: .15rem 0rem;">
+              <span class="left">{{list.discount}}折</span>
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{list.coupon_number}}元</span>
+                      </span>
+              <!--<span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
+            </div>
             <p class="des_b" style="position: relative;margin-top: .1rem;">
               <span class="price"><span style="font-size: .2rem;">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{list.zk_final_price.corner}}</span></span>
               <del style="font-size: .2rem;color: #999;margin-left: .1rem;"><i>￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></i></del>
@@ -147,14 +154,17 @@
   .left {
     font-size: .20rem;
     color: white;
-    background-color: #ff526d;
+    background-color: #ff425f;
     padding: 0 3px;
-    border-radius: .05rem;
+    border-radius: .02rem;
+    display: inline-block;
+    border: .01rem solid #ff425f;
+    margin-right: .2rem;
   }
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {
@@ -169,7 +179,7 @@
     padding: 0 .1rem;
     margin-left: .1rem;
     font-size: .20rem;
-    color: #ff526d;
+    color: #ff425f;
     background-image: url("../assets/j_bd.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;

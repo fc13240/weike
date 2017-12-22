@@ -159,13 +159,13 @@
         }
         else{
           let self = this;//this指向问题
-//        self.getGoodsList()
-//          setTimeout(()=>{
-//            self.pageIndex += 1
-//            self.getGoodsList()
-//            self.$refs.myscroller.resize()
-//            done()
-//          },1500)
+        self.getGoodsList()
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoodsList()
+            self.$refs.myscroller.resize()
+            done()
+          },1500)
         }
 
       },

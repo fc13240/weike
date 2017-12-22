@@ -29,9 +29,9 @@
         <!--<li v-for="historyList in historyList" v-text="historyList.keywords" @click="onSubmit(historyList.keywords)">冬装</li>-->
       <!--</ul>-->
     <!--</div>-->
-    <div id="results">
+    <div id="results" style="overflow: hidden;">
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
-           style="border-bottom: 1px solid #e1e1e1;">
+           style="border-bottom: 1px solid #e1e1e1;margin-top: 44px;">
         <tab-item class="vux-center" :selected="index === 0" v-for="(item, index) in list" @on-item-click="change(item.id)"
                   :key="index">{{item.sort_name}}
         </tab-item>
@@ -43,6 +43,12 @@
             <img :src="goods.pict_url" alt="">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+              <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goods.coupon_number}}元</span>
+                      </span>
+              </div>
               <div class="des_b">
                 <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span v-show="goods.zk_final_price.corner=='00'">.{{goods.zk_final_price.corner}}</span></span>
                 <span class="num">{{goods.volume}}件已售</span>
@@ -204,15 +210,12 @@
     margin: 0 .2rem .2rem 0;
   }
 
-  .main {
-    margin-bottom: 1.06rem;
-  }
-
   .goods {
     overflow: hidden;
   }
 
   .goods_list {
+    font-size: 0;
     background-color: white;
     list-style: none;
     float: left;
@@ -252,7 +255,7 @@
 
   .price {
     font-size: .32rem;
-    color: #ff7171;
+    color: #ff425f;
   }
 
   .num {
@@ -264,6 +267,7 @@
   }
   .goHome{
     background-color: #EFEFF4;height: 44px;width: 10%;position: absolute;border-bottom: 1px solid #D7D6DC;
+    box-sizing: border-box;
   }
   .goHome>img{
     width: 22px;height: 22px;margin-top: 11px;margin-left: calc(((100% - 22px)/2) + 4px);

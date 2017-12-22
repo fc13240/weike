@@ -36,20 +36,21 @@
           <figcaption style="font-size: .28rem;color: #666;">暂时没有相关订单记录~</figcaption>
         </figure>
         <div class="order_list" v-show="orderList.length" v-for="list in orderList">
-          <p class="orderNum"><span style="color: #999;">订单号: </span><span class="order_num" v-text="list.order_num">8089808080800808080</span><span style="color: #ff526d;float: right;" v-text="list.back_status==2?'待返':'已返'">待返</span></p>
-          <div class="order_main">
-            <img src="../assets/1.jpg" alt="">
+          <p class="orderNum"><span style="color: #999;">订单号: </span><span class="order_num" v-text="list.order_num">8089808080800808080</span>
+            <span style="color: #ff526d;float: right;" v-show="list.back_status=='1'">已返</span>
+            <span style="color: #ff526d;float: right;" v-show="list.back_status=='2'">待返</span>
+            <span style="color: #ff526d;float: right;" v-show="list.back_status=='3'">拒绝</span>
+          </p>
+          <div class="order_main" style="position: relative;">
+            <img src="/static/images/order_img.png" alt="">
             <div class="order_main_des" style="width: calc(100% - 1.44rem);">
-              <div style="padding: 0 .15rem;">
-                <p style="font-size: .28rem;color: #333;">{{list.title}} <span style="float: right;">￥{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span></p>
-                <p style="font-size: .24rem;color: #999;">{{list.title}}<del style="float: right;">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del></p>
-                <p style="margin-top: .3rem;"> <span class="btn1">返{{list.back_acer}}元宝</span><span class="num">×{{list.back_acer}}</span></p>
+              <div style="padding: 0 .2rem;">
+                <p style="margin-bottom: .1rem;"> <span class="btn1">返{{list.back_acer}}元宝</span></p>
+                <p style="font-size: .2rem;color: #999999;">日期：{{list.create_time}}</p>
+                <router-link :to="{name:'toShowList',query:{order_num:list.order_num}}"><span class="btn2" style="position: absolute;">去晒单</span></router-link>
               </div>
              </div>
           </div>
-          <p class="orderNum" style="color: #999;">总价: <span style="font-size: .24rem;color: #ff526d;">￥</span><span style="color: #ff526d;font-size: .32rem;" v-text="list.back_acer">88.8</span>
-            <router-link :to="{name:'toShowList',query:{order_num:list.order_num}}"><span class="btn2">去晒单</span></router-link>
-          </p>
         </div>
       </div>
     </div>
@@ -191,16 +192,16 @@
     border-bottom: .16rem solid #f4f4f4;
   }
   .orderNum{
-    font-size: .24rem;padding: .3rem .36rem;background-color: white;
+    font-size: .24rem;padding: .2rem .7rem .15rem .36rem;background-color: white;
   }
   .order_num{
     color: #333;
   }
   .order_main{
-    background-color: #f4f4f4;padding: .2rem;font-size: 0;
+    padding: 0rem .36rem .3rem;font-size: 0;
   }
   .order_main>img{
-    width: 1.44rem;height: 1.44rem;vertical-align: middle;
+    width: .8rem;height: .8rem;vertical-align: middle;
   }
   .order_main_des{
     display: inline-block;vertical-align: middle;width: calc(100% - 1.44rem);
@@ -213,7 +214,10 @@
   }
   .btn2{
     color: #ff526d;border: 1px solid #ff526d;border-radius: .5rem;
-    float: right;
     padding: .05rem .3rem;
+    font-size: .24rem;
+    position: absolute;
+    right: .38rem;
+    bottom: .5rem;
   }
 </style>
