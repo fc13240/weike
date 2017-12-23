@@ -139,7 +139,6 @@
       getGoodsDetail: function () {
         this.id = this.$route.query.id;
         this.type=this.$route.query.type
-        console.log(this.id)
         this.$http({
           method: 'POST',
           url: '/api/goodsDetail',
@@ -190,7 +189,8 @@
       toDraw() {
         var isWeixin = this.is_weixin()
         if(isWeixin){
-          this.$router.push({path: '/goodsDetail/draw',query:{url:this.goodsDetail.click_url}})
+//          this.$router.push({path: '/goodsDetail/draw',query:{url:this.goodsDetail.click_url}})
+          location.href='http://www.dxvke.com/goodsDetail/draw?url='+this.goodsDetail.click_url
         }else{
           location.href=this.goodsDetail.click_url
         }

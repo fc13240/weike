@@ -5,18 +5,27 @@
 </template>
 <script>
   export default {
+    methods:{
+      is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    },
     created () {
       var a = this.$route.query.url
       var sef = this
-      var url = ''
-      // 判断是否是ios微信浏览器
-      if (window.__wxjs_is_wkwebview === true) {
-//        url = this.$store.state.url.split('#')[0]
+      var isWeixin = this.is_weixin()
+      if(isWeixin){
 
-      } else {
-        window.location.href=a
+      }else{
+        location.href=a
       }
     }
+
   }
 
 </script>

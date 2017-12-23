@@ -28,28 +28,28 @@
             </router-link>
           </div>
         </div>
-        <div class="main_goods">
-          <ul class="goods">
-            <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
-                <img :src="goods.pict_url" alt="" :onerror="defaultImg">
-                <div class="content">
-                  <div class="des">{{goods.title}}</div>
-                    <div style="margin: .15rem 0rem;">
+         <div class="main_goods">
+           <ul class="goods">
+             <router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
+               <img :src="goods.pict_url" alt="" :onerror="defaultImg">
+               <div class="content">
+                 <div class="des">{{goods.title}}</div>
+                 <div style="margin: .15rem 0rem;">
                       <span class="juan_style">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
                       </span>
-                      <span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
-                    </div>
-                  <div class="des_b">
-                    <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
-                    <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
-                    <span class="num">{{goods.volume}}件已售</span>
-                  </div>
-                </div>
-            </router-link>
-          </ul>
-        </div>
+                   <span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
+                 </div>
+                 <div class="des_b">
+                   <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
+                   <!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
+                   <span class="num">{{goods.volume}}件已售</span>
+                 </div>
+               </div>
+             </router-link>
+           </ul>
+         </div>
       </div>
     </scroller>
     <div class="toTop" @click="toTop()">
@@ -113,6 +113,8 @@
       },
 //      获取商品列表
       getGoodsList:function(){
+        console.log(this.pageIndex)
+        const self = this
         this.$http({
           method:'POST',
           url:'/api/index_goods',
@@ -120,7 +122,9 @@
         }).then((res)=>{
          if(res.data.code=='200'){
            if(res.data.data.goods.length==0){
-             self.noData='没有更多数据了'
+             console.log('aaa')
+//             self.noData=false;
+//             self.$refs.myscroller.finishPullToRefresh();
            }else{
              this.goodsList=this.goodsList.concat(res.data.data.goods)
            }
@@ -132,18 +136,16 @@
 
       infinite(done) {
         if (this.noData) {
-            setTimeout(() => {
-              this.$refs.myscroller.finishInfinite(2);
-            })
+//            setTimeout(() => {
+//              this.$refs.myscroller.finishInfinite(2);
+//            })
           return;
         }
        else{
           let self = this;//this指向问题
-        self.getGoodsList()
           setTimeout(()=>{
             self.pageIndex += 1
               self.getGoodsList()
-//              self.$refs.myscroller.resize()
             done()
           },1500)
         }
@@ -162,7 +164,7 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
     },
     mounted: function () {
       this.$nextTick(function() {
@@ -182,8 +184,7 @@
     created: function(){
       this.getBannerList()
       this.getTypeList()
-//      this.getGoodsList()
-
+      this.getGoodsList()
     }
   }
 

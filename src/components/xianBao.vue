@@ -159,11 +159,11 @@
         }
         else{
           let self = this;//this指向问题
-        self.getGoodsList()
+//        self.getGoodsList()
           setTimeout(()=>{
             self.pageIndex += 1
             self.getGoodsList()
-            self.$refs.myscroller.resize()
+//            self.$refs.myscroller.resize()
             done()
           },1500)
         }

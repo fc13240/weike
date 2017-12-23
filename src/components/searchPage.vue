@@ -89,6 +89,7 @@
           back_btn.style.display = 'none';
         }
       }
+      this.$refs.search.setFocus()
     },
     methods: {
 //      //      执行搜索
