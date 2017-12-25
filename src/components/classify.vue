@@ -25,7 +25,7 @@
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
-            <img :src="goods.pict_url" alt="">
+            <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div style="margin: .15rem 0rem;">
@@ -72,6 +72,7 @@
         pageIndex:1,
         limit:10,
         noData: false,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods: {
@@ -94,9 +95,11 @@
         }).then((res)=>{
           if(res.data.code == '200'){
             if(res.data.data.goodsList.length==0){
-              self.noData='没有更多数据了'
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
             }else{
               this.goodsList=this.goodsList.concat(res.data.data.goodsList)
+              this.$refs.myscroller.finishPullToRefresh()
             }
           }
         },(err)=>{})
@@ -130,11 +133,9 @@
         }
         else{
           let self = this;//this指向问题
-//        self.getGoodsList()
           setTimeout(()=>{
             self.pageIndex += 1
             self.getGoodsList()
-//            self.$refs.myscroller.resize()
             done()
           },1500)
         }

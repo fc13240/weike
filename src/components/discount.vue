@@ -3,10 +3,12 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">聚折扣</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
+
     <div class="main_goods">
       <ul class="goods">
         <router-link tag="li" class="goods_list" v-for="(list,index) in goodsList" :to="{name:'goodsDetail',query:{id:list.id,type:3}}" :key="index">
-          <img :src="list.pict_url" alt="">
+          <img :src="list.pict_url" alt="" :onerror="defaultImg">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
             <div style="margin: .15rem 0rem;">
@@ -26,6 +28,7 @@
         </router-link>
       </ul>
     </div>
+    </scroller>
     <loading v-model="showLoading" :text="loadText"></loading>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
@@ -46,6 +49,12 @@
         goodsList:[],
         showLoading:false,
         loadText:'加载中...',
+        pageIndex:1,
+        limit:10,
+        totalPage:0,
+        noData: false,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+
       }
     },
     methods: {
@@ -54,11 +63,18 @@
         this.showLoading=true
         this.$http({
           method:'POST',
-          url:'/api/discount'
+          url:'/api/discount',
+          data:{page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
           this.showLoading=false
           if(res.data.code=='200'){
-            this.goodsList = res.data.data.discount_products
+            if(res.data.data.discount_products.length==0){
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.discount_products)
+              this.$refs.myscroller.finishPullToRefresh()
+            }
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -71,7 +87,34 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
+      infinite(done) {
+        if (this.noData) {
+          setTimeout(() => {
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoods()
+            done()
+          },1500)
+        }
+
+      },
+      refresh(done) {
+        var self = this
+        this.pageIndex=1
+        this.goodsList=[]
+        this.getGoods()
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
+      },
     },
     created:function(){
           this.getGoods()

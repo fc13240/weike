@@ -2,19 +2,19 @@
   <div>
     <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
         <nav>
-          <img  :src="type1.image" style="width: 100%;height: 100%;">
+          <img  :src="type1.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
           <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
             <p style="font-size: .28rem;" v-text="type1.store_name">XX专区</p>
             <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
           </div>
-          <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
+          <img src="../assets/sanjiao.png" alt="" class="sanjiao">
         </nav>
       </router-link>
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
           <div class="box1-item" v-for="goods1 in goods1" id="box1-item" style="width: 2.49rem;">
             <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}">
-              <img :src="goods1.pict_url" alt="">
+              <img :src="goods1.pict_url" alt="" :onerror="defaultImg">
               <span class="dess">
             <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
             <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span>
@@ -27,7 +27,7 @@
       </scroller>
     <router-link to="/YouHui/subjects" :to="{name:'subjects',query:{type_id:type2.type_id}}">
       <nav>
-        <img :src="type2.image" alt="" style="width: 100%;height: 100%;">
+        <img :src="type2.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
           <p style="font-size: .28rem;" v-text="type2.store_name">XX专区</p>
           <img src="/static/images/youhui_bd2_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
@@ -39,7 +39,7 @@
       <div class="box1" ref="nav2">
         <div class="box1-item" v-for="goods2 in goods2" id="box2-item" style="width: 2.49rem;">
           <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}">
-          <img :src="goods2.pict_url" alt="">
+          <img :src="goods2.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
             <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span>
@@ -52,7 +52,7 @@
     </scroller>
     <router-link to="/YouHui/discount">
       <nav>
-        <img :src="type3.image" alt="" style="width: 100%;height: 100%;">
+        <img :src="type3.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd3.png);background-size: 100%;">
           <p style="font-size: .28rem;" v-text="type3.store_name">XX专区</p>
           <img src="/static/images/youhui_bd3_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
@@ -64,7 +64,7 @@
       <div class="box1" ref="nav3">
         <div class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.49rem;" :key="index">
           <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}">
-          <img :src="goods3.pict_url" alt="">
+          <img :src="goods3.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
             <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span>
@@ -77,7 +77,7 @@
     </scroller>
     <router-link to="/YouHui/essential">
       <nav>
-        <img :src="type4.image" alt="" style="width: 100%;height: 100%;">
+        <img :src="type4.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
         <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
           <p style="font-size: .28rem;" v-text="type4.store_name">XX专区</p>
           <img src="/static/images/youhui_bd4_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
@@ -88,7 +88,7 @@
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(list,index) in goods4" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">
-            <img :src="list.pict_url" alt="">
+            <img :src="list.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div class="des_b">
@@ -132,6 +132,7 @@
         bottomCount: 20,
         showLoading:false,
         loadText:'加载中...',
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods: {

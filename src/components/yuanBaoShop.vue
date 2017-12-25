@@ -2,6 +2,7 @@
   <div>
     <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: #ff526d;position: fixed;z-index: 10;width: 100%;top: 0;">元宝商城</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
     <nav >
       <a href="javascript:">
         <img src="../assets/yuanBao_gray.png" alt="">
@@ -28,9 +29,10 @@
           </div>
         </router-link>
       </ul>
+
     </div>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
-
+    </scroller>
   </div>
 </template>
 <script>
@@ -47,6 +49,9 @@
         member_acer:[],
         acer_list:[],
         defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+        pageIndex:1,
+        limit:10,
+        noData: false,
       }
     },
     methods:{
@@ -73,11 +78,17 @@
       getAcerList:function(){
         this.$http({
           method:'POST',
-          url:'/api/acerList'
+          url:'/api/acerList',
+          data:{page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
           if(res.data.code=='200'){
-            console.log(res.data)
-            this.acer_list = res.data.data.acer_list
+            if(res.data.data.acer_list.length==0){
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
+            }else{
+              this.acer_list=this.acer_list.concat(res.data.data.acer_list)
+              this.$refs.myscroller.finishPullToRefresh()
+            }
           }
         },(err)=>{
           console.log(err)
@@ -85,7 +96,33 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
+      infinite(done){
+        if(this.noData){
+          setTimeout(()=>{
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getAcerList()
+            done()
+          },1500)
+        }
+      },
+      refresh(done){
+        var self =this
+        this.acer_list=[]
+        this.pageIndex=1;
+        this.getAcerList();
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
+      },
     },
     created:function(){
      this.getNum()

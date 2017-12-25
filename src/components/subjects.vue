@@ -8,12 +8,12 @@
                 :key="index">{{item.sort_name}}
       </tab-item>
     </tab>
-
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 44px;">
     <div class="goods_list">
       <ul class="goods">
         <li v-for="list in goodsList">
           <router-link :to="{name:'goodsDetail',query:{id:list.id}}">
-            <img :src="list.pict_url" alt="" class="pic">
+            <img :src="list.pict_url" alt="" class="pic" :onerror="defaultImg">
           </router-link>
           <div class="content">
             <p class="title" v-text="list.title">产品标题产品标题</p>
@@ -37,6 +37,7 @@
         </li>
       </ul>
     </div>
+    </scroller>
     <loading v-model="showLoading" :text="loadText"></loading>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
@@ -67,7 +68,12 @@
         loadText:'加载中...',
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
-        }
+        },
+        pageIndex:1,
+        limit:10,
+        noData: false,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
+
       }
     },
     methods: {
@@ -82,7 +88,6 @@
           if(res.data.code=='200'){
             this.sortsType = res.data.data.sorts_type
             this.sort = this.sortsType[this.index].id
-            this.getGoods()
           }else if(res.data.code=='400'){
           }
         },(err)=>{
@@ -91,16 +96,19 @@
       },
       //      9.9专区商品====19.9专区商品
       getGoods:function(){
-        console.log(this.sort)
-        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/nine',
-          data:{sort:this.sort,type_id:this.type_id}
+          data:{sort:this.sort,type_id:this.type_id,page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
-          this.showLoading=false
           if(res.data.code=='200'){
-            this.goodsList = res.data.data.nine_products
+            if(res.data.data.nine_products.length==0){
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.nine_products)
+              this.$refs.myscroller.finishPullToRefresh()
+            }
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -114,16 +122,41 @@
       change(sortsType,index){
         this.goodsList=[]
         this.sort = sortsType[index].id
+        this.pageIndex=1
 //        console.log(this.sort)
         this.getGoods()
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
+      infinite(done) {
+        if (this.noData) {
+          setTimeout(() => {
+              this.$refs.myscroller.finishInfinite(2);
+            })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoods()
+            done()
+          },1500)
+        }
+      },
+      refresh(done) {
+        var self = this
+        this.pageIndex=1
+        this.goodsList=[]
+        this.getGoods()
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
+      },
     },
     mounted() {
-//      const title = document.getElementsByClassName('vux-header-title');
-//      title[0].style.color = '#333'
       // 返回顶部
       let back_btn = document.getElementsByClassName('toTop')[0];
       window.onscroll = function () {
@@ -138,6 +171,7 @@
     created:function(){
       this.type_id = this.$route.query.type_id
       this.getSortsType()
+      this.getGoods()
     }
   }
 </script>

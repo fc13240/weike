@@ -36,11 +36,11 @@
                   :key="index">{{item.sort_name}}
         </tab-item>
       </tab>
-
+      <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 89px;">
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :key="index" :to="{name:'goodsDetail',query:{id:goods.id,type:2}}">
-            <img :src="goods.pict_url" alt="">
+            <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div style="margin: .15rem 0rem;">
@@ -57,6 +57,7 @@
           </router-link>
         </ul>
       </div>
+      </scroller>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
@@ -89,7 +90,12 @@
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
-        }
+        },
+        pageIndex:1,
+        limit:10,
+        totalPage:0,
+        noData: false,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     mounted() {
@@ -109,18 +115,22 @@
     methods: {
       //      执行搜索
       doSearch:function(){
-        this.keywords = this.$route.query.keyword
-        this.showLoading=true
         this.$http({
           method:'POST',
           url:'/api/doSearch',
-          data:{keywords:this.keywords,sort:this.sort_id}
+          data:{keywords:this.keywords,sort:this.sort_id,page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
           this.showLoading=false
           if(res.data.code=='200'){
 //            this.searchResults=false;
-            this.goodsList=res.data.data.product_list
-            console.log(this.goodsList)
+//            this.goodsList=res.data.data.product_list
+            if(res.data.data.product_list.length==0){
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.product_list)
+              this.$refs.myscroller.finishPullToRefresh()
+            }
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -164,7 +174,6 @@
 
       },
       onFocus() {
-        console.log('aaaa')
         this.$router.push({path:'/Search/searchPage'})
       },
       onCancel() {
@@ -172,9 +181,9 @@
         history.go(-1)
       },
       change(e){
-        console.log(e)
+        this.pageIndex=1
+        this.goodsList=[]
         this.sort_id = e
-        this.goodsList=''
         this.doSearch()
 
       },
@@ -183,9 +192,37 @@
       },
       goHome(){
         this.$router.push({path:'/home'})
-      }
+      },
+      infinite(done) {
+        if (this.noData) {
+          setTimeout(() => {
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.doSearch()
+            done()
+          },1500)
+        }
+
+      },
+      refresh(done) {
+        var self = this
+        this.pageIndex=1
+        this.goodsList=[]
+        this.doSearch()
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
+      },
     },
     created:function(){
+      this.keywords = this.$route.query.keyword
       this.doSearch()
       this.getType()
     },

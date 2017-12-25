@@ -92,22 +92,35 @@ import {XButton,Loading} from 'vux'
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
+      },
+      readMessage(){
+        this.$http.get('/api/readMessage').then((res) => {
+          if (res.data.code == '200') {
+
+          }
+        }, (err) => {
+          console.log(err)
+        })
       }
     },
     created:function(){
       this.getNoticeList()
+      //      改变消息中心新消息状态
+      this.readMessage()
     },
-    mounted:function(){
-      // 返回顶部
-      let back_btn = document.getElementsByClassName('toTop')[0];
-      window.onscroll = function () {
-        let top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 800) {
-          back_btn.style.display = 'block';
-        } else {
-          back_btn.style.display = 'none';
+    mounted(){
+      this.$nextTick(function() {
+        // 返回顶部
+        let back_btn = document.getElementsByClassName('toTop')[0];
+        window.onscroll = function () {
+          let top = document.documentElement.scrollTop || document.body.scrollTop;
+          if (top > 800) {
+            back_btn.style.display = 'block';
+          } else {
+            back_btn.style.display = 'none';
+          }
         }
-      }
+      })
     }
   }
 </script>

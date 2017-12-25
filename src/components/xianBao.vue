@@ -136,10 +136,11 @@
         }).then((res)=>{
           if(res.data.code==200){
             if(res.data.data.goods_list.length==0){
-              self.noData='没有更多数据了'
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
             }else{
               this.goodsList=this.goodsList.concat(res.data.data.goods_list)
-              this.showLoading=false
+              this.$refs.myscroller.finishPullToRefresh()
             }
 
           }

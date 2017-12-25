@@ -5,14 +5,15 @@
     <!--<div style="height: .88rem;"></div>-->
    <div style="font-size: 0;">
      <nav>
-       <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;">
+       <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;" :onerror="defaultImg">>
      </nav>
      <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="/static/images/essential_img.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早10点晚9点上新</p>
    </div>
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 3.44rem;">
     <div class="main_goods">
       <ul class="goods">
         <router-link tag="li" class="goods_list" v-for="(list,index) in goodsList" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">
-          <img :src="list.pict_url" alt="">
+          <img :src="list.pict_url" alt="" :onerror="defaultImg">
           <div class="content">
             <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
             <!--<p style="position: relative;margin-top: .1rem;"><span class="left">送元宝</span><span class="right">剩余2000张劵</span></p>-->
@@ -33,6 +34,7 @@
         </router-link>
       </ul>
     </div>
+    </scroller>
     <loading v-model="showLoading" :text="loadText"></loading>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
 
@@ -53,6 +55,11 @@
         banner:'',
         showLoading:false,
         loadText:'加载中...',
+        pageIndex:1,
+        limit:10,
+        totalPage:0,
+        noData: false,
+        defaultImg: 'this.src="' + require('../../static/images/default_img.png') + '"',
       }
     },
     methods: {
@@ -66,7 +73,6 @@
           this.showLoading=false
           if(res.data.code=='200'){
             this.banner = res.data.data.banner[0].banner_image
-            console.log(this.banner)
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -79,14 +85,20 @@
       },
       //      应季必备专区商品
       getGoods:function(){
-        this.showLoading=true
         this.$http({
           method:'POST',
-          url:'/api/seasonindex'
+          url:'/api/seasonindex',
+          data:{page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
           this.showLoading=false
           if(res.data.code=='200'){
-            this.goodsList = res.data.data.season_products
+            if(res.data.data.season_products.length==0){
+              this.noData=true
+              this.$refs.myscroller.finishInfinite(2);
+            }else{
+              this.goodsList=this.goodsList.concat(res.data.data.season_products)
+              this.$refs.myscroller.finishPullToRefresh()
+            }
           }else if(res.data.code=='400'){
 //            this.$vux.toast.show({
 //              type:"cancel",
@@ -99,7 +111,34 @@
       },
       toTop(){
         document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+      },
+      infinite(done) {
+        if (this.noData) {
+          setTimeout(() => {
+            this.$refs.myscroller.finishInfinite(2);
+          })
+          return;
+        }
+        else{
+          let self = this;//this指向问题
+          setTimeout(()=>{
+            self.pageIndex += 1
+            self.getGoods()
+            done()
+          },1500)
+        }
+
+      },
+      refresh(done) {
+        var self = this
+        this.pageIndex=1
+        this.goodsList=[]
+        this.getGoods()
+        setTimeout(function () {
+          self.top = self.top - 10;
+          done()
+        }, 1500)
+      },
     },
     created:function(){
      this.getGoods()

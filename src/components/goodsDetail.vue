@@ -86,7 +86,7 @@
     </div>
     <div v-show="show2" class="model">
       <div class="model_bd"></div>
-      <img src="/static/images" alt="" class="model_main rq">
+      <img src="/static/images/qr.jpg" alt="" class="model_main rq">
       <img src="../../static/images/cancel_img.png" alt="" @click="cancel2" class="cancel">
     </div>
     <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
@@ -266,7 +266,15 @@
         }
       })
 
-    }
+    },
+//    beforeRouteEnter(to,from,next){
+//      next(vm=>{
+//        vm.id=vm.$route.query.id
+//        vm.type=vm.$route.query.type
+//        vm.getGoodsList()
+//        vm.getGoodsDetail()
+//      })
+//    }
   }
 </script>
 <style scoped="">

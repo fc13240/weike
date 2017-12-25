@@ -14,19 +14,17 @@
       <div class="main">
         <div class="nav-bigger">
           <router-link to="/home/yuanBaoShop">
-          <img class="yuanBaoShop" src="static/images/yuanbaoShop_img.png">
+          <img class="same" src="static/images/yuanbaoShop_img.png">
           </router-link>
-          <router-link to="">
-          <img class="zhiNan" src="/static/images/zhinan_img.png">
-          </router-link>
-          <div class="m_r">
             <router-link to="/home/xianBao">
-              <img class="m_r_t" src="static/images/xianbao_img.png">
+              <img class="same" src="static/images/xianbao_img.png">
             </router-link>
+          <router-link to="">
+            <img class="same" src="/static/images/zhinan_img.png">
+          </router-link>
             <router-link to="/home/fuLi">
-              <img class="m_r_b" src="static/images/fuli_img.png">
+              <img class="same" src="static/images/fuli_img.png">
             </router-link>
-          </div>
         </div>
          <div class="main_goods">
            <ul class="goods">
@@ -113,7 +111,6 @@
       },
 //      获取商品列表
       getGoodsList:function(){
-        console.log(this.pageIndex)
         const self = this
         this.$http({
           method:'POST',
@@ -122,7 +119,8 @@
         }).then((res)=>{
          if(res.data.code=='200'){
            if(res.data.data.goods.length==0){
-             console.log('aaa')
+             this.noData=true
+             this.$refs.myscroller.finishInfinite(2);
 //             self.noData=false;
 //             self.$refs.myscroller.finishPullToRefresh();
            }else{
@@ -136,9 +134,9 @@
 
       infinite(done) {
         if (this.noData) {
-//            setTimeout(() => {
-//              this.$refs.myscroller.finishInfinite(2);
-//            })
+            setTimeout(() => {
+              this.$refs.myscroller.finishInfinite(2);
+            })
           return;
         }
        else{
@@ -222,43 +220,21 @@
 
   .nav-bigger {
     width: 100%;
-    height: 1.88rem;
     background-color: white;
     font-size: 0;
-    margin: .2rem 0;
+    margin: .16rem 0;
   }
 
-  .yuanBaoShop {
-    width: 28%;
-    height: 100%;
+  .same:nth-child(odd){
+    width: 50%;
+    height: 1.52rem;
     display: inline-block;
-    border-right: .02rem solid #f4f4f4;
+    border-right: .01rem solid #f4f4f4;
     box-sizing: border-box;
   }
-
-  .zhiNan {
-    width: 28%;
-    height: 100%;
-    display: inline-block;
-    border-right: .02rem solid #f4f4f4;
-    box-sizing: border-box;
+  .same:nth-child(1),.same:nth-child(1){
+    border-bottom: .01rem solid #f4f4f4;
   }
-
-  .m_r {
-    width: 44%;
-    height: 100%;
-    display: inline-block;
-  }
-
-  .m_r_t, .m_r_b {
-    height: 50%;
-  }
-
-  .m_r_t {
-    border-bottom: .02rem solid #f4f4f4;
-    box-sizing: border-box;
-  }
-
   .main {
     margin-bottom: 1.06rem;
   }

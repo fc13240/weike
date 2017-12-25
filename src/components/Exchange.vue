@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div>
+    <div style="position: fixed;z-index: 99999;width: 100%;">
       <tab :line-width=3 active-color='#ff425f' v-model="index" custom-bar-width=".8rem" bar-active-color="#ff425f">
         <tab-item class="vux-center" :selected="index === demo2" v-for="(item, index) in exchangeType" :key="index" @on-item-click="change(exchangeType,index)">{{item.type_name}}</tab-item>
       </tab>
     </div>
-    <div class="main">
-      <div class="page1">
+    <div class="main" style="overflow: hidden;">
+      <div class="page1" style="margin-top: 44px;">
         <figure style="text-align: center;padding-top: 1.1rem;" v-show="!list1.length">
           <img src="/static/images/empty_img.png" alt="" style="width:1.86rem;height:1.8rem;">
           <figcaption style="font-size: .28rem;color: #666;">暂时没有兑换记录~</figcaption>
