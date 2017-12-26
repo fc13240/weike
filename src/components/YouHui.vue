@@ -1,108 +1,106 @@
 <template>
   <div>
-    <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
         <nav>
           <img  :src="type1.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
-          <div class="nav_btn" style="background-image: url(/static/images/youhui_bd1.png);background-size: 100%;">
-            <p style="font-size: .28rem;" v-text="type1.store_name">XX专区</p>
-            <img src="/static/images/youhui_bd_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-          </div>
           <img src="../assets/sanjiao.png" alt="" class="sanjiao">
         </nav>
-      </router-link>
+    <router-link :to="{name:'subjects',query:{type_id:type1.type_id}}">
+        <p class="title">
+          <img src="/static/images/youhui_bd_img.png" alt="" >
+          <span v-text="type1.store_name" class="subject_name"></span>
+          <span class="to_subject">进入专场<img src="/static/images/gt_white.png" alt=""></span>
+        </p>
+    </router-link>
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
-          <div class="box1-item" v-for="goods1 in goods1" id="box1-item" style="width: 2.49rem;">
-            <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}">
+          <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}" v-for="(goods1,index) in goods1" id="box1-item" style="width: 2.38rem;" class="box1-item" :key="index">
+          <div class="box_content">
               <img :src="goods1.pict_url" alt="" :onerror="defaultImg">
               <span class="dess">
             <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span>
-              <del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del>
-            </p>
+            <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del></p>
           </span>
-            </router-link>
           </div>
+          </router-link>
         </div>
       </scroller>
-    <router-link to="/YouHui/subjects" :to="{name:'subjects',query:{type_id:type2.type_id}}">
       <nav>
         <img :src="type2.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
-        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
-          <p style="font-size: .28rem;" v-text="type2.store_name">XX专区</p>
-          <img src="/static/images/youhui_bd2_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-        </div>
-        <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
+        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
       </nav>
+    <router-link to="/YouHui/subjects" :to="{name:'subjects',query:{type_id:type2.type_id}}">
+      <p class="title">
+        <img src="/static/images/youhui_bd2_img.png" alt="" >
+        <span v-text="type2.store_name" class="subject_name"></span>
+        <span class="to_subject">进入专场<img src="/static/images/gt_white.png" alt=""></span>
+      </p>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav2">
-        <div class="box1-item" v-for="goods2 in goods2" id="box2-item" style="width: 2.49rem;">
-          <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}">
+        <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}" style="width: 2.38rem;" class="box1-item" v-for="(goods2,index) in goods2" id="box2-item" :key="index">
+        <div class="box_content">
           <img :src="goods2.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span>
-              <del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del>
-            </p>
+            <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del></p>
           </span>
-          </router-link>
         </div>
+        </router-link>
       </div>
     </scroller>
-    <router-link to="/YouHui/discount">
       <nav>
         <img :src="type3.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
-        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd3.png);background-size: 100%;">
-          <p style="font-size: .28rem;" v-text="type3.store_name">XX专区</p>
-          <img src="/static/images/youhui_bd3_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-        </div>
-        <!--<img src="../assets/sanjiao.png" alt="" class="sanjiao">-->
+        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
       </nav>
+    <router-link to="/YouHui/discount">
+    <p class="title">
+        <img src="/static/images/youhui_bd3_img.png" alt="" >
+        <span v-text="type3.store_name" class="subject_name"></span>
+        <span class="to_subject">进入专场<img src="/static/images/gt_white.png" alt=""></span>
+      </p>
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav3">
-        <div class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.49rem;" :key="index">
-          <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}">
+        <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}" class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.38rem;" :key="index">
+        <div class="box_content">
           <img :src="goods3.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span>
-              <del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>
+            <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>
             </p>
           </span>
-          </router-link>
         </div>
+        </router-link>
       </div>
     </scroller>
-    <router-link to="/YouHui/essential">
       <nav>
         <img :src="type4.image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg">
-        <div class="nav_btn" style="background-image: url(/static/images/youhui_bd2.png);background-size: 100%;">
-          <p style="font-size: .28rem;" v-text="type4.store_name">XX专区</p>
-          <img src="/static/images/youhui_bd4_img.png" alt="" style="width: 1.42rem;height: .22rem;margin-bottom: .3rem;">
-        </div>
+        <img src="../assets/sanjiao.png" alt="" class="sanjiao">
       </nav>
+    <router-link to="/YouHui/essential">
+      <p class="title">
+        <img src="/static/images/youhui_bd4_img.png" alt="" >
+        <span class="subject_name" v-text="type4.store_name"></span>
+        <span class="to_subject">进入专场<img src="/static/images/gt_white.png" alt=""></span>
+      </p>
     </router-link>
-    <div class="main">
-      <div class="main_goods">
-        <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(list,index) in goods4" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">
-            <img :src="list.pict_url" alt="" :onerror="defaultImg">
-            <div class="content">
-              <div class="des" v-text="list.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-              <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>88.8</span>
-                <span class="num">518件已售</span>
-              </div>
-            </div>
-          </router-link>
-        </ul>
+    <scroller lock-y :scrollbar-x=false>
+      <div class="box1" ref="nav4">
+        <router-link :to="{name:'goodsDetail',query:{id:goods4.id}}" class="box1-item" v-for="(goods4,index) in goods4" id="box3-item" style="width: 2.38rem;" :key="index">
+          <div class="box_content">
+            <img :src="goods4.pict_url" alt="" :onerror="defaultImg">
+            <span class="dess">
+            <p class="des_name" v-text="goods4.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
+            <p class="des_price"><span class="new_price">￥{{goods4.zk_final_price.rmb}}<span v-show="goods4.zk_final_price.corner!=='00'">.{{goods4.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods4.reserve_price.rmb}}<span v-show="goods4.reserve_price.corner!=='00'">.{{goods4.reserve_price.corner}}</span></del></p>
+          </span>
+          </div>
+        </router-link>
       </div>
-    </div>
+    </scroller>
+    <div style=" height: 1.06rem;"></div>
     <loading v-model="showLoading" :text="loadText"></loading>
 
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
   </div>
 </template>
@@ -201,6 +199,8 @@
           if(res.data.code=='200'){
             this.type4 = res.data.data.type
             this.goods4 = res.data.data.goods
+            console.log(this.goods4)
+            console.log(this.type4)
           }else if(res.data.code=='400'){
 
 
@@ -209,9 +209,9 @@
           console.log(err)
         })
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      },
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      },
 
     },
     created:function(){
@@ -222,27 +222,29 @@
     },
     mounted() {
       this.$nextTick(function(){
-        setTimeout(()=>{
-          //      动态的更改scroller的宽度
-          const self = this;
-          const w = document.getElementById('box1-item').offsetWidth;
-          const n1 = self.goods1.length;
-          const n2 = self.goods2.length;
-          const n3 = self.goods3.length;
-          self.$refs.nav1.style.width = (w * n1) + 'px';
-          self.$refs.nav2.style.width = (w * n2) + 'px';
-          self.$refs.nav3.style.width = (w * n3) + 'px';
-        },1000)
-        // 返回顶部
-        let back_btn = document.getElementsByClassName('toTop')[0];
-        window.onscroll = function () {
-          let top = document.documentElement.scrollTop || document.body.scrollTop;
-          if (top > 800) {
-            back_btn.style.display = 'block';
-          } else {
-            back_btn.style.display = 'none';
-          }
-        }
+//        setTimeout(()=>{
+//          //      动态的更改scroller的宽度
+//          const self = this;
+//          const w = document.getElementById('box1-item').offsetWidth;
+//          const n1 = self.goods1.length;
+//          const n2 = self.goods2.length;
+//          const n3 = self.goods3.length;
+//          const n4 = self.goods4.length;
+//          self.$refs.nav1.style.width = (w * n1) + 'px';
+//          self.$refs.nav2.style.width = (w * n2) + 'px';
+//          self.$refs.nav3.style.width = (w * n3) + 'px';
+//          self.$refs.nav4.style.width = (w * n4) + 'px';
+//        },1000)
+//        // 返回顶部
+//        let back_btn = document.getElementsByClassName('toTop')[0];
+//        window.onscroll = function () {
+//          let top = document.documentElement.scrollTop || document.body.scrollTop;
+//          if (top > 800) {
+//            back_btn.style.display = 'block';
+//          } else {
+//            back_btn.style.display = 'none';
+//          }
+//        }
       })
 
     }
@@ -254,18 +256,6 @@
     height: 2.6rem;
     position: relative;
   }
-
-  .nav_btn {
-    position: absolute;
-    color: white;
-    height: .76rem;
-    border-radius: .44rem;
-    top: .08rem;
-    left: .08rem;
-    text-align: center;
-    padding: 0 .4rem;
-  }
-
   .sanjiao {
     width: .30rem;
     height: .22rem;
@@ -275,32 +265,32 @@
   }
 
   .box1 {
-    height: 3.2rem;
-    min-width: 7.50rem;
+    height: 3.38rem;
+    min-width: 14.5rem;
     position: relative;
     background-color: white;
-    border-top: .1rem solid #f4f4f4;
-    border-bottom: .1rem solid #f4f4f4;
+    padding-bottom: .34rem;
   }
-
+  .box_content{
+    margin: 0 0 0 .18rem;border: .01rem solid #e8e8e8;
+  }
   .box1-item {
-    height: 3.12rem;
-    border-left: .04rem solid white;
     box-sizing: border-box;
     float: left;
   }
 
   .box1-item img {
-    width: 2.42rem;
+    /*width: 2.02rem;*/
+    width: 100%;
     height: 2rem;
   }
 
   .box1-item:first-child {
-    border-left: 0 solid white;
+    /*border-left: 0 solid white;*/
   }
 
   .dess {
-    /*text-align: center;*/
+    text-align: center;
     font-size: .24rem;
   }
 
@@ -309,14 +299,14 @@
     color: #333;
     padding: 0 .1rem .1rem;
     word-wrap: break-word;
-    -webkit-line-clamp: 2;
+    /*-webkit-line-clamp: 2;*/
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
   .des_price {
-    padding: 0 .1rem;
+    margin: .05rem 0 .1rem;
   }
 
   .new_price {
@@ -329,63 +319,78 @@
     font-size: .2rem;
   }
 
-  .main {
-    margin-bottom: 1.06rem;
-    border-top: .1rem solid #f4f4f4;
-  }
+  /*.main {*/
+    /*margin-bottom: 1.06rem;*/
+    /*border-top: .1rem solid #f4f4f4;*/
+  /*}*/
 
-  .goods {
-    overflow: hidden;
-  }
+  /*.goods {*/
+    /*overflow: hidden;*/
+  /*}*/
 
-  .goods_list {
-    background-color: white;
-    list-style: none;
-    float: left;
-    width: 50%;
-    box-sizing: border-box;
-    border-bottom: .1rem solid #f4f4f4;
-  }
+  /*.goods_list {*/
+    /*background-color: white;*/
+    /*list-style: none;*/
+    /*float: left;*/
+    /*width: 50%;*/
+    /*box-sizing: border-box;*/
+    /*border-bottom: .1rem solid #f4f4f4;*/
+  /*}*/
 
-  .goods_list img {
-    width: 100%;
-    height: 3.6rem;
-  }
+  /*.goods_list img {*/
+    /*width: 100%;*/
+    /*height: 3.6rem;*/
+  /*}*/
 
-  .goods_list:nth-of-type(odd) {
-    border-right: .05rem solid #f4f4f4;
-  }
+  /*.goods_list:nth-of-type(odd) {*/
+    /*border-right: .05rem solid #f4f4f4;*/
+  /*}*/
 
-  .goods_list:nth-of-type(even) {
-    border-left: .05rem solid #f4f4f4;
-  }
+  /*.goods_list:nth-of-type(even) {*/
+    /*border-left: .05rem solid #f4f4f4;*/
+  /*}*/
 
-  .content {
-    padding: .15rem;
-  }
+  /*.content {*/
+    /*padding: .15rem;*/
+  /*}*/
 
-  .des {
-    height: .8rem;
-    font-size: .28rem;
-    color: #333;
-    line-height: .4rem;
-    word-wrap: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  /*.des {*/
+    /*height: .8rem;*/
+    /*font-size: .28rem;*/
+    /*color: #333;*/
+    /*line-height: .4rem;*/
+    /*word-wrap: break-word;*/
+    /*-webkit-line-clamp: 2;*/
+    /*display: -webkit-box;*/
+    /*-webkit-box-orient: vertical;*/
+    /*overflow: hidden;*/
+  /*}*/
 
-  .price {
-    font-size: .32rem;
-    color: #ff425f;
-  }
+  /*.price {*/
+    /*font-size: .32rem;*/
+    /*color: #ff425f;*/
+  /*}*/
 
-  .num {
-    font-size: .24rem;
-    color: #999;
-    float: right;
-    margin-top: .1rem;
-    margin-right: .15rem;
+  /*.num {*/
+    /*font-size: .24rem;*/
+    /*color: #999;*/
+    /*float: right;*/
+    /*margin-top: .1rem;*/
+    /*margin-right: .15rem;*/
+  /*}*/
+  .title{
+    background-color: white;position: relative;line-height: 1rem;padding:0 .28rem 0 .2rem;
+  }
+  .title>img{
+    width: .28rem;height: .28rem;
+  }
+  .subject_name{
+    font-size: .32rem;color: #333;
+  }
+  .to_subject{
+    font-size: .24rem;color: #999;position: absolute;right: .2rem;
+  }
+  .to_subject>img{
+    width: .2rem;height: .2rem;margin-left: .1rem;
   }
 </style>

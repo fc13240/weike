@@ -11,7 +11,7 @@
         </group>
       <div style="height: 1.34rem;"></div>
       <div class="btn">
-        <x-button @click.native="click()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">保存</x-button>
+        <x-button @click.native="click()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">保存</x-button>
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
@@ -73,7 +73,7 @@
           }else if(res.data.code=='400'){
             this.$vux.toast.show({
               text:res.data.error,
-              type:'warn'
+              type:'cancel'
             })
             this.showLoading=false
           }
@@ -181,6 +181,7 @@
     margin: 0 .3rem;
     padding: .3rem 0;
     border-top: 1px solid #f4f4f4;
+    -webkit-appearance: none;
   }
   .btn{
     width: 100%;

@@ -28,7 +28,7 @@
       <x-button @click.native="clear()"  action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">清空</x-button>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
   </div>
 </template>
@@ -92,21 +92,21 @@
           }
         })
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      }
     },
     mounted() {
-      // 返回顶部
-      let back_btn = document.getElementsByClassName('toTop')[0];
-      window.onscroll = function () {
-        let top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 800) {
-          back_btn.style.display = 'block';
-        } else {
-          back_btn.style.display = 'none';
-        }
-      }
+//      // 返回顶部
+//      let back_btn = document.getElementsByClassName('toTop')[0];
+//      window.onscroll = function () {
+//        let top = document.documentElement.scrollTop || document.body.scrollTop;
+//        if (top > 800) {
+//          back_btn.style.display = 'block';
+//        } else {
+//          back_btn.style.display = 'none';
+//        }
+//      }
     },
     created:function(){
       this.getFootprintList()

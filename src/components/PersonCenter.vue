@@ -6,7 +6,7 @@
         <p class="name" v-text="info.user_name">昵称</p>
         <p class="num"><img src="../assets/yuanBao_white.png" alt="" class="yuanBao">元宝 {{info.user_acer}}</p>
       </div>
-      <img src="../assets/gt.png" alt=""
+      <img src="../../static/images/gt.png" alt=""
            style="width: .16rem;height: .28rem;position: absolute;right: .34rem; top: .9rem;">
     </router-link>
     <group>

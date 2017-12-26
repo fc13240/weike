@@ -92,21 +92,21 @@
       submit: function () {
         if (this.evaluate == '') {
           this.$vux.toast.show({
-            type: 'warn',
-            text: '晒单感受不能为空！'
+            type: 'cancel',
+            text: '内容不能为空！'
           })
           return
         }
         if (this.imgList.length == 0) {
           this.$vux.toast.show({
-            type: 'warn',
+            type: 'cancel',
             text: '请上传晒单图片！'
           })
           return
         }
-        if (this.order_num == '') {
+        if (!this.order_num) {
           this.$vux.toast.show({
-            type: 'warn',
+            type: 'cancel',
             text: '订单号不能为空'
           })
           return
@@ -115,17 +115,20 @@
         this.showLoading = true
         this.$http({
           method: 'POST',
-          url: '/api/shareOrder',
+          url: '/api/shareOrder_front',
           data: {evaluate: this.evaluate, order_num: this.order_num, evaluate_url: JSON.stringify(this.imgList)}
         }).then((res) => {
           this.showLoading = false
           if (res.data.code == '200') {
             this.$vux.toast.show({
-              text: res.data.message
+              text: res.data.data.message
             })
             history.go(-1)
           } else if (res.data.code == '400') {
-
+            this.$vux.toast.show({
+              text: res.data.error,
+              type:'cancel'
+            })
           }
         }, (err) => {
           console.log(err)

@@ -1,11 +1,11 @@
 <template>
   <div style="background-color: white;">
-    <div style="background-color: #f4f4f4;padding: .1rem;font-size: 0;">
-          <img src="/static/images/search_img.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .25rem;left: .2rem;">
-      <form action="" style="width: 80%;display: inline-block;margin-right: .6rem;">
-        <input v-model="key" type="text" style="width: 100%;outline: none;padding:.1rem .1rem .1rem .6rem;border:none;line-height: .5rem;font-size: .28rem;border-radius: .1rem;">
+    <div class="searchDiv">
+      <img src="/static/images/search_img.png" alt="">
+      <form action="">
+        <input v-model="key" type="text">
       </form>
-      <span style="display: inline-block;text-align: center;font-size: .28rem;color: #333;margin-left: .2rem;" @click="onCancel()">取消</span>
+      <span @click="onCancel()" class="cancel_btn">取消</span>
     </div>
     <div id="hot">
       <p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>
@@ -18,7 +18,7 @@
       </ul>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
   </div>
 </template>
 <script>
@@ -47,16 +47,16 @@
     },
     mounted() {
       this.$nextTick(function () {
-        // 返回顶部
-        let back_btn = document.getElementsByClassName('toTop')[0];
-        window.onscroll = function () {
-          let top = document.documentElement.scrollTop || document.body.scrollTop;
-          if (top > 800) {
-            back_btn.style.display = 'block';
-          } else {
-            back_btn.style.display = 'none';
-          }
-        }
+//        // 返回顶部
+//        let back_btn = document.getElementsByClassName('toTop')[0];
+//        window.onscroll = function () {
+//          let top = document.documentElement.scrollTop || document.body.scrollTop;
+//          if (top > 800) {
+//            back_btn.style.display = 'block';
+//          } else {
+//            back_btn.style.display = 'none';
+//          }
+//        }
         var oForm =  document.getElementsByTagName("form")[0];
         var self =this
         oForm.onsubmit = function(e){
@@ -125,9 +125,9 @@
         this.doSearch()
 
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      },
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      },
       onSubmit(e) {
 //        this.showLoading=true
         this.$router.push({name:'searchResult',query:{keyword:e}})
@@ -157,5 +157,20 @@ ul li{
     font-size: .28rem;
     color: #333;
     margin: 0 .2rem .2rem 0;
+  }
+  .searchDiv{
+    background-color: #f4f4f4;padding: .1rem;font-size: 0;
+  }
+  .searchDiv>img{
+    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .25rem;left: .2rem;
+  }
+  .searchDiv>form{
+    width: 80%;display: inline-block;margin-right: .6rem;
+  }
+  .searchDiv>form>input{
+    width: 100%;outline: none;padding:.1rem .1rem .1rem .6rem;border:none;line-height: .5rem;font-size: .28rem;border-radius: .1rem;
+  }
+  .searchDiv>.cancel_btn{
+    display: inline-block;text-align: center;font-size: .28rem;color: #333;margin-left: .2rem;
   }
 </style>

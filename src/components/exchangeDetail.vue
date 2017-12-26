@@ -31,7 +31,7 @@
         <p style="font-size: .24rem;color: #666;margin: .2rem  0 .1rem;">请输入您要充值的手机号</p>
         <div style="display: inline-block;">
           <input type="number"
-                 style="vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;" v-model="tel">
+                 style="-webkit-appearance: none;-webkit-tap-highlight-color:rgba(255,0,0,0);vertical-align: middle;outline: none;width: 4.5rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;" v-model="tel">
         </div>
       </div>
       <div style="padding-bottom: .25rem;" v-show="data.product_type==2">
@@ -177,7 +177,7 @@
           }else if(res.data.code=='400'){
             this.$vux.toast.show({
               text:res.data.error,
-              type:'warn'
+              type:'cancel'
             })
             this.showLoading=false
           }
@@ -237,7 +237,7 @@
 
   .yuanBao {
     width: .26rem;
-    height: .26rem;
+    height: .20rem;
   }
 
   .has_num {

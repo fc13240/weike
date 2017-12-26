@@ -11,11 +11,8 @@
      </div>
      <div @click="onFocus">
        <search placeholder="请输入商品名称" cancel-text="取消"
-               @result-click="resultClick"
-               @on-change="getResult"
                :results="results"
                v-model="keywords"
-               @click="onFocus"
                ref="search"  style="width: 90%;margin-left: 10%;"></search>
      </div>
    </div>
@@ -32,8 +29,8 @@
     <div id="results" style="overflow: hidden;">
       <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
            style="border-bottom: 1px solid #e1e1e1;margin-top: 44px;">
-        <tab-item class="vux-center" :selected="index === 0" v-for="(item, index) in list" @on-item-click="change(item.id)"
-                  :key="index">{{item.sort_name}}
+        <tab-item class="vux-center" :selected="index === 0" v-for="(item, index) in list" @on-item-click="change(index)"
+                  :key="index">{{item}}
         </tab-item>
       </tab>
       <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 89px;">
@@ -60,7 +57,7 @@
       </scroller>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
   </div>
 </template>
@@ -77,7 +74,7 @@
     },
     data() {
       return {
-        sort_id:'',
+        sort_id:9,
         goodsList:[],
         showLoading:false,
         loadText:'加载中...',
@@ -86,7 +83,7 @@
 //        searchResults:true,
         results: [],
         keywords: '',
-        list:[],
+        list:['综合排序','销量优先','价格优先'],
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
@@ -101,16 +98,16 @@
     mounted() {
       const search = document.getElementsByClassName('weui-search-bar__cancel-btn')
       search[0].style.cssText="color:#333;font-size:.28rem;"
-      // 返回顶部
-      let back_btn = document.getElementsByClassName('toTop')[0];
-      window.onscroll = function () {
-        let top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 800) {
-          back_btn.style.display = 'block';
-        } else {
-          back_btn.style.display = 'none';
-        }
-      }
+//      // 返回顶部
+//      let back_btn = document.getElementsByClassName('toTop')[0];
+//      window.onscroll = function () {
+//        let top = document.documentElement.scrollTop || document.body.scrollTop;
+//        if (top > 800) {
+//          back_btn.style.display = 'block';
+//        } else {
+//          back_btn.style.display = 'none';
+//        }
+//      }
     },
     methods: {
       //      执行搜索
@@ -141,30 +138,22 @@
           console.log(err)
         })
       },
-      //      热门推荐列表
-      getType:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/serrchSort'
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.list = res.data.data.sorts_type
-          }else{
-
-          }
-        },(err)=>{
-          console.log(err)
-        })
-      },
-      setFocus() {
-        this.$refs.search.setFocus()
-      },
-      resultClick(item) {
-        window.alert('you click the result item: ' + JSON.stringify(item))
-      },
-      getResult(val) {
-//        this.results = val ? getResult(this.value) : []
-      },
+//      //      热门推荐列表
+//      getType:function(){
+//        this.$http({
+//          method:'POST',
+//          url:'/api/serrchSort'
+//        }).then((res)=>{
+//          if(res.data.code=='200'){
+//            this.list = res.data.data.sorts_type
+//          }else{
+//
+//          }
+//        },(err)=>{
+//          console.log(err)
+//        })
+//      },
+//      },
       onSubmit(e) {
         console.log(e)
         this.$refs.search.setBlur();
@@ -183,13 +172,19 @@
       change(e){
         this.pageIndex=1
         this.goodsList=[]
-        this.sort_id = e
+        if(e==0){
+          this.sort_id=9
+        }else if(e==1){
+          this.sort_id=10
+        }else{
+          this.sort_id=11
+        }
         this.doSearch()
 
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      },
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      },
       goHome(){
         this.$router.push({path:'/home'})
       },
@@ -224,7 +219,7 @@
     created:function(){
       this.keywords = this.$route.query.keyword
       this.doSearch()
-      this.getType()
+//      this.getType()
     },
 
   }

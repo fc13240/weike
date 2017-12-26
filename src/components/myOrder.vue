@@ -3,7 +3,7 @@
     <!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">我的订单</x-header>-->
     <!--<div style="height: .88rem;"></div>-->
     <div>
-      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
+      <tab :line-width=3 active-color='#ff425f' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff425f">
         <!--@click="type = item" -->
         <tab-item class="vux-center" :selected="type === index" v-for="(item, index) in list2" :key="index"  @on-item-click="change(list2,index)">{{item}}</tab-item>
       </tab>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <loading v-model="showLoading" :text="loadText"></loading>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
   </div>
 </template>
@@ -143,24 +143,24 @@
         this.type = index;
         this.getOrderList(this.type)
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      }
     },
     mounted(){
 
       const add_b = document.getElementsByClassName('weui-cell__primary');
       add_b[0].style.borderBottom='1px solid #f4f4f4'
-      // 返回顶部
-      let back_btn = document.getElementsByClassName('toTop')[0];
-      window.onscroll = function () {
-        let top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 800) {
-          back_btn.style.display = 'block';
-        } else {
-          back_btn.style.display = 'none';
-        }
-      }
+//      // 返回顶部
+//      let back_btn = document.getElementsByClassName('toTop')[0];
+//      window.onscroll = function () {
+//        let top = document.documentElement.scrollTop || document.body.scrollTop;
+//        if (top > 800) {
+//          back_btn.style.display = 'block';
+//        } else {
+//          back_btn.style.display = 'none';
+//        }
+//      }
     },
     created:function(){
       this.type = this.$route.params.type;

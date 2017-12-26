@@ -31,7 +31,7 @@
       </ul>
 
     </div>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
     </scroller>
   </div>
 </template>
@@ -94,9 +94,9 @@
           console.log(err)
         })
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      },
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      },
       infinite(done){
         if(this.noData){
           setTimeout(()=>{
@@ -129,15 +129,15 @@
       this.getAcerList()
     },
     mounted(){
-      let back_btn = document.getElementsByClassName('toTop')[0];
-      window.onscroll = function () {
-        let top = document.documentElement.scrollTop || document.body.scrollTop;
-        if (top > 800) {
-          back_btn.style.display = 'block';
-        } else {
-          back_btn.style.display = 'none';
-        }
-      }
+//      let back_btn = document.getElementsByClassName('toTop')[0];
+//      window.onscroll = function () {
+//        let top = document.documentElement.scrollTop || document.body.scrollTop;
+//        if (top > 800) {
+//          back_btn.style.display = 'block';
+//        } else {
+//          back_btn.style.display = 'none';
+//        }
+//      }
     }
 }
 </script>
@@ -169,7 +169,7 @@
     padding: .07rem 0;
   }
  .nums{
-    color: #ff426d;
+    color: #ff425f;
   }
   nav img{
     vertical-align: bottom;
@@ -184,7 +184,7 @@
     font-weight: 500;
   }
   h3 i{
-    border-left: .06rem solid #ff526d;
+    border-left: .06rem solid #ff425f;
     margin-right: .2rem;
   }
   .goods{
@@ -214,9 +214,8 @@
 
   }
   .yuanBao{
-    color: #ff526d;
+    color: #ff425f;
     font-size: .28rem;
-    font-weight: bold;
   }
   .y_img{
     width: .26rem;

@@ -40,6 +40,13 @@
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des">{{goods.title}}</div>
+              <div style="margin: .15rem 0rem;">
+                      <span class="juan_style">
+                      <span class="juan_style_left">券</span>
+                      <span class="juan_style_right">{{goods.coupon_number}}元</span>
+                      </span>
+                <!--<span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
+              </div>
               <div class="des_b">
                 <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span
                   style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
@@ -89,7 +96,7 @@
       <img src="/static/images/qr.jpg" alt="" class="model_main rq">
       <img src="../../static/images/cancel_img.png" alt="" @click="cancel2" class="cancel">
     </div>
-    <div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>
+    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
   </div>
 </template>
 <script>
@@ -227,9 +234,9 @@
           return false;
         }
       },
-      toTop(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
-      }
+//      toTop(){
+//        document.documentElement.scrollTop = document.body.scrollTop =0;
+//      }
     },
     created: function () {
       this.id=this.$route.query.id
@@ -254,16 +261,16 @@
             type: 'warn'
           })
         });
-        // 返回顶部
-        let back_btn = document.getElementsByClassName('toTop')[0];
-        window.onscroll = function () {
-          let top = document.documentElement.scrollTop || document.body.scrollTop;
-          if (top > 800) {
-            back_btn.style.display = 'block';
-          } else {
-            back_btn.style.display = 'none';
-          }
-        }
+//        // 返回顶部
+//        let back_btn = document.getElementsByClassName('toTop')[0];
+//        window.onscroll = function () {
+//          let top = document.documentElement.scrollTop || document.body.scrollTop;
+//          if (top > 800) {
+//            back_btn.style.display = 'block';
+//          } else {
+//            back_btn.style.display = 'none';
+//          }
+//        }
       })
 
     },
@@ -389,7 +396,9 @@
   .goods {
     overflow: hidden;
   }
-
+  .goods li{
+    font-size: 0;
+  }
   .goods_list {
     background-color: white;
     list-style: none;
