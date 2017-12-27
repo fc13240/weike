@@ -47,7 +47,7 @@
                       </span>
               </div>
               <div class="des_b">
-                <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span v-show="goods.zk_final_price.corner=='00'">.{{goods.zk_final_price.corner}}</span></span>
+                <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
                 <span class="num">{{goods.volume}}件已售</span>
               </div>
             </div>

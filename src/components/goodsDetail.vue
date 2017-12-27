@@ -36,7 +36,7 @@
       <p class="guss">猜你喜欢</p>
       <div class="main_goods">
         <ul class="goods">
-          <li v-for="(goods,index) in goodsList" class="goods_list" @click="click(goods)" :key="index">
+          <li v-for="(goods,index) in goodsList" class="goods_list" @click="click(goods.id)" :key="index">
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des">{{goods.title}}</div>
@@ -221,9 +221,10 @@
         this.show1 = false
       },
       click(id){
-        this.toTop()
-        this.id=id
-        this.$router.push({name:'goodsDetail',query:{id:id}})
+//        this.id=id
+//        this.$router.push({name:'goodsDetail',query:{id:id}})
+        location.href='http://www.dxvke.com/goodsDetail/?id='+id
+//        this.toTop()
 //        this.getGoodsDetail()
       },
       is_weixin() {
@@ -234,9 +235,9 @@
           return false;
         }
       },
-//      toTop(){
-//        document.documentElement.scrollTop = document.body.scrollTop =0;
-//      }
+      toTop(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+      }
     },
     created: function () {
       this.id=this.$route.query.id

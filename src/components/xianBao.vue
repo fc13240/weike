@@ -15,9 +15,9 @@
       <div class="goods_list">
         <ul class="goods">
           <li v-for="(list,index) in goodsList" :key="index" :onerror="defaultImg">
-            <router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">
+            <!--<router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">-->
               <img :src="list.pict_url" alt="" class="pic">
-            </router-link>
+            <!--</router-link>-->
             <div class="content">
               <p class="title" v-text="list.title">产品标题产品标题</p>
               <p class="des" v-text="list.item_description">产品补充介绍</p>
@@ -38,10 +38,10 @@
                 </div>
                 <div style="position: absolute;right: 0;bottom: .05rem;text-align: center;">
                   <p style="font-size: .24rem;color: #ff526d;">已抢{{list.volume}}件</p>
-                  <router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">
-                     <span style="border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;">立刻抢 <img
+                  <!--<router-link :to="{name:'goodsDetail',query:{id:list.id,type:1}}">-->
+                     <span class="togo" :class="list.not_start=='1'?'not_start':''" @click="toBuy(list.id,list.not_start)">立刻抢 <img
                        src="../assets/lt_white.png" alt="" style="width: .10rem;height: .16rem;"></span>
-                  </router-link>
+                  <!--</router-link>-->
 
                 </div>
               </div>
@@ -51,7 +51,6 @@
       </div>
     </div>
     </scroller>
-    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
 </template>
@@ -88,6 +87,8 @@
         time[index].active = true;
         this.panic_id=time[index].panic_id
          this.goodsList=[]
+        this.pageIndex=1
+        this.showLoading=true
         this.getGoodsList()
       },
       //      获取超值线报banner
@@ -148,9 +149,6 @@
           console.log(err)
         })
       },
-//      toTop(){
-//        document.documentElement.scrollTop = document.body.scrollTop =0;
-//      },
       infinite(done) {
         if (this.noData) {
           setTimeout(() => {
@@ -160,11 +158,9 @@
         }
         else{
           let self = this;//this指向问题
-//        self.getGoodsList()
           setTimeout(()=>{
             self.pageIndex += 1
             self.getGoodsList()
-//            self.$refs.myscroller.resize()
             done()
           },1500)
         }
@@ -182,18 +178,16 @@
           done()
         }, 1500)
       },
+      toBuy(id,type){
+        if(type=='1'){
+          return
+        }else{
+          this.$router.push({name:'goodsDetail',query:{id:id,type:1}})
+        }
+      }
     },
     mounted(){
-//      // 返回顶部
-//      let back_btn = document.getElementsByClassName('toTop')[0];
-//      window.onscroll = function () {
-//        let top = document.documentElement.scrollTop || document.body.scrollTop;
-//        if (top > 800) {
-//          back_btn.style.display = 'block';
-//        } else {
-//          back_btn.style.display = 'none';
-//        }
-//      }
+
     },
     created:function(){
       this.showLoading=true
@@ -286,5 +280,11 @@
     font-size: .2rem;
     color: #999999;
     margin-left: .1rem;
+  }
+  .togo{
+    border-radius: .5rem; margin-top:.05rem;width: 1.16rem;font-size: .24rem;color: white;background-color: #ff526d;line-height: .46rem;display: inline-block;
+  }
+  .not_start{
+    background-color: #999;
   }
 </style>
