@@ -19,7 +19,7 @@
               <p class="title" style="line-height: .4rem;">
                 <span style="display: inline-block;width: 1.6rem;overflow: hidden;height: .4rem;">{{list1.product_name}}</span>
                 <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==1">未发货</span>
-                <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==2">待发货</span>
+                <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==2">已发货</span>
                 <span style="float: right;font-size: .24rem;color: #ff425f;" v-show="list1.express_status==3">已发货</span>
               </p>
               <p style="line-height: .3rem;margin-top: -.1rem;"><span style="font-size: .2rem;color: #333333;">x{{list1.exchange_num}}</span></p>

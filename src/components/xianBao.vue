@@ -135,6 +135,7 @@
           url:'/api/overflow',
           params:{panic_id:this.panic_id,page:this.pageIndex,limit:this.limit}
         }).then((res)=>{
+          this.showLoading=false
           if(res.data.code==200){
             if(res.data.data.goods_list.length==0){
               this.noData=true

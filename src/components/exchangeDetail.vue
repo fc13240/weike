@@ -24,7 +24,7 @@
         <div style="margin: .2rem 0 .5rem;">
           <img src="../assets/alipay_img.png" alt="" style="width: 1.38rem;height: .48rem;vertical-align: middle">
           <input type="text" v-model="alipay"
-                 style="vertical-align: middle;outline: none;width: 4.8rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
+                 style="-webkit-appearance: none;-webkit-tap-highlight-color:rgba(255,0,0,0);vertical-align: middle;outline: none;width: 4.8rem;padding: .12rem .2rem; float: right;border: 1px solid #b1b1b1;border-radius: .05rem;">
         </div>
       </div>
       <div style="padding: .2rem .3rem;" v-show="data.type==1">

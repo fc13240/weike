@@ -5,9 +5,9 @@
      <!--去掉细线-->
     <div style="font-size: 0">
       <div>
-        <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff526d;">
+        <tab :line-width=3 active-color='#ff425f' v-model="index" custom-bar-width="1.8rem" bar-active-color="#ffa4a4" style="background-color: #ff425f;">
           <tab-item class="vux-center" :selected=" type=== index" v-for="(item, index) in list2" :key="index" style="color: white;">
-            <img :src="item.src" alt="" style="width: .38rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
+            <img :src="item.src" alt="" style="width: .36rem;height: .36rem;vertical-align: middle;margin-right: .15rem;">{{item.title}}</tab-item>
         </tab>
       </div>
       <div class="main">
@@ -61,10 +61,10 @@
   const list = () => [
      {
     title:'我的晒单',
-      src:'../static/images/shaidan2.png'
+      src:'../static/images/shaidan1.png'
   },{
       title:'晒单广场',
-      src:'../static/images/shaidan1.png'
+      src:'../static/images/shaidan2.png'
     }
   ]
   export default {

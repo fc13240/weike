@@ -531,7 +531,7 @@
     top: 0;
     left: 0;
     width: 5.98rem;
-    height: 3.46rem;
+    height: 3.64rem;
     margin: 2.5rem calc((100% - 5.98rem) / 2);
     background-color: white;
     border-radius: .15rem;
@@ -547,22 +547,23 @@
     font-size: .2rem;
     color: #666666;
     margin: 0 .16rem;
-    line-height: .45rem;
-    height: .45rem;
+    line-height: .40rem;
+    height: .40rem;
   }
 
   .m_btn {
     display: inline-block;
-    font-size: .24rem;
+    font-size: .26rem;
     color: white;
     width: 4.64rem;
-    line-height: .42rem;
-    border-radius: .3rem;
+    line-height: .68rem;
+    border-radius: .8rem;
     border: none;
     background: -webkit-linear-gradient(left, #ff526d, #f8214f); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(left, #ff526d, #f8214f); /* Opera 11.1 - 12.0 */
     background: -moz-linear-gradient(left, #ff526d, #f8214f); /* Firefox 3.6 - 15 */
     background: linear-gradient(left, #ff526d, #f8214f); /* 标准的语法 */
+    margin: .1rem 0;
   }
 
   .model_main img {
@@ -586,6 +587,8 @@
   }
 
   .word {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
     border: .01rem dotted #ff425f;
     text-align: center;
     background-color: #ffe7eb;
@@ -597,17 +600,17 @@
   }
 
   .rq {
-    width: 2.2rem;
-    height: 2.2rem;
-    margin: calc((100% - 2.2rem) / 2) calc((100% - 2.2rem) / 2);
+    width: 3.2rem;
+    height: 3.2rem;
+    margin: calc((100% - 3.2rem) / 2) calc((100% - 3.2rem) / 2);
   }
 
   .cancel {
     width: .5rem;
     height: .5rem;
     position: fixed;
-    right: calc(((100% - 2.2rem) / 2) - .5rem);
-    top: calc(((100% - 2.2rem) / 2) - 3rem);
+    right: calc(((100% - 3.2rem) / 2) - .5rem);
+    top: calc(((100% - 3.2rem) / 2) - 3rem);
     z-index: 200;
   }
 </style>

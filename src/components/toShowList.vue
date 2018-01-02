@@ -44,7 +44,7 @@
 </template>
 <script>
   import {XButton, XInput, Loading} from 'vux'
-  //import uploader from './uploader.vue'
+  import {ImageResizer,dataURLtoBlob} from '@/util/util.js'
   export default {
     name: 'toShowList',
     components: {
@@ -140,152 +140,65 @@
       remove(index) {
         this.imgList.splice(index, 1)
       },
+      uploadPic(formData){
+                    this.$http({
+              method: 'POST',
+              url: '/api/upload',
+              dataType: 'formData',
+              data: formData
+            }).then((res) => {
+              if (res.data.code == '200') {
+                let j
+                for (j in res.data.data.image_url) {
+                  this.imgList.push(res.data.data.image_url[j])
+                  this.files=[]
+                }
+              }
+            }, (err) => {
+            })
+      },
+
       fileChanged(e) {
-//        const list = e.target.files
-//        for (let i = 0; i < list.length; i++) {
-//          if (!this.isContain(list[i])) {
-//            const item = {
-//              name: list[i].name,
-//              size: list[i].size,
-//              file: list[i]
-//            }
-//            this.html5Reader(list[i], item)
-//            this.files.push(item)
-//          }
-//        }
-//        const formData = new FormData();
-//        this.files.forEach((item) => {
-//          formData.append('images[]', item.file)
-//        })
-//        for(var i =0 ;i<e.target.files.length;i++){
-//          formData.append('images[]',e.target.files[i]);
-//        }
         var file=e.target.files[0]
         var self = this
+        var imgSize = file.size
         const formData = new FormData();
-//          调用压缩图片的方法
-          this.compress(file, 0.2, function (err, data) {
-            if (err) {console.log(err);return;}else{
-              formData.append('images[]', data);
-              // 接下来就可以用 ajax 提交 fromdData
-              self.$http({
-                method: 'POST',
-                url: '/api/upload',
-                dataType: 'formData',
-                data: formData
-              }).then((res) => {
-                if (res.data.code == '200') {
-                  let j
-                  for (j in res.data.data.image_url) {
-                    self.imgList.push(res.data.data.image_url[j])
-                    self.files=[]
-                  }
-                }
-              }, (err) => {
-              })
-            }
-          });
-//        console.log(formData)
-//        this.$http({
-//          method: 'POST',
-//          url: '/api/upload',
-//          dataType: 'formData',
-//          data: formData
-//        }).then((res) => {
-//          if (res.data.code == '200') {
-//            let j
-//            for (j in res.data.data.image_url) {
-//              this.imgList.push(res.data.data.image_url[j])
-//              this.files=[]
-////              console.log(this.imgList)
-//            }
-//          }
-//        }, (err) => {
-//        })
-      },
-//      // 将图片文件转成BASE64格式
-//      html5Reader(file, item) {
-//        const reader = new FileReader()
-//        reader.onload = (e) => {
-//          this.$set(item, 'src', e.target.result)
-//        }
-//        reader.readAsDataURL(file)
-//      },
-//      isContain(file) {
-//        console.log(file)
-//        this.files.forEach((item) => {
-//          if (item.name === file.name && item.size === file.size) {
-//            return true
-//          }
-//        })
-//        return false
-//      },
-//      uploadProgress(evt) {
-//        const component = this
-//        if (evt.lengthComputable) {
-//          const percentComplete = Math.round((evt.loaded * 100) / evt.total)
-//          component.percent = percentComplete / 100
-//        } else {
-//          console.warn('upload progress unable to compute')
-//        }
-//      },
-//      图片压缩方法
-      compress(file, quality, callback) {
-        if (!window.FileReader || !window.Blob) {
-          return errorHandler('您的浏览器不支持图片压缩')();
-        }
+        if(imgSize < 256 * 1024){
+          formData.append('images[]', file);
+          self.uploadPic(formData);
+        } else {    // 图片压缩处理
+          var reader   = new FileReader(),
+            maxWidth = 400,
+            maxHeight= 400,
+            suffix = file.name.substring(file.name.lastIndexOf('.') + 1);
 
-        var reader = new FileReader();
-        var mimeType = file.type || 'image/jpeg';
-
-        reader.onload = createImage;
-        reader.onerror = errorHandler('图片读取失败！');
-        reader.readAsDataURL(file);
-
-        function createImage() {
-          var dataURL = this.result;
-          var image = new Image();
-          image.onload = compressImage;
-          image.onerror = errorHandler('图片加载失败');
-          image.src = dataURL;
-        }
-
-        function compressImage() {
-          var canvas = document.createElement('canvas');
-          var ctx;
-          var dataURI;
-          var result;
-
-          canvas.width = this.naturalWidth;
-          canvas.height = this.naturalHeight;
-          ctx = canvas.getContext('2d');
-          ctx.drawImage(this, 0, 0);
-          dataURI = canvas.toDataURL(mimeType, quality);
-          result = dataURIToBlob(dataURI);
-
-          callback(null, result);
-        }
-
-        function dataURIToBlob(dataURI) {
-          var type = dataURI.match(/data:([^;]+)/)[1];
-          var base64 = dataURI.replace(/^[^,]+,/, '');
-          var byteString = atob(base64);
-
-          var ia = new Uint8Array(byteString.length);
-          for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+          if(imgSize > 2 * 1024 * 1024){
+            maxWidth = 800;
+            maxHeight= 800;
           }
 
-          return new Blob([ia], {type: type});
-        }
-
-        function errorHandler(message) {
-          return function () {
-            var error = new Error('Compression Error:', message);
-            callback(error, null);
+          reader.onload = function(e) {
+            var base64Img= e.target.result;
+            //--执行resize。
+            var _ir=ImageResizer({
+              resizeMode:"auto",
+              dataSource:base64Img,
+              dataSourceType:"base64",
+              maxWidth:maxWidth, //允许的最大宽度
+              maxHeight:maxHeight, //允许的最大高度。
+              onTmpImgGenerate:function(img){
+              },
+              success:function(resizeImgBase64,canvas){
+                var blob = dataURLtoBlob(resizeImgBase64);
+                console.log(blob)
+                formData.append( 'images[]', blob);
+                self.uploadPic(formData);
+              }
+            });
           };
+          reader.readAsDataURL(file);
         }
-  }
+      },
     },
     created: function () {
       this.order_num = this.$route.query.order_num
@@ -450,3 +363,149 @@
     border-top: 1px solid #e9e9e9;
   }
 </style>
+<!--fileChanged(e) {-->
+<!--//        const list = e.target.files-->
+<!--//        for (let i = 0; i < list.length; i++) {-->
+<!--//          if (!this.isContain(list[i])) {-->
+<!--//            const item = {-->
+<!--//              name: list[i].name,-->
+<!--//              size: list[i].size,-->
+<!--//              file: list[i]-->
+<!--//            }-->
+<!--//            this.html5Reader(list[i], item)-->
+<!--//            this.files.push(item)-->
+<!--//          }-->
+<!--//        }-->
+<!--//        const formData = new FormData();-->
+<!--//        this.files.forEach((item) => {-->
+<!--//          formData.append('images[]', item.file)-->
+<!--//        })-->
+<!--//        for(var i =0 ;i<e.target.files.length;i++){-->
+<!--//          formData.append('images[]',e.target.files[i]);-->
+<!--//        }-->
+<!--var file=e.target.files[0]-->
+<!--var self = this-->
+<!--const formData = new FormData();-->
+<!--//          调用压缩图片的方法-->
+<!--this.compress(file, 0.3, function (err, data) {-->
+<!--if (err) {console.log(err);return;}else{-->
+<!--formData.append('images[]', data);-->
+<!--// 接下来就可以用 ajax 提交 fromdData-->
+<!--console.log(data)-->
+<!--self.$http({-->
+<!--method: 'POST',-->
+<!--url: '/api/upload',-->
+<!--dataType: 'formData',-->
+<!--data: formData-->
+<!--}).then((res) => {-->
+<!--if (res.data.code == '200') {-->
+<!--let j-->
+<!--for (j in res.data.data.image_url) {-->
+<!--self.imgList.push(res.data.data.image_url[j])-->
+<!--self.files=[]-->
+<!--}-->
+<!--}-->
+<!--}, (err) => {-->
+<!--})-->
+<!--}-->
+<!--});-->
+<!--//        console.log(formData)-->
+<!--//        this.$http({-->
+<!--//          method: 'POST',-->
+<!--//          url: '/api/upload',-->
+<!--//          dataType: 'formData',-->
+<!--//          data: formData-->
+<!--//        }).then((res) => {-->
+<!--//          if (res.data.code == '200') {-->
+<!--//            let j-->
+<!--//            for (j in res.data.data.image_url) {-->
+<!--//              this.imgList.push(res.data.data.image_url[j])-->
+<!--//              this.files=[]-->
+<!--////              console.log(this.imgList)-->
+<!--//            }-->
+<!--//          }-->
+<!--//        }, (err) => {-->
+<!--//        })-->
+<!--},-->
+<!--//      // 将图片文件转成BASE64格式-->
+<!--//      html5Reader(file, item) {-->
+<!--//        const reader = new FileReader()-->
+<!--//        reader.onload = (e) => {-->
+<!--//          this.$set(item, 'src', e.target.result)-->
+<!--//        }-->
+<!--//        reader.readAsDataURL(file)-->
+<!--//      },-->
+<!--//      isContain(file) {-->
+<!--//        console.log(file)-->
+<!--//        this.files.forEach((item) => {-->
+<!--//          if (item.name === file.name && item.size === file.size) {-->
+<!--//            return true-->
+<!--//          }-->
+<!--//        })-->
+<!--//        return false-->
+<!--//      },-->
+<!--//      uploadProgress(evt) {-->
+<!--//        const component = this-->
+<!--//        if (evt.lengthComputable) {-->
+<!--//          const percentComplete = Math.round((evt.loaded * 100) / evt.total)-->
+<!--//          component.percent = percentComplete / 100-->
+<!--//        } else {-->
+<!--//          console.warn('upload progress unable to compute')-->
+<!--//        }-->
+<!--//      },-->
+<!--//      图片压缩方法-->
+<!--compress(file, quality, callback) {-->
+<!--if (!window.FileReader || !window.Blob) {-->
+<!--return errorHandler('您的浏览器不支持图片压缩')();-->
+<!--}-->
+
+<!--var reader = new FileReader();-->
+<!--var mimeType = file.type || 'image/*';-->
+
+<!--reader.onload = createImage;-->
+<!--reader.onerror = errorHandler('图片读取失败！');-->
+<!--reader.readAsDataURL(file);-->
+
+<!--function createImage() {-->
+<!--var dataURL = this.result;-->
+<!--var image = new Image();-->
+<!--image.onload = compressImage;-->
+<!--image.onerror = errorHandler('图片加载失败');-->
+<!--image.src = dataURL;-->
+<!--}-->
+
+<!--function compressImage() {-->
+<!--var canvas = document.createElement('canvas');-->
+<!--var ctx;-->
+<!--var dataURI;-->
+<!--var result;-->
+
+<!--canvas.width = this.naturalWidth;-->
+<!--canvas.height = this.naturalHeight;-->
+<!--ctx = canvas.getContext('2d');-->
+<!--ctx.drawImage(this, 0, 0);-->
+<!--dataURI = canvas.toDataURL(mimeType, quality);-->
+<!--result = dataURIToBlob(dataURI);-->
+<!--console.log(result)-->
+<!--callback(null, result);-->
+<!--}-->
+
+<!--function dataURIToBlob(dataURI) {-->
+<!--var type = dataURI.match(/data:([^;]+)/)[1];-->
+<!--var base64 = dataURI.replace(/^[^,]+,/, '');-->
+<!--var byteString = atob(base64);-->
+
+<!--var ia = new Uint8Array(byteString.length);-->
+<!--for (var i = 0; i < byteString.length; i++) {-->
+<!--ia[i] = byteString.charCodeAt(i);-->
+<!--}-->
+<!--console.log(new Blob([ia],{type:type}))-->
+<!--return new Blob([ia], {type: type});-->
+<!--}-->
+
+<!--function errorHandler(message) {-->
+<!--return function () {-->
+<!--var error = new Error('Compression Error:', message);-->
+<!--callback(error, null);-->
+<!--};-->
+<!--}-->

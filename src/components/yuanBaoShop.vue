@@ -180,7 +180,7 @@
     font-size: .32rem;
     color: #333;
     background-color: white;
-    padding:.4rem .4rem .4rem 0;
+    padding:.3rem .4rem .3rem 0;
     font-weight: 500;
   }
   h3 i{
@@ -188,7 +188,7 @@
     margin-right: .2rem;
   }
   .goods{
-    margin-top: .1rem;
+    margin-top: .05rem;
   }
   .goods:nth-of-type(old){
     border-right: .05rem solid #f4f4f4;
@@ -219,7 +219,7 @@
   }
   .y_img{
     width: .26rem;
-    height:  .22rem;
+    height:  .20rem;
     margin-left: -.05rem;
   }
   .des_b del{
