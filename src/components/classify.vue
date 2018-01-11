@@ -39,7 +39,7 @@
                 <!--<p>                <del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
                 <!--</p>-->
                 <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
-                <span class="num">518件已售</span>
+                <span class="num">{{goods.volume}}件已售</span>
               </div>
             </div>
           </router-link>

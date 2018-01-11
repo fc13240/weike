@@ -187,6 +187,7 @@
     font-size: .28rem;
     color: #333;
     line-height: .4rem;
+    height: .4rem;
     word-wrap: break-word;
     -webkit-line-clamp: 1;
     display: -webkit-box;

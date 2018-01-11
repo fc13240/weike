@@ -243,9 +243,16 @@
   /*}*/
 
   .sign_s {
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    vertical-align: middle;
     color: white;
     text-align: center;
-    margin-top: 1.14rem;
+    margin: .48rem auto 0;
   }
 
   .step {

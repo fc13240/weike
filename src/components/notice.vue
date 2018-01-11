@@ -18,6 +18,7 @@
        </div>
       <p style="font-size: .28rem;color: #999;text-align: center; background-color: #f4f4f4;padding-top: 2rem;" v-show="!noticeList.length">您还没有收到任何通知呢</p>
     </div>
+    <div style="height: 1.34rem;"></div>
     <div class="btn" v-show="noticeList.length">
       <x-button  @click.native="clear()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">清空</x-button>
     </div>

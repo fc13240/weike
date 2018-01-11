@@ -13,7 +13,7 @@
             <div style="margin-top: .35rem;position: relative;">
               <span style="font-size: .24rem;color: #999;">已售{{list.volume}}件</span>
               <div>
-                <span class="new_num"><span style="font-size: .24rem;">￥</span>{{list.reserve_price.rmb}}<span style="font-size: .28rem" v-show="list.reserve_price!==''">.{{list.reserve_price.corner}}</span></span>
+                <span class="new_num"><span style="font-size: .24rem;">￥</span>{{list.reserve_price.rmb}}<span style="font-size: .28rem" v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></span>
               </div>
             </div>
           </div>

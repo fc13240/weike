@@ -105,10 +105,9 @@
             this.showLoading=false
             const data = res.data.data.product_info
             this.data= data
-            this.address_id = res.data.data.default_address.address_id
             this.corner = data.market_price.corner
             this.rmb = data.market_price.rmb
-//            console.log(res.data.data.)
+            this.address_id = res.data.data.default_address.address_id
             if(this.ids){
               this.getAddressDetail(this.ids)
             }else{
@@ -242,7 +241,7 @@
 
   .has_num {
     font-size: .24rem;
-    border-top: 1px dashed #ff526d;
+    border-top: 1px dashed #ff425f;
     margin-top: .15rem;
     color: #999;
     line-height: .5rem;
