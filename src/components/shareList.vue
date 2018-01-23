@@ -15,9 +15,9 @@
           <div class="list_m" v-for="list in orderSquareList">
             <div class="list">
               <div class="user_info">
-                <img :src="list.head_image" alt="" class="user_pic">
+                <img :src="list.wechat_head_image" alt="" class="user_pic">
                 <div class="user_des">
-                  <p class="user_name" v-text="list.member_name">昵称</p>
+                  <p class="user_name" v-text="list.wechat_nickname">昵称</p>
                   <p class="user_time" v-text="list.create_time">2017-10-14</p>
                 </div>
               </div>
@@ -191,5 +191,9 @@
     position: fixed;
     bottom: 0;
     border-top: 1px solid #e9e9e9;
+  }
+  .user_name{
+    font-size:.28rem;
+    color: #333;
   }
 </style>

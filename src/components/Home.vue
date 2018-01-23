@@ -1,7 +1,7 @@
 <template>
   <div>
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
-      <swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
+      <swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom"
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
         <ul class="nav-small">

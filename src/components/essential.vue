@@ -5,11 +5,11 @@
     <!--<div style="height: .88rem;"></div>-->
    <div style="font-size: 0;">
      <nav>
-       <img :src="banner" alt="" style="width: 7.5rem;height: 2.6rem;" :onerror="defaultImg">>
+       <img :src="banner" alt="" style="width: 7.5rem;height: 3.58rem;" :onerror="defaultImg">>
      </nav>
      <p style="text-align: center;font-size: .28rem;color: #333;background-color: white;padding: .2rem 0;"><img src="/static/images/essential_img.png" alt="" style="vertical-align: middle;width: .4rem;height: .4rem;margin-right: .1rem;">每天早10点晚9点上新</p>
    </div>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 3.44rem;">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.44rem;">
     <div class="main_goods">
       <ul class="goods">
         <router-link tag="li" class="goods_list" v-for="(list,index) in goodsList" :to="{name:'goodsDetail',query:{id:list.id}}" :key="index">

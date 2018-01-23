@@ -13,12 +13,14 @@
     </router-link>
       <scroller lock-y :scrollbar-x=false>
         <div class="box1" ref="nav1">
-          <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}" v-for="(goods1,index) in goods1" id="box1-item" style="width: 2.38rem;" class="box1-item" :key="index">
+          <router-link :to="{name:'goodsDetail',query:{id:goods1.id}}" v-for="(goods1,index) in goods1" id="box1-item" style="width: 2.18rem;" class="box1-item" :key="index">
           <div class="box_content">
               <img :src="goods1.pict_url" alt="" :onerror="defaultImg">
               <span class="dess">
             <p class="des_name" v-text="goods1.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del></p>
+            <p class="des_price"><span class="new_price">￥{{goods1.zk_final_price.rmb}}<span v-show="goods1.zk_final_price.corner!=='00'">.{{goods1.zk_final_price.corner}}</span></span>
+              <!--<del class="old_price">￥{{goods1.reserve_price.rmb}}<span v-show="goods1.reserve_price.corner!=='00'">.{{goods1.reserve_price.corner}}</span></del>-->
+            </p>
           </span>
           </div>
           </router-link>
@@ -37,12 +39,14 @@
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav2">
-        <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}" style="width: 2.38rem;" class="box1-item" v-for="(goods2,index) in goods2" id="box2-item" :key="index">
+        <router-link :to="{name:'goodsDetail',query:{id:goods2.id}}" style="width: 2.18rem;" class="box1-item" v-for="(goods2,index) in goods2" id="box2-item" :key="index">
         <div class="box_content">
           <img :src="goods2.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods2.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del></p>
+            <p class="des_price"><span class="new_price">￥{{goods2.zk_final_price.rmb}}<span v-show="goods2.zk_final_price.corner!=='00'">.{{goods2.zk_final_price.corner}}</span></span>
+              <!--<del class="old_price">￥{{goods2.reserve_price.rmb}}<span v-show="goods2.reserve_price.corner!=='00'">.{{goods2.reserve_price.corner}}</span></del>-->
+            </p>
           </span>
         </div>
         </router-link>
@@ -61,12 +65,13 @@
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav3">
-        <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}" class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.38rem;" :key="index">
+        <router-link :to="{name:'goodsDetail',query:{id:goods3.id}}" class="box1-item" v-for="(goods3,index) in goods3" id="box3-item" style="width: 2.18rem;" :key="index">
         <div class="box_content">
           <img :src="goods3.pict_url" alt="" :onerror="defaultImg">
           <span class="dess">
             <p class="des_name" v-text="goods3.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>
+            <p class="des_price"><span class="new_price">￥{{goods3.zk_final_price.rmb}}<span v-show="goods3.zk_final_price.corner!=='00'">.{{goods3.zk_final_price.corner}}</span></span>
+              <!--<del class="old_price">￥{{goods3.reserve_price.rmb}}<span v-show="goods3.reserve_price.corner!=='00'">.{{goods3.reserve_price.corner}}</span></del>-->
             </p>
           </span>
         </div>
@@ -86,12 +91,14 @@
     </router-link>
     <scroller lock-y :scrollbar-x=false>
       <div class="box1" ref="nav4">
-        <router-link :to="{name:'goodsDetail',query:{id:goods4.id}}" class="box1-item" v-for="(goods4,index) in goods4" id="box3-item" style="width: 2.38rem;" :key="index">
+        <router-link :to="{name:'goodsDetail',query:{id:goods4.id}}" class="box1-item" v-for="(goods4,index) in goods4" id="box3-item" style="width: 2.18rem;" :key="index">
           <div class="box_content">
             <img :src="goods4.pict_url" alt="" :onerror="defaultImg">
             <span class="dess">
             <p class="des_name" v-text="goods4.title">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥{{goods4.zk_final_price.rmb}}<span v-show="goods4.zk_final_price.corner!=='00'">.{{goods4.zk_final_price.corner}}</span></span><del class="old_price">￥{{goods4.reserve_price.rmb}}<span v-show="goods4.reserve_price.corner!=='00'">.{{goods4.reserve_price.corner}}</span></del></p>
+            <p class="des_price"><span class="new_price">￥{{goods4.zk_final_price.rmb}}<span v-show="goods4.zk_final_price.corner!=='00'">.{{goods4.zk_final_price.corner}}</span></span>
+              <!--<del class="old_price">￥{{goods4.reserve_price.rmb}}<span v-show="goods4.reserve_price.corner!=='00'">.{{goods4.reserve_price.corner}}</span></del>-->
+            </p>
           </span>
           </div>
         </router-link>
@@ -253,7 +260,7 @@
 <style scoped>
   nav {
     width: 100%;
-    height: 2.6rem;
+    height: 3.58rem;
     position: relative;
   }
   .sanjiao {
@@ -265,14 +272,17 @@
   }
 
   .box1 {
-    height: 3.38rem;
-    min-width: 14.5rem;
+    /*height: 3.38rem;*/
+    height: 2.8rem;
+    min-width: 13.3rem;
     position: relative;
     background-color: white;
     padding-bottom: .34rem;
+    margin-bottom: .16rem;
   }
   .box_content{
-    margin: 0 0 0 .18rem;border: .01rem solid #e8e8e8;
+    margin: 0 0 0 .18rem;
+    /*border: .01rem solid #e8e8e8;*/
   }
   .box1-item {
     box-sizing: border-box;
@@ -283,6 +293,7 @@
     /*width: 2.02rem;*/
     width: 100%;
     height: 2rem;
+    border-radius: .08rem;
   }
 
   .box1-item:first-child {
@@ -295,7 +306,8 @@
   }
 
   .des_name {
-    height: .60rem;
+    /*height: .60rem;*/
+    height: .3rem;
     color: #333;
     padding: 0 .1rem .1rem;
     word-wrap: break-word;

@@ -19,7 +19,7 @@
     <div class="main_goods">
       <div>
         <ul class="goods">
-          <router-link  class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'goodsDetail',query:{id:goodList1.id,type:1}}" :key="index">
+          <router-link  class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'goodsDetail',query:{id:goodList1.id}}" :key="index">
             <img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
