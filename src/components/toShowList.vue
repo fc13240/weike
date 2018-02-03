@@ -19,7 +19,7 @@
               <label for="file" class="add"></label>
             </section>
           </div>
-          <input type="file" accept="image/*" @change="fileChanged" ref="file"id="file">
+          <input type="file" accept="image/*" @change="fileChanged" ref="file" id="file">
         </div>
       </div>
     </div>
